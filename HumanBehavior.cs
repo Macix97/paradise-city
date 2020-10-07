@@ -10,14 +10,15 @@ public enum ActionType
     Turning,
     Sitting,
     Waiting,
-    Standing
+    Standing,
+    Admiring
 };
 
 // Control character behavior
-public class ManBehavior : MonoBehaviour
+public class HumanBehavior : MonoBehaviour
 {
     // Angle accuracy
-    [Range(2f, 5f)]
+    [Range(3.5f, 5.5f)]
     public float AngleAccuracy;
     // Waiting time in way point
     [Range(1f, 3f)]
@@ -25,6 +26,8 @@ public class ManBehavior : MonoBehaviour
     // Rotation speed
     [Range(1f, 5f)]
     public float RotationSpeed;
+    [Range(-0.05f, -0.01f)]
+    public float SittingOffset;
     // Targets (way points)
     public Transform[] Targets;
     // Agent offset
@@ -68,30 +71,7 @@ public class ManBehavior : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        switch (_currentAction)
-        {
-            case ActionType.Idling:
-                WaitAWhile();
-                break;
-            case ActionType.Walking:
-                GoToTarget();
-                break;
-            case ActionType.Rotating:
-                RotateToTarget();
-                break;
-            case ActionType.Turning:
-                TurnCharacter();
-                break;
-            case ActionType.Sitting:
-                SitOnBench();
-                break;
-            case ActionType.Waiting:
-                WaitOnBench();
-                break;
-            case ActionType.Standing:
-                StandUpAndSetTarget();
-                break;
-        }
+        SwitchActions();
     }
 
     // Initializate parameters
@@ -134,30 +114,28 @@ public class ManBehavior : MonoBehaviour
         // Destination is reached
         if (!_agent.pathPending && _agent.remainingDistance < _agent.stoppingDistance)
         {
-            // Set animation
-            _agent.isStopped = true;
-            _isWalking = false;
-            _animator.SetBool(_animWalk, _isWalking);
-            // Check target type
-            if (Targets[_currentTarget].name.Equals("SitPoint"))
+            // Check target type - bench or monument
+            if (Targets[_currentTarget].name.Equals("SitPoint")
+                || Targets[_currentTarget].name.Equals("LookPoint"))
             {
+                // Set animation
+                _isWalking = false;
+                _animator.SetBool(_animWalk, _isWalking);
+                // Stop agent
+                _agent.isStopped = true;
                 // Set rotating action
                 _currentAction = ActionType.Rotating;
                 // Break action
                 return;
             }
-            // Set new target
+            // Set new way point
             else
             {
-                // Check current target
-                if (_currentTarget.Equals(Targets.Length - 1))
-                    // Reset path
-                    _currentTarget = 0;
-                // Set another target
-                else
-                    _currentTarget++;
-                // Set idling action
-                _currentAction = ActionType.Idling;
+                // Set animation
+                _isWalking = true;
+                _animator.SetBool(_animWalk, _isWalking);
+                // Set next target
+                SetNextTarget();
             }
         }
         // Go to target
@@ -183,10 +161,22 @@ public class ManBehavior : MonoBehaviour
             // Set animation
             _animator.SetBool(_animRotateRight, _isRotatingRight);
             _animator.SetBool(_animRotateLeft, _isRotatingLeft);
-            // Set turning action
-            _currentAction = ActionType.Turning;
-            // Break action
-            return;
+            // Check target type - bench
+            if (Targets[_currentTarget].name.Equals("SitPoint"))
+            {
+                // Set turning action
+                _currentAction = ActionType.Turning;
+                // Break action
+                return;
+            }
+            // Check target type - monument
+            else if (Targets[_currentTarget].name.Equals("LookPoint"))
+            {
+                // Set admiring action
+                _currentAction = ActionType.Admiring;
+                // Break action
+                return;
+            }
         }
         // Check rotation direction
         _isRotatingRight = GetRotateDirection(transform.rotation, _lookRotation);
@@ -242,7 +232,7 @@ public class ManBehavior : MonoBehaviour
         _isTurning = false;
         _animator.SetBool(_animTurning, _isTurning);
         // Check transition time
-        if (_translationTime >= 0.5f)
+        if (_translationTime >= 1f)
         {
             // Reset translation time
             _translationTime = 0f;
@@ -252,11 +242,10 @@ public class ManBehavior : MonoBehaviour
             return;
         }
         // Set new nav mesh offset
-        _agent.baseOffset = -0.05f;
+        _agent.baseOffset = SittingOffset;
         // Increase translation time
         _translationTime += Time.deltaTime;
-        transform.Translate(new Vector3(0f, -Time.deltaTime, Time.deltaTime), Space.Self);
-
+        transform.Translate(new Vector3(0f, 0f, Time.deltaTime), Space.Self);
     }
 
     // Wait on bench
@@ -282,6 +271,23 @@ public class ManBehavior : MonoBehaviour
     // Stand up from bench and set new target
     private void StandUpAndSetTarget()
     {
+        // Set next target
+        SetNextTarget();
+        // Set standard offset
+        _agent.baseOffset = _standardOffset;
+        // Set idling action
+        _currentAction = ActionType.Idling;
+    }
+
+    // Stand front of monument and start looking at it
+    private void AdmireMonument()
+    {
+        // Do something
+    }
+
+    // Set new target after destination
+    private void SetNextTarget()
+    {
         // Check current target
         if (_currentTarget.Equals(Targets.Length - 1))
             // Reset path
@@ -289,9 +295,37 @@ public class ManBehavior : MonoBehaviour
         // Set another target
         else
             _currentTarget++;
-        // Set standard offset
-        _agent.baseOffset = _standardOffset;
-        // Set idling action
-        _currentAction = ActionType.Idling;
+    }
+
+    // Switch human actions
+    private void SwitchActions()
+    {
+        switch (_currentAction)
+        {
+            case ActionType.Idling:
+                WaitAWhile();
+                break;
+            case ActionType.Walking:
+                GoToTarget();
+                break;
+            case ActionType.Rotating:
+                RotateToTarget();
+                break;
+            case ActionType.Turning:
+                TurnCharacter();
+                break;
+            case ActionType.Sitting:
+                SitOnBench();
+                break;
+            case ActionType.Waiting:
+                WaitOnBench();
+                break;
+            case ActionType.Standing:
+                StandUpAndSetTarget();
+                break;
+            case ActionType.Admiring:
+                AdmireMonument();
+                break;
+        }
     }
 }
