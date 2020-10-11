@@ -1,6 +1,6 @@
 # Paradise City
 
-Paradise City is a real-time simulation which presents behaviors occur in big city. In the project many different actions are performing independently of each other. The main goal is created the full of life environment with a lot of characters and vehicles. Specifc people have their own sequences of the behaviors which is executed in proper order. The list below presents most important features:
+Paradise City is a real-time simulation which presents behaviors occur in big city. In the project many actions are performing independently of each other. The main goal is created the full of life environment with a lot of characters and vehicles. Specific people have their own sequences of the behaviors which is executed in proper order. The list below presents most important features:
 
 * Beautiful city with many buildings, street props and decorations.
 * Traffic with different types of vehicles.
