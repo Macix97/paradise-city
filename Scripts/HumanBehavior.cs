@@ -85,12 +85,14 @@ public class HumanBehavior : MonoBehaviour
     // Initializate parameters
     private void Init()
     {
+        // Get person gender
+        string gender = name = name.Replace("(Clone)", "");
         // Random human type
         int humanIndex = Random.Range(1, humanTypesCount + 1);
         // Random eye color
         int eyeIndex = Random.Range(1, eyesTypesCount + 1);
         // Get eye renderer
-        SkinnedMeshRenderer eyesRenderer = transform.Find("ManEyes").GetComponent<SkinnedMeshRenderer>();
+        SkinnedMeshRenderer eyesRenderer = transform.Find(gender + "Eyes").GetComponent<SkinnedMeshRenderer>();
         // Set new eyes material
         eyesRenderer.material = Resources.Load<Material>("People/Materials/Eyes0" + eyeIndex);
         // Disable other types
@@ -101,17 +103,50 @@ public class HumanBehavior : MonoBehaviour
                 // Go to next step
                 continue;
             // Find proper human's outfit
-            GameObject humanType = transform.Find("Man0" + cnt + "LOD").gameObject;
+            GameObject humanType = transform.Find(gender + "0" + cnt + "LOD").gameObject;
             // Disable outfit
             humanType.SetActive(false);
         }
-        // Set black skin for this case
-        if (humanIndex.Equals(humanTypesCount))
+        // Man
+        if (humanIndex.Equals(humanTypesCount) && gender.Equals("Man"))
         {
             // Get body renderer
             SkinnedMeshRenderer bodyRenderer = transform.Find("ManBody").GetComponent<SkinnedMeshRenderer>();
-            // Set new body material
+            // Set new eyes material (dark)
+            eyesRenderer.material = Resources.Load<Material>("People/Materials/Eyes05");
+            // Set new body material (dark)
             bodyRenderer.material = Resources.Load<Material>("People/Man/Materials/ManBodyBlack");
+        }
+        // Woman
+        if (gender.Equals("Woman"))
+        {
+            // Set new skin and eyes (dark)
+            if (Random.Range(0, 2).Equals(1))
+            {
+                // Get body renderer
+                SkinnedMeshRenderer bodyRenderer = transform.Find("WomanBody")
+                    .GetComponent<SkinnedMeshRenderer>();
+                // Set new eyes material (dark)
+                eyesRenderer.material = Resources.Load<Material>("People/Materials/Eyes05");
+                // Set new body material (dark)
+                bodyRenderer.material = Resources.Load<Material>("People/Woman/Materials/WomanBodyDusky");
+            }
+            // Find fingernails
+            SkinnedMeshRenderer skinnedMeshRenderer =
+                transform.Find("WomanFingernails").GetComponent<SkinnedMeshRenderer>();
+            // Set fingernails
+            skinnedMeshRenderer.material =
+                Resources.Load<Material>("People/Woman/Materials/Woman0" + humanIndex + "Fingernails");
+            // Find high heels
+            skinnedMeshRenderer = transform.Find("WomanHighHeels").GetComponent<SkinnedMeshRenderer>();
+            // Set high heels
+            skinnedMeshRenderer.material =
+                Resources.Load<Material>("People/Woman/Materials/Woman0" + humanIndex + "HighHeels");
+            // Find panty
+            skinnedMeshRenderer = transform.Find("WomanPanty").GetComponent<SkinnedMeshRenderer>();
+            // Set panty
+            skinnedMeshRenderer.material =
+                Resources.Load<Material>("People/Woman/Materials/Woman0" + humanIndex + "Panty");
         }
         // Set proper human area
         _area = transform.parent.gameObject;
@@ -283,7 +318,7 @@ public class HumanBehavior : MonoBehaviour
         _isTurning = false;
         _animator.SetBool(_animTurning, _isTurning);
         // Check transition time
-        if (_translationTime >= 1f)
+        if (_translationTime >= 1.2f)
         {
             // Reset translation time
             _translationTime = 0f;
@@ -296,7 +331,7 @@ public class HumanBehavior : MonoBehaviour
         _agent.baseOffset = SittingOffset;
         // Increase translation time
         _translationTime += Time.deltaTime;
-        transform.Translate(new Vector3(0f, 0f, Time.deltaTime), Space.Self);
+        transform.Translate(new Vector3(0f, 0f, Time.deltaTime / 2.5f), Space.Self);
     }
 
     // Wait on bench

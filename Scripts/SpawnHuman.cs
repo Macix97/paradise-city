@@ -21,13 +21,28 @@ public class SpawnHuman : MonoBehaviour
     // Spawn person in selected position
     private void SpawnPerson()
     {
-        // Load prefab
-        GameObject humanPrefab = Resources.Load<GameObject>("People/Man/Man");
+        // Search spawn points
         foreach (GameObject spawnPoint in SpawnPoints)
         {
+            // Get some gender
+            string gender = RandomGender();
+            // Load prefab
+            GameObject humanPrefab = Resources.Load<GameObject>("People/" + gender + "/" + gender);
             // Spawn person
             GameObject human = GameObject.Instantiate<GameObject>(humanPrefab,
                 spawnPoint.transform.position, Quaternion.identity, spawnPoint.transform.parent);
         }
+    }
+
+    // Random some gender (man or woman)
+    public string RandomGender()
+    {
+        // Random number
+        int number = Random.Range(0, 2);
+        // It is a man
+        if (number.Equals(0))
+            return "Man";
+        // It is a woman
+        return "Woman";
     }
 }
