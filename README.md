@@ -9,4 +9,4 @@ Paradise City is a real-time simulation which presents behaviors occur in big ci
 * Day and night cycle providing extra feelings.
 * And a lot more...
 
-The whole project can be easily transformed to RPG action game with missions and additional achievements.
+The whole project can be easily transformed to RPG action game with missions and additional achievements. Simulator was made by using Unity 3D 2019.4.2f1.
