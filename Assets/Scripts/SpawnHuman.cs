@@ -4,12 +4,13 @@
 public class SpawnHuman : MonoBehaviour
 {
     // Selected spawn points
-    public GameObject[] SpawnPoints;
+    private GameObject[] _spawnPoints;
 
     // Start is called before the first frame update
     private void Start()
     {
-        SpawnPerson();
+        Init();
+        SpawnPeople();
     }
 
     // Update is called once per frame
@@ -18,11 +19,18 @@ public class SpawnHuman : MonoBehaviour
         // TODO: Manipulate human types in run-time
     }
 
-    // Spawn person in selected position
-    private void SpawnPerson()
+    // Initializate parameters
+    private void Init()
+    {
+        // Get spawn points
+        _spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
+    }
+
+    // Spawn people in selected positions
+    private void SpawnPeople()
     {
         // Search spawn points
-        foreach (GameObject spawnPoint in SpawnPoints)
+        foreach (GameObject spawnPoint in _spawnPoints)
         {
             // Get some gender
             string gender = RandomGender();

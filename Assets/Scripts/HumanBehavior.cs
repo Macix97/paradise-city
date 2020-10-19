@@ -24,15 +24,18 @@ public class HumanBehavior : MonoBehaviour
     // Waiting time in way point
     [Range(1f, 3f)]
     public float WaitingTime;
+    // Admiring time in way point
+    [Range(2f, 5f)]
+    public float AdmiringTime;
     // Rotation speed
     [Range(1f, 5f)]
     public float RotationSpeed;
     [Range(-0.05f, -0.01f)]
     public float SittingOffset;
     // Target area
-    public GameObject _area;
+    private GameObject _area;
     // Targets (way points)
-    public Transform[] _targets;
+    private Transform[] _targets;
     // Agent offset
     private float _standardOffset;
     // Nav mesh agent
@@ -49,6 +52,8 @@ public class HumanBehavior : MonoBehaviour
     private bool _isRotatingLeft;
     // Check if character is turning
     private bool _isTurning;
+    // Check if character is admiring
+    private bool _isAdmiring;
     // Animator walking value
     private string _animWalk = "isWalking";
     // Animator rotating right value
@@ -57,6 +62,8 @@ public class HumanBehavior : MonoBehaviour
     private string _animRotateLeft = "isRotatingLeft";
     // Animator turning value
     private string _animTurning = "isTurning";
+    // Animator admiring value
+    private string _animAdmiring = "isAdmiring";
     // Current target index
     private int _currentTarget;
     // Current waiting time
@@ -168,11 +175,13 @@ public class HumanBehavior : MonoBehaviour
         _targets = wayPointsList.ToArray();
         _agent = gameObject.GetComponent<NavMeshAgent>();
         _animator = gameObject.GetComponent<Animator>();
-        _isWalking = _isRotatingRight = _isRotatingLeft = false;
+        _isWalking = _isRotatingRight = _isRotatingLeft = _isAdmiring = _isTurning = false;
         _currentAction = ActionType.Idling;
         _currentTarget = 0;
         _currentTime = 0f;
         _standardOffset = _agent.baseOffset;
+        _animator.SetBool(_animTurning, _isTurning);
+        _animator.SetBool(_animAdmiring, _isAdmiring);
         _animator.SetBool(_animWalk, _isWalking);
         _animator.SetBool(_animRotateRight, _isRotatingRight);
         _animator.SetBool(_animRotateLeft, _isRotatingLeft);
@@ -257,7 +266,7 @@ public class HumanBehavior : MonoBehaviour
                 return;
             }
             // Check target type - monument
-            else if (_targets[_currentTarget].GetChild(0).name.Equals("Look Point"))
+            if (_targets[_currentTarget].GetChild(0).name.Equals("Admire Point"))
             {
                 // Set admiring action
                 _currentAction = ActionType.Admiring;
@@ -368,7 +377,26 @@ public class HumanBehavior : MonoBehaviour
     // Stand front of monument and start looking at it
     private void AdmireMonument()
     {
-        // Do something
+        // Check time
+        if (_currentTime > AdmiringTime)
+        {
+            // Set animation
+            _isAdmiring = false;
+            _animator.SetBool(_animAdmiring, _isAdmiring);
+            // Reset time
+            _currentTime = 0f;
+            // Change state
+            _currentAction = ActionType.Idling;
+            // Set new target
+            SetNextTarget();
+            // Break action
+            return;
+        }
+        // Increase time
+        _currentTime += Time.deltaTime;
+        // Set animation
+        _isAdmiring = true;
+        _animator.SetBool(_animAdmiring, _isAdmiring);
     }
 
     // Set new target after destination

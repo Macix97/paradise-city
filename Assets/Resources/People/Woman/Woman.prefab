@@ -824,9 +824,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1b40c12e7484a44a192a1102a9ad6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AngleAccuracy: 6
+  AngleAccuracy: 5
   WaitingTime: 2
-  RotationSpeed: 4
+  AdmiringTime: 5
+  RotationSpeed: 1.5
   SittingOffset: -0.02
   _area: {fileID: 0}
   _targets: []

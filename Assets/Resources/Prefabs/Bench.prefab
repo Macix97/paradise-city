@@ -263,6 +263,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Look Point
       objectReference: {fileID: 0}
+    - target: {fileID: 4220339980196334533, guid: 4548225142441d044af9e2a80f40e551,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4548225142441d044af9e2a80f40e551, type: 3}
 --- !u!4 &4842651350728210136 stripped
@@ -337,6 +342,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sit Point
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194471104817471503, guid: 28f1d2fced02f584286beeb3a7541329,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28f1d2fced02f584286beeb3a7541329, type: 3}

@@ -47,6 +47,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chair
       objectReference: {fileID: 0}
+    - target: {fileID: 1629056723457141040, guid: 7c052672757225c4f8970b69af7dd822,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2148290525825840010, guid: 7c052672757225c4f8970b69af7dd822,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -202,6 +207,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Table
       objectReference: {fileID: 0}
+    - target: {fileID: 6496134727657529413, guid: f7fdacabdd36a954fb8727cdefacae0e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7fdacabdd36a954fb8727cdefacae0e, type: 3}
 --- !u!4 &6775172735525540082 stripped
@@ -221,6 +231,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 1629056723457141040, guid: 7c052672757225c4f8970b69af7dd822,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2148290525825840010, guid: 7c052672757225c4f8970b69af7dd822,
         type: 3}
@@ -312,6 +327,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chair
       objectReference: {fileID: 0}
+    - target: {fileID: 1629056723457141040, guid: 7c052672757225c4f8970b69af7dd822,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2148290525825840010, guid: 7c052672757225c4f8970b69af7dd822,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -401,6 +421,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 1629056723457141040, guid: 7c052672757225c4f8970b69af7dd822,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2148290525825840010, guid: 7c052672757225c4f8970b69af7dd822,
         type: 3}

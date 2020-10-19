@@ -395,6 +395,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Admire Point
       objectReference: {fileID: 0}
+    - target: {fileID: 2198441763467486625, guid: f7250b172d13c5c449fd9e9498fda496,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6747698554309363404, guid: f7250b172d13c5c449fd9e9498fda496,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -518,6 +523,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Look Point
+      objectReference: {fileID: 0}
+    - target: {fileID: 4220339980196334533, guid: 4548225142441d044af9e2a80f40e551,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4548225142441d044af9e2a80f40e551, type: 3}
