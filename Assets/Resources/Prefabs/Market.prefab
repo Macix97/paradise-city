@@ -173,7 +173,7 @@ GameObject:
   m_Name: MarketWalls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
+  m_NavMeshLayer: 0
   m_StaticEditorFlags: 72
   m_IsActive: 1
 --- !u!4 &1033085725201890528

@@ -484,7 +484,7 @@ GameObject:
   - component: {fileID: 5875459994456537817}
   m_Layer: 0
   m_Name: Man02LOD
-  m_TagString: Untagged
+  m_TagString: HumanType
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2001,7 +2001,7 @@ GameObject:
   - component: {fileID: 53746696203433891}
   m_Layer: 0
   m_Name: Man03LOD
-  m_TagString: Untagged
+  m_TagString: HumanType
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2174,11 +2174,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AngleAccuracy: 5
   WaitingTime: 2
-  AdmiringTime: 4
+  ActionTime: 4
   RotationSpeed: 2
   SittingOffset: -0.02
-  _area: {fileID: 0}
-  _targets: []
 --- !u!205 &3617756429842567019
 LODGroup:
   m_ObjectHideFlags: 0
@@ -3668,7 +3666,7 @@ GameObject:
   - component: {fileID: 1386561604243141599}
   m_Layer: 0
   m_Name: Man04LOD
-  m_TagString: Untagged
+  m_TagString: HumanType
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4257,7 +4255,7 @@ GameObject:
   - component: {fileID: 2710329390137793127}
   m_Layer: 0
   m_Name: Man01LOD
-  m_TagString: Untagged
+  m_TagString: HumanType
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

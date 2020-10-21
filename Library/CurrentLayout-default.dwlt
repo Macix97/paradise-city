@@ -114,7 +114,7 @@ MonoBehaviour:
   m_MinSize: {x: 507, y: 392}
   m_MaxSize: {x: 14002, y: 14042}
   vertical: 1
-  controlID: 6131
+  controlID: 123
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -139,7 +139,7 @@ MonoBehaviour:
   m_MinSize: {x: 507, y: 392}
   m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 6132
+  controlID: 124
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_MinSize: {x: 231, y: 392}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 6133
+  controlID: 46
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_MinSize: {x: 203, y: 121}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 6134
+  controlID: 47
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -423,14 +423,14 @@ MonoBehaviour:
     - {fileID: -8676952512782468145, guid: a0925113f5041b349881de70651a9c2f, type: 2}
     - {fileID: -8676952512782468145, guid: 0c1c5a53050f8c34381f6aaf3602a6c5, type: 2}
     m_ValueSerializationHelper:
-    - e00: 0.28870967
+    - e00: 0.32508594
       e01: 0
       e02: 0
-      e03: 32.322586
+      e03: 33.216778
       e10: 0
-      e11: 0.28870967
+      e11: 0.32508594
       e12: 0
-      e13: 149
+      e13: 162.36684
       e20: 0
       e21: 0
       e22: 1
@@ -439,14 +439,14 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    - e00: 0.52178687
+    - e00: 0.7071218
       e01: 0
       e02: 0
-      e03: -66.728134
+      e03: -57.396797
       e10: 0
-      e11: 0.52178687
+      e11: 0.7071218
       e12: 0
-      e13: 89.03551
+      e13: 260.58972
       e20: 0
       e21: 0
       e22: 1
@@ -456,10 +456,10 @@ MonoBehaviour:
       e32: 0
       e33: 1
   m_PreviewAnimator: {fileID: 0}
-  m_AnimatorController: {fileID: 9100000, guid: 0c1c5a53050f8c34381f6aaf3602a6c5,
+  m_AnimatorController: {fileID: 9100000, guid: a0925113f5041b349881de70651a9c2f,
     type: 2}
   m_BreadCrumbs:
-  - m_Target: {fileID: -8676952512782468145, guid: 0c1c5a53050f8c34381f6aaf3602a6c5,
+  - m_Target: {fileID: -8676952512782468145, guid: a0925113f5041b349881de70651a9c2f,
       type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   stateMachineGraph: {fileID: 0}
@@ -501,7 +501,7 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 30194
+  m_LastSelectedObjectID: -440574
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -538,9 +538,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 178.49371, y: 345.17902, z: -208.8068}
+    m_Target: {x: 176.89183, y: 340.58057, z: -214.2549}
     speed: 2
-    m_Value: {x: 178.49371, y: 345.17902, z: -208.8068}
+    m_Value: {x: 176.89183, y: 340.58057, z: -214.2549}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -586,13 +586,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.23592086, y: -0.41849312, z: 0.11352263, w: 0.86966944}
+    m_Target: {x: 0.24031474, y: -0.5148456, z: 0.1530191, w: 0.8085599}
     speed: 2
-    m_Value: {x: 0.23294878, y: -0.44052958, z: 0.11950061, w: 0.8587131}
+    m_Value: {x: 0.23985447, y: -0.5172687, z: 0.15373927, w: 0.80701137}
   m_Size:
-    m_Target: 5.46572
+    m_Target: 8.742682
     speed: 2
-    m_Value: 5.7657204
+    m_Value: 8.366203
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -674,18 +674,18 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 7a7cfcff2a91fcffe84effff20f6ffff40fbffff9a3d0000265a000074660000
+      m_ExpandedIDs: 56f1f7ff8ef2f7ffa065faffe265faffe665faffea65fafff265fafff665fafffa65faff0266faff0666faff0a66faff1266faff1666faff1a66faff2266faff2666faff2a66faff2e66faff3266faff3666faff3a66faff4a66faff4e66faff5666faff5a66faff5e66faff6666faff6a66faff6e66faff7666faff7a66faff7e66faff8666faff8a66faff8e66faff9666faff9a66faff9e66faffa266faffa666faffaa66faffae66faffb266faffb666faffba66faffc266faffc666faffca66faffce66faffd666faffda66faffde66faffe266faffe666fafff866faff1067faff60dbfaff0248fbff5ed1fbffe242feff9aab0000b6ac0000daac0000deb70000ccd30000fecc0d00cce90d00
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: Way Point
-        m_OriginalName: Way Point
+        m_Name: Woman01Hair
+        m_OriginalName: Woman01Hair
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: -549878
+        m_UserData: -309522
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
         m_OriginalEventType: 0
@@ -737,20 +737,20 @@ MonoBehaviour:
     m_SkipHidden: 1
     m_SearchArea: 1
     m_Folders:
-    - Assets/AI
+    - Assets/Scripts
   m_ViewMode: 1
   m_StartGridSize: 63
   m_LastFolders:
-  - Assets/AI
+  - Assets/Scripts
   m_LastFoldersGridSize: 63
   m_LastProjectPath: C:\Users\Macix\Documents\Unity Projects\ParadiseCity\paradiseCity
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: a6a70000
-    m_LastClickedID: 42918
-    m_ExpandedIDs: 000000008aa400008ca400008ea4000090a4000092a4000094a4000096a4000098a400009aa400009ca400009ea40000a0a40000a2a40000a4a40000a6a40000a8a40000aaa40000aca40000aea40000b0a40000b2a40000b4a40000b6a40000b8a40000baa40000bca40000bea40000c0a40000c2a40000c4a40000c6a40000c8a40000caa40000cca40000cea40000d0a40000d2a40000d4a40000d6a40000d8a40000daa40000dca40000dea40000e0a40000e2a40000e4a40000e6a40000e8a40000eaa40000eca40000eea40000f0a40000f2a40000f4a40000f6a40000f8a40000faa40000fca40000fea4000000a5000002a5000004a5000006a5000008a500000aa500000ca500000ea5000010a5000012a5000014a5000016a5000018a500001aa500001ca500001ea5000020a5000022a5000000ca9a3b
+    scrollPos: {x: 0, y: 199}
+    m_SelectedIDs: d0fa0000
+    m_LastClickedID: 64208
+    m_ExpandedIDs: 0000000018fa00001afa00001cfa00001efa000020fa000022fa000024fa000026fa000028fa00002afa00002cfa00002efa000030fa000032fa000034fa000036fa000038fa00003afa00003cfa00003efa000040fa000042fa000044fa000046fa000048fa00004afa00004cfa00004efa000050fa000052fa000054fa000056fa000058fa00005afa00005cfa00005efa000060fa000062fa000064fa000066fa000068fa00006afa00006cfa00006efa000070fa000072fa000074fa000076fa000078fa00007afa00007cfa00007efa000080fa000082fa000084fa000086fa000088fa00008afa00008cfa00008efa000090fa000092fa000094fa000096fa000098fa00009afa00009cfa00009efa0000a0fa0000a2fa0000a4fa0000a6fa0000a8fa0000aafa0000acfa0000aefa0000b0fa0000e4fa000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -778,7 +778,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000008aa400008ca400008ea4000090a4000092a4000094a4000096a4000098a400009aa400009ca400009ea40000a0a40000a2a40000a4a40000a6a40000a8a40000aaa40000aca40000aea40000b0a40000b2a40000b4a40000b6a40000b8a40000baa40000bca40000bea40000c0a40000c2a40000c4a40000c6a40000c8a40000caa40000cca40000cea40000d0a40000d2a40000d4a40000d6a40000d8a40000daa40000dca40000dea40000e0a40000e2a40000e4a40000e6a40000e8a40000eaa40000eca40000eea40000f0a40000f2a40000f4a40000f6a40000f8a40000faa40000fca40000fea4000000a5000002a5000004a5000006a5000008a500000aa500000ca500000ea5000010a5000012a5000014a5000016a5000018a500001aa500001ca500001ea5000020a5000022a5000000ca9a3b
+    m_ExpandedIDs: 0000000018fa00001afa00001cfa00001efa000020fa000022fa000024fa000026fa000028fa00002afa00002cfa00002efa000030fa000032fa000034fa000036fa000038fa00003afa00003cfa00003efa000040fa000042fa000044fa000046fa000048fa00004afa00004cfa00004efa000050fa000052fa000054fa000056fa000058fa00005afa00005cfa00005efa000060fa000062fa000064fa000066fa000068fa00006afa00006cfa00006efa000070fa000072fa000074fa000076fa000078fa00007afa00007cfa00007efa000080fa000082fa000084fa000086fa000088fa00008afa00008cfa00008efa000090fa000092fa000094fa000096fa000098fa00009afa00009cfa00009efa0000a0fa0000a2fa0000a4fa0000a6fa0000a8fa0000aafa0000acfa0000aefa0000b0fa0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

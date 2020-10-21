@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 5846299194655267941}
   m_Layer: 0
   m_Name: Woman02LOD
-  m_TagString: Untagged
+  m_TagString: HumanType
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -826,11 +826,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AngleAccuracy: 5
   WaitingTime: 2
-  AdmiringTime: 5
+  ActionTime: 4
   RotationSpeed: 1.5
   SittingOffset: -0.02
-  _area: {fileID: 0}
-  _targets: []
 --- !u!205 &5974188174595882507
 LODGroup:
   m_ObjectHideFlags: 0
@@ -1317,7 +1315,7 @@ GameObject:
   - component: {fileID: 1007899836110448451}
   m_Layer: 0
   m_Name: Woman04LOD
-  m_TagString: Untagged
+  m_TagString: HumanType
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3198,7 +3196,7 @@ GameObject:
   - component: {fileID: 1104234117829657120}
   m_Layer: 0
   m_Name: Woman03LOD
-  m_TagString: Untagged
+  m_TagString: HumanType
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3468,7 +3466,7 @@ GameObject:
   - component: {fileID: 1114444045926609644}
   m_Layer: 0
   m_Name: Woman01LOD
-  m_TagString: Untagged
+  m_TagString: HumanType
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

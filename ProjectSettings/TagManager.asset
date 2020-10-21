@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - WayPoint
   - SpawnPoint
+  - HumanType
   layers:
   - Default
   - TransparentFX

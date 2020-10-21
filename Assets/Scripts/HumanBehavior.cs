@@ -12,7 +12,8 @@ public enum ActionType
     Sitting,
     Waiting,
     Standing,
-    Admiring
+    Admiring,
+    Watching
 };
 
 // Control character behavior
@@ -24,9 +25,9 @@ public class HumanBehavior : MonoBehaviour
     // Waiting time in way point
     [Range(1f, 3f)]
     public float WaitingTime;
-    // Admiring time in way point
+    // Action time in way point
     [Range(2f, 5f)]
-    public float AdmiringTime;
+    public float ActionTime;
     // Rotation speed
     [Range(1f, 5f)]
     public float RotationSpeed;
@@ -54,6 +55,8 @@ public class HumanBehavior : MonoBehaviour
     private bool _isTurning;
     // Check if character is admiring
     private bool _isAdmiring;
+    // Check if character is watching
+    private bool _isWatching;
     // Animator walking value
     private string _animWalk = "isWalking";
     // Animator rotating right value
@@ -64,6 +67,8 @@ public class HumanBehavior : MonoBehaviour
     private string _animTurning = "isTurning";
     // Animator admiring value
     private string _animAdmiring = "isAdmiring";
+    // Animator watching value
+    private string _animWatching = "isWatching";
     // Current target index
     private int _currentTarget;
     // Current waiting time
@@ -72,10 +77,10 @@ public class HumanBehavior : MonoBehaviour
     private float _translationTime;
     // Current action
     private ActionType _currentAction;
-    // Count of eyes types
-    private const int eyesTypesCount = 5;
-    // Count of human types
-    private const int humanTypesCount = 4;
+    // Human types
+    private Transform[] _humanTypes;
+    // Gender
+    private string _gender;
 
     // Awake is called when the script instance is being loaded
     private void Awake()
@@ -92,40 +97,58 @@ public class HumanBehavior : MonoBehaviour
     // Initializate parameters
     private void Init()
     {
+        // Load eyes materials
+        Material[] eyesMaterials = Resources.LoadAll<Material>("People/Materials/Eyes");
         // Get person gender
-        string gender = name = name.Replace("(Clone)", "");
+        _gender = name = name.Replace("(Clone)", "");
+        // Get all objects in human
+        Transform[] humanTransforms = transform.GetComponentsInChildren<Transform>();
+        // Create temporary list
+        List<Transform> humanTypes = new List<Transform>();
+        // Get all human types
+        foreach (Transform trans in humanTransforms)
+        {
+            // Check object tag
+            if (trans.tag.Equals("HumanType"))
+                // Add to list
+                humanTypes.Add(trans);
+        }
+        // Transform list to array
+        _humanTypes = humanTypes.ToArray();
         // Random human type
-        int humanIndex = Random.Range(1, humanTypesCount + 1);
+        int humanIndex = Random.Range(1, _humanTypes.Length + 1);
         // Random eye color
-        int eyeIndex = Random.Range(1, eyesTypesCount + 1);
+        int eyeIndex = Random.Range(0, eyesMaterials.Length);
         // Get eye renderer
-        SkinnedMeshRenderer eyesRenderer = transform.Find(gender + "Eyes").GetComponent<SkinnedMeshRenderer>();
+        SkinnedMeshRenderer eyesRenderer = transform.Find(_gender + "Eyes").GetComponent<SkinnedMeshRenderer>();
         // Set new eyes material
-        eyesRenderer.material = Resources.Load<Material>("People/Materials/Eyes0" + eyeIndex);
+        eyesRenderer.material = eyesMaterials[eyeIndex];
         // Disable other types
-        for (int cnt = 1; cnt <= humanTypesCount; cnt++)
+        foreach (Transform trans in _humanTypes)
         {
             // Check human index
-            if (cnt.Equals(humanIndex))
+            if (trans.name.Contains("0" + humanIndex + "LOD"))
                 // Go to next step
                 continue;
-            // Find proper human's outfit
-            GameObject humanType = transform.Find(gender + "0" + cnt + "LOD").gameObject;
-            // Disable outfit
-            humanType.SetActive(false);
+            // Get mesh renderers
+            SkinnedMeshRenderer[] skinnedMeshRenderers = trans.GetComponentsInChildren<SkinnedMeshRenderer>();
+            // Search mesh renderers
+            foreach (SkinnedMeshRenderer renderer in skinnedMeshRenderers)
+                // Disable mesh renderer
+                renderer.enabled = false;
         }
         // Man
-        if (humanIndex.Equals(humanTypesCount) && gender.Equals("Man"))
+        if (humanIndex.Equals(_humanTypes.Length) && _gender.Equals("Man"))
         {
             // Get body renderer
             SkinnedMeshRenderer bodyRenderer = transform.Find("ManBody").GetComponent<SkinnedMeshRenderer>();
             // Set new eyes material (dark)
-            eyesRenderer.material = Resources.Load<Material>("People/Materials/Eyes05");
+            eyesRenderer.material = eyesMaterials[eyesMaterials.Length - 1];
             // Set new body material (dark)
             bodyRenderer.material = Resources.Load<Material>("People/Man/Materials/ManBodyBlack");
         }
         // Woman
-        if (gender.Equals("Woman"))
+        if (_gender.Equals("Woman"))
         {
             // Set new skin and eyes (dark)
             if (Random.Range(0, 2).Equals(1))
@@ -134,7 +157,7 @@ public class HumanBehavior : MonoBehaviour
                 SkinnedMeshRenderer bodyRenderer = transform.Find("WomanBody")
                     .GetComponent<SkinnedMeshRenderer>();
                 // Set new eyes material (dark)
-                eyesRenderer.material = Resources.Load<Material>("People/Materials/Eyes05");
+                eyesRenderer.material = eyesMaterials[eyesMaterials.Length - 1];
                 // Set new body material (dark)
                 bodyRenderer.material = Resources.Load<Material>("People/Woman/Materials/WomanBodyDusky");
             }
@@ -175,7 +198,7 @@ public class HumanBehavior : MonoBehaviour
         _targets = wayPointsList.ToArray();
         _agent = gameObject.GetComponent<NavMeshAgent>();
         _animator = gameObject.GetComponent<Animator>();
-        _isWalking = _isRotatingRight = _isRotatingLeft = _isAdmiring = _isTurning = false;
+        _isWalking = _isRotatingRight = _isRotatingLeft = _isAdmiring = _isTurning = _isWatching = false;
         _currentAction = ActionType.Idling;
         _currentTarget = 0;
         _currentTime = 0f;
@@ -191,7 +214,7 @@ public class HumanBehavior : MonoBehaviour
     private void WaitAWhile()
     {
         // Check waiting time
-        if (_currentTime >= WaitingTime)
+        if (_currentTime > WaitingTime)
         {
             // Reset current time
             _currentTime = 0f;
@@ -270,6 +293,14 @@ public class HumanBehavior : MonoBehaviour
             {
                 // Set admiring action
                 _currentAction = ActionType.Admiring;
+                // Break action
+                return;
+            }
+            // Check target type - window
+            if (_targets[_currentTarget].GetChild(0).name.Equals("Watch Point"))
+            {
+                // Set admiring action
+                _currentAction = ActionType.Watching;
                 // Break action
                 return;
             }
@@ -378,7 +409,7 @@ public class HumanBehavior : MonoBehaviour
     private void AdmireMonument()
     {
         // Check time
-        if (_currentTime > AdmiringTime)
+        if (_currentTime > ActionTime)
         {
             // Set animation
             _isAdmiring = false;
@@ -397,6 +428,31 @@ public class HumanBehavior : MonoBehaviour
         // Set animation
         _isAdmiring = true;
         _animator.SetBool(_animAdmiring, _isAdmiring);
+    }
+
+    // Stand front of window and start looking through
+    private void WatchThroughWindow()
+    {
+        // Check time
+        if (_currentTime > ActionTime)
+        {
+            // Set animation
+            _isWatching = false;
+            _animator.SetBool(_animWatching, _isWatching);
+            // Reset time
+            _currentTime = 0f;
+            // Change state
+            _currentAction = ActionType.Idling;
+            // Set new target
+            SetNextTarget();
+            // Break action
+            return;
+        }
+        // Increase time
+        _currentTime += Time.deltaTime;
+        // Set animation
+        _isWatching = true;
+        _animator.SetBool(_animWatching, _isWatching);
     }
 
     // Set new target after destination
@@ -439,6 +495,9 @@ public class HumanBehavior : MonoBehaviour
                 break;
             case ActionType.Admiring:
                 AdmireMonument();
+                break;
+            case ActionType.Watching:
+                WatchThroughWindow();
                 break;
         }
     }
