@@ -64,7 +64,7 @@ MonoBehaviour:
   Sun: {fileID: 10851780}
   Moon: {fileID: 4690009345123586904}
   SkyMaterial: {fileID: 2100000, guid: 7b621f3d20f81af4785f8576da7910e2, type: 2}
-  SecondsInAFullDay: 300
+  SecondsInAFullDay: 3600
   CurrentTime: 0
 --- !u!1 &190586
 GameObject:

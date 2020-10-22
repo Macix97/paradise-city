@@ -15,7 +15,7 @@ GameObject:
   m_Name: Edifice04_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
+  m_NavMeshLayer: 0
   m_StaticEditorFlags: 72
   m_IsActive: 1
 --- !u!4 &8677754473485474054
@@ -97,7 +97,7 @@ GameObject:
   m_Name: Edifice04_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
+  m_NavMeshLayer: 0
   m_StaticEditorFlags: 72
   m_IsActive: 1
 --- !u!4 &8710842770261307686
@@ -240,7 +240,7 @@ GameObject:
   m_Name: Edifice04_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
+  m_NavMeshLayer: 0
   m_StaticEditorFlags: 72
   m_IsActive: 1
 --- !u!4 &7088474569886752059

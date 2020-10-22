@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SpawnPoint
   - HumanType
+  - Region
   layers:
   - Default
   - TransparentFX
