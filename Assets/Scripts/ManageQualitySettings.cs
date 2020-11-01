@@ -13,7 +13,7 @@ public class ManageQualitySettings : MonoBehaviour
     // Terrain
     public Terrain Terrain;
     // Show or hide canvas button
-    public KeyCode ShowOrHideCanvas = KeyCode.CapsLock;
+    public KeyCode ShowOrHideCanvas;
     // Layer
     private PostProcessLayer _layer;
 

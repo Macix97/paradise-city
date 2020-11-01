@@ -33,8 +33,6 @@ public class HumanBehavior : MonoBehaviour
     public float RotationSpeed;
     [Range(-0.05f, -0.01f)]
     public float SittingOffset;
-    // Target area
-    private GameObject _area;
     // Targets (way points)
     private Transform[] _targets;
     // Agent offset
@@ -179,11 +177,9 @@ public class HumanBehavior : MonoBehaviour
                 Resources.Load<Material>("People/Woman/Materials/Woman0" + humanIndex + "Panty");
         }
         // Set proper human area
-        _area = transform.parent.gameObject;
-        // Change human parent
-        transform.SetParent(GameObject.Find("People").transform);
+        GameObject area = transform.parent.gameObject;
         // Get all area children
-        Transform[] areaPoints = _area.GetComponentsInChildren<Transform>();
+        Transform[] areaPoints = area.GetComponentsInChildren<Transform>();
         // Create temporary list
         List<Transform> wayPointsList = new List<Transform>();
         // Search way points
@@ -270,40 +266,40 @@ public class HumanBehavior : MonoBehaviour
     // Rotate character to target
     private void RotateToTarget()
     {
+        // Get child
+        Transform target = _targets[_currentTarget].GetChild(0);
         // Get look rotation
-        _lookRotation = Quaternion.LookRotation(_targets[_currentTarget].GetChild(0).position - transform.position);
+        _lookRotation = Quaternion.LookRotation(target.position - transform.position);
         // Check if rotatin is completed
         if (Quaternion.Angle(transform.rotation, _lookRotation) < AngleAccuracy)
         {
+            // Check target type - rotation
+            if (target.name.Equals("Rotation Point"))
+            {
+                // Change state
+                _currentAction = ActionType.Idling;
+                // Set new target
+                SetNextTarget();
+            }
+            // Check target type - bench
+            if (target.name.Equals("Sit Point"))
+                // Set turning action
+                _currentAction = ActionType.Turning;
+            // Check target type - monument
+            if (target.name.Equals("Admire Point"))
+                // Set admiring action
+                _currentAction = ActionType.Admiring;
+            // Check target type - window
+            if (target.name.Equals("Watch Point"))
+                // Set admiring action
+                _currentAction = ActionType.Watching;
             // Change values
             _isRotatingLeft = _isRotatingRight = false;
             // Set animation
             _animator.SetBool(_animRotateRight, _isRotatingRight);
             _animator.SetBool(_animRotateLeft, _isRotatingLeft);
-            // Check target type - bench
-            if (_targets[_currentTarget].GetChild(0).name.Equals("Sit Point"))
-            {
-                // Set turning action
-                _currentAction = ActionType.Turning;
-                // Break action
-                return;
-            }
-            // Check target type - monument
-            if (_targets[_currentTarget].GetChild(0).name.Equals("Admire Point"))
-            {
-                // Set admiring action
-                _currentAction = ActionType.Admiring;
-                // Break action
-                return;
-            }
-            // Check target type - window
-            if (_targets[_currentTarget].GetChild(0).name.Equals("Watch Point"))
-            {
-                // Set admiring action
-                _currentAction = ActionType.Watching;
-                // Break action
-                return;
-            }
+            // Break action
+            return;
         }
         // Check rotation direction
         _isRotatingRight = GetRotateDirection(transform.rotation, _lookRotation);

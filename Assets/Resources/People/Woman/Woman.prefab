@@ -824,7 +824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1b40c12e7484a44a192a1102a9ad6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AngleAccuracy: 5
+  AngleAccuracy: 7
   WaitingTime: 2
   ActionTime: 4
   RotationSpeed: 1.5
@@ -5158,10 +5158,6 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 97a5d18865a659c46b1418232ca2f56f, type: 2}
-  - {fileID: 2100000, guid: 97a5d18865a659c46b1418232ca2f56f, type: 2}
-  - {fileID: 2100000, guid: 97a5d18865a659c46b1418232ca2f56f, type: 2}
-  - {fileID: 2100000, guid: 97a5d18865a659c46b1418232ca2f56f, type: 2}
   - {fileID: 2100000, guid: 97a5d18865a659c46b1418232ca2f56f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
