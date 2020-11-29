@@ -67,6 +67,8 @@ public class HumanBehavior : MonoBehaviour
     private string _animAdmiring = "isAdmiring";
     // Animator watching value
     private string _animWatching = "isWatching";
+    // Animator idle trigger
+    private string _animIdle = "idle";
     // Current target index
     private int _currentTarget;
     // Current waiting time
@@ -209,9 +211,13 @@ public class HumanBehavior : MonoBehaviour
     // Wait a while in postion
     private void WaitAWhile()
     {
+        // Set trigger
+        _animator.SetTrigger(_animIdle);
         // Check waiting time
         if (_currentTime > WaitingTime)
         {
+            // Reset trigger
+            _animator.ResetTrigger(_animIdle);
             // Reset current time
             _currentTime = 0f;
             // Set walking action
