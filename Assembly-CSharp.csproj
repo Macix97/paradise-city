@@ -41,10 +41,12 @@
      <Compile Include="Assets\Scripts\CameraMovement.cs" />
      <Compile Include="Assets\Scripts\DayAndNightCycle.cs" />
      <Compile Include="Assets\Scripts\DrawPath.cs" />
+     <Compile Include="Assets\Scripts\GenerateObject.cs" />
      <Compile Include="Assets\Scripts\HumanBehavior.cs" />
      <Compile Include="Assets\Scripts\ManageLOD.cs" />
      <Compile Include="Assets\Scripts\ManageQualitySettings.cs" />
-     <Compile Include="Assets\Scripts\SpawnHuman.cs" />
+     <Compile Include="Assets\Scripts\ReplaceWithPrefab.cs" />
+     <Compile Include="Assets\Scripts\VehicleBehavior.cs" />
      <None Include="Assets\Resources\Shaders\Decal Road Trial.shader" />
      <None Include="Assets\Resources\Shaders\Decal Road Array.shader" />
      <None Include="Assets\Resources\Shaders\WindNoShiver.cginc" />

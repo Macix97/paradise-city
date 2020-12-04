@@ -2149,9 +2149,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.4
   m_Speed: 1.5
-  m_Acceleration: 25
+  m_Acceleration: 15
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 100
   m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -2173,9 +2173,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AngleAccuracy: 7
+  CheckingDistance: 1
   WaitingTime: 2
   ActionTime: 4
-  RotationSpeed: 2
+  RotationSpeed: 1.5
   SittingOffset: -0.02
 --- !u!205 &3617756429842567019
 LODGroup:

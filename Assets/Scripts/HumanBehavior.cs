@@ -2,26 +2,28 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-// List of actions
-public enum ActionType
-{
-    Idling,
-    Walking,
-    Rotating,
-    Turning,
-    Sitting,
-    Waiting,
-    Standing,
-    Admiring,
-    Watching
-};
-
 // Control character behavior
 public class HumanBehavior : MonoBehaviour
 {
+    // List of human actions
+    public enum HumanActionType
+    {
+        Idling,
+        Walking,
+        Rotating,
+        Turning,
+        Sitting,
+        Waiting,
+        Standing,
+        Admiring,
+        Watching
+    };
     // Angle accuracy
     [Range(5f, 10f)]
     public float AngleAccuracy;
+    // Checking distance during walking
+    [Range(1f, 3f)]
+    public float CheckingDistance;
     // Waiting time in way point
     [Range(1f, 3f)]
     public float WaitingTime;
@@ -33,8 +35,8 @@ public class HumanBehavior : MonoBehaviour
     public float RotationSpeed;
     [Range(-0.05f, -0.01f)]
     public float SittingOffset;
-    // Targets (way points)
-    private Transform[] _targets;
+    // Destinations (way points)
+    private Transform[] _destinations;
     // Agent offset
     private float _standardOffset;
     // Nav mesh agent
@@ -69,16 +71,18 @@ public class HumanBehavior : MonoBehaviour
     private string _animWatching = "isWatching";
     // Animator idle trigger
     private string _animIdle = "idle";
-    // Current target index
-    private int _currentTarget;
+    // Current destination index
+    private int _curDestination;
     // Current waiting time
-    private float _currentTime;
+    private float _curTime;
     // Translation time
     private float _translationTime;
     // Current action
-    private ActionType _currentAction;
+    private HumanActionType _curAction;
     // Human types
     private Transform[] _humanTypes;
+    // Nav mesh path
+    private NavMeshPath _path;
     // Gender
     private string _gender;
 
@@ -91,7 +95,7 @@ public class HumanBehavior : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        SwitchActions();
+        SwitchHumanActions();
     }
 
     // Initializate parameters
@@ -193,14 +197,15 @@ public class HumanBehavior : MonoBehaviour
                 wayPointsList.Add(areaPoint);
         }
         // Transform list
-        _targets = wayPointsList.ToArray();
+        _destinations = wayPointsList.ToArray();
         _agent = gameObject.GetComponent<NavMeshAgent>();
         _animator = gameObject.GetComponent<Animator>();
         _isWalking = _isRotatingRight = _isRotatingLeft = _isAdmiring = _isTurning = _isWatching = false;
-        _currentAction = ActionType.Idling;
-        _currentTarget = 0;
-        _currentTime = 0f;
+        _curAction = HumanActionType.Idling;
+        _curDestination = 0;
+        _curTime = 0f;
         _standardOffset = _agent.baseOffset;
+        _path = new NavMeshPath();
         _animator.SetBool(_animTurning, _isTurning);
         _animator.SetBool(_animAdmiring, _isAdmiring);
         _animator.SetBool(_animWalk, _isWalking);
@@ -214,91 +219,80 @@ public class HumanBehavior : MonoBehaviour
         // Set trigger
         _animator.SetTrigger(_animIdle);
         // Check waiting time
-        if (_currentTime > WaitingTime)
+        if (_curTime > WaitingTime)
         {
             // Reset trigger
             _animator.ResetTrigger(_animIdle);
             // Reset current time
-            _currentTime = 0f;
+            _curTime = 0f;
             // Set walking action
-            _currentAction = ActionType.Walking;
+            _curAction = HumanActionType.Walking;
             // Break action
             return;
         }
         // Increase time
-        _currentTime += Time.deltaTime;
+        _curTime += Time.deltaTime;
     }
 
-    // Go to selected target
-    private void GoToTarget()
+    // Go to selected destination
+    private void GoToDestination()
     {
-        // Set destination
-        _agent.SetDestination(_targets[_currentTarget].position);
-        // Destination is reached
-        if (!_agent.pathPending && _agent.remainingDistance < _agent.stoppingDistance)
-        {
-            // Check target type - bench or monument
-            if (_targets[_currentTarget].name.Equals("Look Point"))
-            {
-                // Set animation
-                _agent.isStopped = true;
-                _isWalking = false;
-                _animator.SetBool(_animWalk, _isWalking);
-                // Set rotating action
-                _currentAction = ActionType.Rotating;
-                // Break action
-                return;
-            }
-            // Set new way point
-            else
-            {
-                // Set animation
-                _isWalking = true;
-                _animator.SetBool(_animWalk, _isWalking);
-                // Set next target
-                SetNextTarget();
-            }
-        }
-        // Go to target
-        else
+        // Set new path
+        SetNewHumanPath(_curDestination);
+        // Destination is reached (It is not way point!)
+        if (_agent.remainingDistance <= _agent.stoppingDistance
+            && !_destinations[_curDestination].name.Equals("Way Point"))
         {
             // Set animation
-            _agent.isStopped = false;
-            _isWalking = true;
+            _agent.isStopped = true;
+            _isWalking = false;
             _animator.SetBool(_animWalk, _isWalking);
+            // Set rotating action
+            _curAction = HumanActionType.Rotating;
+            // Break action
+            return;
         }
+        // Go to next way point
+        if (_agent.remainingDistance < CheckingDistance
+            && _destinations[_curDestination].name.Equals("Way Point"))
+            // Set next human destination
+            SetNextHumanDestination();
+        // Set animation
+        _agent.isStopped = false;
+        _isWalking = true;
+        _animator.SetBool(_animWalk, _isWalking);
     }
 
-    // Rotate character to target
-    private void RotateToTarget()
+    // Rotate character to destination
+    private void RotateToDestination()
     {
         // Get child
-        Transform target = _targets[_currentTarget].GetChild(0);
+        Transform destination = _destinations[_curDestination].GetChild(0);
         // Get look rotation
-        _lookRotation = Quaternion.LookRotation(target.position - transform.position);
+        _lookRotation = Quaternion.LookRotation(destination.position - transform.position);
         // Check if rotatin is completed
         if (Quaternion.Angle(transform.rotation, _lookRotation) < AngleAccuracy)
         {
-            // Check target type - rotation
-            if (target.name.Equals("Rotation Point"))
+            // Check destination type - rotation
+            if (destination.name.Equals("Rotation Point"))
             {
                 // Change state
-                _currentAction = ActionType.Idling;
-                // Set new target
-                SetNextTarget();
+                _curAction = HumanActionType.Idling;
+                // Set new destination
+                SetNextHumanDestination();
             }
-            // Check target type - bench
-            if (target.name.Equals("Sit Point"))
+            // Check destination type - bench
+            if (destination.name.Equals("Sit Point"))
                 // Set turning action
-                _currentAction = ActionType.Turning;
-            // Check target type - monument
-            if (target.name.Equals("Admire Point"))
+                _curAction = HumanActionType.Turning;
+            // Check destination type - monument
+            if (destination.name.Equals("Admire Point"))
                 // Set admiring action
-                _currentAction = ActionType.Admiring;
-            // Check target type - window
-            if (target.name.Equals("Watch Point"))
+                _curAction = HumanActionType.Admiring;
+            // Check destination type - window
+            if (destination.name.Equals("Watch Point"))
                 // Set admiring action
-                _currentAction = ActionType.Watching;
+                _curAction = HumanActionType.Watching;
             // Change values
             _isRotatingLeft = _isRotatingRight = false;
             // Set animation
@@ -324,7 +318,7 @@ public class HumanBehavior : MonoBehaviour
     {
         // Character
         float fromY = from.eulerAngles.y;
-        // Target
+        // Destination
         float toY = to.eulerAngles.y;
         // Left rotation
         float clockWise = 0f;
@@ -365,7 +359,7 @@ public class HumanBehavior : MonoBehaviour
             // Reset translation time
             _translationTime = 0f;
             // Set waiting action
-            _currentAction = ActionType.Waiting;
+            _curAction = HumanActionType.Waiting;
             // Break action
             return;
         }
@@ -385,48 +379,48 @@ public class HumanBehavior : MonoBehaviour
     // Trigger standing action
     public void TriggerStanding()
     {
-        if (_currentAction.Equals(ActionType.Waiting))
-            _currentAction = ActionType.Standing;
+        if (_curAction.Equals(HumanActionType.Waiting))
+            _curAction = HumanActionType.Standing;
     }
 
     // Trigger sitting action
     public void TriggerSitting()
     {
-        if (_currentAction.Equals(ActionType.Turning))
-            _currentAction = ActionType.Sitting;
+        if (_curAction.Equals(HumanActionType.Turning))
+            _curAction = HumanActionType.Sitting;
     }
 
-    // Stand up from bench and set new target
-    private void StandUpAndSetTarget()
+    // Stand up from bench and set new destination
+    private void StandUpAndSetDestination()
     {
-        // Set next target
-        SetNextTarget();
+        // Set next human destination
+        SetNextHumanDestination();
         // Set standard offset
         _agent.baseOffset = _standardOffset;
         // Set idling action
-        _currentAction = ActionType.Idling;
+        _curAction = HumanActionType.Idling;
     }
 
     // Stand front of monument and start looking at it
     private void AdmireMonument()
     {
         // Check time
-        if (_currentTime > ActionTime)
+        if (_curTime > ActionTime)
         {
             // Set animation
             _isAdmiring = false;
             _animator.SetBool(_animAdmiring, _isAdmiring);
             // Reset time
-            _currentTime = 0f;
+            _curTime = 0f;
             // Change state
-            _currentAction = ActionType.Idling;
-            // Set new target
-            SetNextTarget();
+            _curAction = HumanActionType.Idling;
+            // Set new human destination
+            SetNextHumanDestination();
             // Break action
             return;
         }
         // Increase time
-        _currentTime += Time.deltaTime;
+        _curTime += Time.deltaTime;
         // Set animation
         _isAdmiring = true;
         _animator.SetBool(_animAdmiring, _isAdmiring);
@@ -436,69 +430,80 @@ public class HumanBehavior : MonoBehaviour
     private void WatchThroughWindow()
     {
         // Check time
-        if (_currentTime > ActionTime)
+        if (_curTime > ActionTime)
         {
             // Set animation
             _isWatching = false;
             _animator.SetBool(_animWatching, _isWatching);
             // Reset time
-            _currentTime = 0f;
+            _curTime = 0f;
             // Change state
-            _currentAction = ActionType.Idling;
-            // Set new target
-            SetNextTarget();
+            _curAction = HumanActionType.Idling;
+            // Set new human destination
+            SetNextHumanDestination();
             // Break action
             return;
         }
         // Increase time
-        _currentTime += Time.deltaTime;
+        _curTime += Time.deltaTime;
         // Set animation
         _isWatching = true;
         _animator.SetBool(_animWatching, _isWatching);
     }
 
-    // Set new target after destination
-    private void SetNextTarget()
+    // Set new destination for human
+    private void SetNextHumanDestination()
     {
-        // Check current target
-        if (_currentTarget.Equals(_targets.Length - 1))
+        // Check current destination
+        if (_curDestination.Equals(_destinations.Length - 1))
             // Reset path
-            _currentTarget = 0;
-        // Set another target
+            _curDestination = 0;
+        // Set another destination
         else
-            _currentTarget++;
+            _curDestination++;
+    }
+
+    /// <summary>
+    /// Calculates the next path for the human and sets proper destination.
+    /// </summary>
+    private void SetNewHumanPath(int destIndex)
+    {
+        // Calculate path
+        _agent.CalculatePath(_destinations[destIndex].position, _path);
+        // Assign new path
+        _agent.SetPath(_path);
     }
 
     // Switch human actions
-    private void SwitchActions()
+    private void SwitchHumanActions()
     {
-        switch (_currentAction)
+        switch (_curAction)
         {
-            case ActionType.Idling:
+            case HumanActionType.Idling:
                 WaitAWhile();
                 break;
-            case ActionType.Walking:
-                GoToTarget();
+            case HumanActionType.Walking:
+                GoToDestination();
                 break;
-            case ActionType.Rotating:
-                RotateToTarget();
+            case HumanActionType.Rotating:
+                RotateToDestination();
                 break;
-            case ActionType.Turning:
+            case HumanActionType.Turning:
                 TurnCharacter();
                 break;
-            case ActionType.Sitting:
+            case HumanActionType.Sitting:
                 SitOnBench();
                 break;
-            case ActionType.Waiting:
+            case HumanActionType.Waiting:
                 WaitOnBench();
                 break;
-            case ActionType.Standing:
-                StandUpAndSetTarget();
+            case HumanActionType.Standing:
+                StandUpAndSetDestination();
                 break;
-            case ActionType.Admiring:
+            case HumanActionType.Admiring:
                 AdmireMonument();
                 break;
-            case ActionType.Watching:
+            case HumanActionType.Watching:
                 WatchThroughWindow();
                 break;
         }

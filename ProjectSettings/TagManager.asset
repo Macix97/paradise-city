@@ -4,9 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - SpawnPoint
   - HumanType
   - Region
+  - HumanPoint
+  - VehiclePoint
+  - Zone
   layers:
   - Default
   - TransparentFX
