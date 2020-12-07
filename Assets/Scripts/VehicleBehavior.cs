@@ -127,6 +127,9 @@ public class VehicleBehavior : MonoBehaviour
         if (_agent.remainingDistance < CheckingDistance)
             // Set next vehicle destination
             SetNextVehicleDestinaton();
+        // Rotate vehicle
+        transform.eulerAngles = new Vector3(_destinations[_curDestination].eulerAngles.x,
+            transform.eulerAngles.y, transform.eulerAngles.z);
         // Move vehicle
         _agent.isStopped = false;
         _isMoving = true;

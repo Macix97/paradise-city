@@ -17,10 +17,11 @@ public class ManageQualitySettings : MonoBehaviour
     // Layer
     private PostProcessLayer _layer;
 
-    // Start is called before the first frame update
-    private void Start()
+    // Awake is called when the script instance is being loaded
+    private void Awake()
     {
         Init();
+        SetHighQuality();
     }
 
     // Update is called once per frame
@@ -32,6 +33,7 @@ public class ManageQualitySettings : MonoBehaviour
     // Initializate parameters
     private void Init()
     {
+        // Create quality settings
         Canvas.transform.Find("QualityPanel/HideShowText").GetComponent<Text>().text =
             "Press \"" + ShowOrHideCanvas + "\" to show or hide the menu";
         _layer = Camera.main.GetComponent<PostProcessLayer>();

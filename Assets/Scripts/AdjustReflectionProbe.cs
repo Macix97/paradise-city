@@ -15,10 +15,12 @@ public class AdjustReflectionProbe : MonoBehaviour
     private Texture _nightTex;
     private float _currentTime;
     private float _secondsInAFullDay;
-    // Temporary blended texture
-    private RenderTexture _tmpBlend;
-    // Blend factor
+    // Blending factor
     private float _blendFac;
+    // Counter
+    private int _cnt;
+    // Current quality level
+    private int _curLvl;
 
     // Start is called before the first frame update
     private void Start()
@@ -29,6 +31,7 @@ public class AdjustReflectionProbe : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        LoadProperTextures();
         AdjustReflection();
     }
 
@@ -39,20 +42,32 @@ public class AdjustReflectionProbe : MonoBehaviour
         _dayAndNightCycle = GameObject.Find("Day And Night Cycle").GetComponent<DayAndNightCycle>();
         // Get reflection probe
         _reflectionProbe = gameObject.GetComponent<ReflectionProbe>();
-        // Load twilight texture
-        _twilightTex = Resources.Load<Texture>("Light/Twilight/" + gameObject.name);
-        // Load day texture
-        _dayTex = Resources.Load<Texture>("Light/Day/" + gameObject.name);
-        // Load night texture
-        _nightTex = Resources.Load<Texture>("Light/Night/" + gameObject.name);
         // Set probe intensity
         _currentTime = _dayAndNightCycle.CurrentTime;
         _secondsInAFullDay = _dayAndNightCycle.SecondsInAFullDay;
-        // Prepare blend texture
-        _tmpBlend = new RenderTexture(_dayTex.width, _dayTex.height, 0);
-        _tmpBlend.dimension = UnityEngine.Rendering.TextureDimension.Cube;
-        _tmpBlend.useMipMap = true;
+        _curLvl = 0;
         _blendFac = 0f;
+        _cnt = 0;
+    }
+
+    public void LoadProperTextures()
+    {
+        // Get current settings
+        int level = QualitySettings.GetQualityLevel();
+        // Check current quality level
+        if (!_curLvl.Equals(level))
+        {
+            // Set current level
+            _curLvl = level;
+            // Get proper name
+            string curName = QualitySettings.names[level];
+            // Load twilight texture
+            _twilightTex = Resources.Load<Texture>("Light/" + curName + "/Twilight/" + gameObject.name);
+            // Load day texture
+            _dayTex = Resources.Load<Texture>("Light/" + curName + "/Day/" + gameObject.name);
+            // Load night texture
+            _nightTex = Resources.Load<Texture>("Light/" + curName + "/Night/" + gameObject.name);
+        }
     }
 
     // Control reflection probe
@@ -65,49 +80,51 @@ public class AdjustReflectionProbe : MonoBehaviour
             _reflectionProbe.customBakedTexture = _nightTex;
         // Night to twilight
         if (_currentTime > 0.2f && _currentTime <= 0.25f)
-        {
-            _blendFac += Time.deltaTime / _secondsInAFullDay * 20;
-            // Validate blend factor
-            if (_blendFac > 1f)
-                _blendFac = 1f;
-            ReflectionProbe.BlendCubemap(_nightTex, _twilightTex, _blendFac, _tmpBlend);
-            _reflectionProbe.customBakedTexture = _tmpBlend;
-        }
+            SetProperCubemap(_nightTex, _twilightTex, false);
         // Twilight to day
         if (_currentTime > 0.25f && _currentTime <= 0.3f)
-        {
-            _blendFac -= Time.deltaTime / _secondsInAFullDay * 20;
-            // Validate blend factor
-            if (_blendFac < 0f)
-                _blendFac = 0f;
-            ReflectionProbe.BlendCubemap(_dayTex, _twilightTex, _blendFac, _tmpBlend);
-            _reflectionProbe.customBakedTexture = _tmpBlend;
-        }
+            SetProperCubemap(_dayTex, _twilightTex, true);
         // Afternoon
         if (_currentTime > 0.3f && _currentTime <= 0.7f)
             _reflectionProbe.customBakedTexture = _dayTex;
         // Day to twilight
         if (_currentTime > 0.7f && _currentTime <= 0.75f)
+            SetProperCubemap(_dayTex, _twilightTex, false);
+        // Twilight to night
+        if (_currentTime > 0.75f && _currentTime <= 0.8f)
+            SetProperCubemap(_nightTex, _twilightTex, true);
+        // Evening
+        if (_currentTime > 0.8f)
+            _reflectionProbe.customBakedTexture = _nightTex;
+    }
+
+    private void SetProperCubemap(Texture texture1, Texture texture2, bool isReversed)
+    {
+        // Create render texture
+        RenderTexture tmpBlend = new RenderTexture(_dayTex.width, _dayTex.height, 0);
+        tmpBlend.dimension = UnityEngine.Rendering.TextureDimension.Cube;
+        tmpBlend.useMipMap = true;
+        // It is normal cubemap
+        if (!isReversed)
         {
+            // Increase blend factor
             _blendFac += Time.deltaTime / _secondsInAFullDay * 20;
             // Validate blend factor
             if (_blendFac > 1f)
                 _blendFac = 1f;
-            ReflectionProbe.BlendCubemap(_dayTex, _twilightTex, _blendFac, _tmpBlend);
-            _reflectionProbe.customBakedTexture = _tmpBlend;
         }
-        // Twilight to night
-        if (_currentTime > 0.75f && _currentTime <= 0.8f)
+        // It is reversed cubemap
+        else
         {
+            // Decrease blend factor
             _blendFac -= Time.deltaTime / _secondsInAFullDay * 20;
             // Validate blend factor
             if (_blendFac < 0f)
                 _blendFac = 0f;
-            ReflectionProbe.BlendCubemap(_nightTex, _twilightTex, _blendFac, _tmpBlend);
-            _reflectionProbe.customBakedTexture = _tmpBlend;
         }
-        // Evening
-        if (_currentTime > 0.8f)
-            _reflectionProbe.customBakedTexture = _nightTex;
+        // Generate texture
+        ReflectionProbe.BlendCubemap(texture1, texture2, _blendFac, tmpBlend);
+        // Set cubemap
+        _reflectionProbe.customBakedTexture = tmpBlend;
     }
 }
