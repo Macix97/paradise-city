@@ -9,6 +9,13 @@ TagManager:
   - HumanPoint
   - VehiclePoint
   - Zone
+  - Vehicle
+  - TrafficLights
+  - PedestrianLights
+  - Territory
+  - LightZone01
+  - LightZone02
+  - LightZone03
   layers:
   - Default
   - TransparentFX

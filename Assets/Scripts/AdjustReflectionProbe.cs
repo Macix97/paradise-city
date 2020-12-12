@@ -17,8 +17,6 @@ public class AdjustReflectionProbe : MonoBehaviour
     private float _secondsInAFullDay;
     // Blending factor
     private float _blendFac;
-    // Counter
-    private int _cnt;
     // Current quality level
     private int _curLvl;
 
@@ -47,7 +45,6 @@ public class AdjustReflectionProbe : MonoBehaviour
         _secondsInAFullDay = _dayAndNightCycle.SecondsInAFullDay;
         _curLvl = 0;
         _blendFac = 0f;
-        _cnt = 0;
     }
 
     public void LoadProperTextures()

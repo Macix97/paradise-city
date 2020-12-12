@@ -89,6 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2528279008391344405}
   - component: {fileID: 1767480859448838322}
+  - component: {fileID: 2571812841053828204}
   m_Layer: 0
   m_Name: Arrow Traffic Lights
   m_TagString: Untagged
@@ -135,11 +136,25 @@ LODGroup:
     - renderer: {fileID: 4250052937462615243}
     - renderer: {fileID: 3865980425547315685}
     - renderer: {fileID: 3046876133339619863}
-  - screenRelativeHeight: 0.00860203
+  - screenRelativeHeight: 0.009650828
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 3046876133339619863}
   m_Enabled: 1
+--- !u!114 &2571812841053828204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2908640296001498031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b8adfd6146727f42b1eddab0b4f3ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LongWaitingTime: 10
+  ShortWaitingTime: 1
 --- !u!1 &3326423794790961632
 GameObject:
   m_ObjectHideFlags: 0

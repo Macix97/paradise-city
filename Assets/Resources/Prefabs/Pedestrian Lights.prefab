@@ -89,6 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3905993998273701820}
   - component: {fileID: 7392962465276644844}
+  - component: {fileID: 1330815626377932345}
   m_Layer: 0
   m_Name: Pedestrian Lights
   m_TagString: Untagged
@@ -132,6 +133,19 @@ LODGroup:
     - renderer: {fileID: 8608996795568615618}
     - renderer: {fileID: 4288046221877519921}
   m_Enabled: 1
+--- !u!114 &1330815626377932345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4431313833723247878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84ae7e210326ed544b461178b260a3c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WaitingTime: 10
 --- !u!1 &5871325206135246291
 GameObject:
   m_ObjectHideFlags: 0

@@ -168,6 +168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2411878285610926181}
   - component: {fileID: 5022931531185206742}
+  - component: {fileID: 7505715573625059446}
   m_Layer: 0
   m_Name: Simple Traffic Lights
   m_TagString: Untagged
@@ -219,6 +220,20 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2893100322417120103}
   m_Enabled: 1
+--- !u!114 &7505715573625059446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3040886500723071711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b8adfd6146727f42b1eddab0b4f3ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LongWaitingTime: 10
+  ShortWaitingTime: 1
 --- !u!1 &5488383970588264434
 GameObject:
   m_ObjectHideFlags: 0

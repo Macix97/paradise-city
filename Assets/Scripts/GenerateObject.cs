@@ -55,6 +55,27 @@ public class GenerateObject : MonoBehaviour
         }
     }
 
+    public GameObject GenerateDriver(Transform parent, Transform manPoint, Transform womanPoint)
+    {
+        // Get some gender
+        string gender = DrawGender();
+        // Load prefab
+        GameObject humanPrefab = Resources.Load<GameObject>("People/" + gender + "/" + gender);
+        // Prepare game object
+        GameObject driver;
+        // Check gender
+        if (gender.Equals("Man"))
+            // Generate man
+            driver = GameObject.Instantiate<GameObject>(humanPrefab,
+                manPoint.position, manPoint.rotation, parent);
+        else
+            // Generate woman
+            driver = GameObject.Instantiate<GameObject>(humanPrefab,
+                womanPoint.position, womanPoint.rotation, parent);
+        // return driver
+        return driver;
+    }
+
     /// <summary>
     /// Generates some random vehicles in selected positions.
     /// </summary>
