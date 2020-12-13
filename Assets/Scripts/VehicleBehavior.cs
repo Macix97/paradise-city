@@ -184,6 +184,10 @@ public class VehicleBehavior : MonoBehaviour
         _frontPoint = transform.Find("Front");
     }
 
+    /// <summary>
+    /// Generates the driver in the specific position.
+    /// The final position is related to the gender of the person and the type of the car.
+    /// </summary>
     private void PrepareDriver()
     {
         // Find game controller and get proper script
@@ -214,7 +218,10 @@ public class VehicleBehavior : MonoBehaviour
         SwitchVehicleActions();
     }
 
-    // Set color of rear lights
+    /// <summary>
+    /// Sets proper color of the rear lights.
+    /// If the car stopped the lights are lighter, otherwise there are darker.
+    /// </summary>
     private void SetRearLights(Color color)
     {
         // Set emission
@@ -279,7 +286,8 @@ public class VehicleBehavior : MonoBehaviour
     }
 
     /// <summary>
-    /// Naivgates the specific vehicle to the destination.
+    /// Navigates the specific vehicle to the destination.
+    /// Checks the position of the car and makes proper decision.
     /// </summary>
     private void RideToDestination()
     {

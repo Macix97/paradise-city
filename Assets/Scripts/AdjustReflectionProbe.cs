@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
-// Modify reflection probe
+/// <summary>
+/// Modifies the state of the reflection probes.
+/// </summary>
 public class AdjustReflectionProbe : MonoBehaviour
 {
     // Day and night cycle
@@ -47,6 +49,10 @@ public class AdjustReflectionProbe : MonoBehaviour
         _blendFac = 0f;
     }
 
+    /// <summary>
+    /// Loads textures that will be used when changing game settings.
+    /// Low resolution textures will be used at low settings and vice versa.
+    /// </summary>
     public void LoadProperTextures()
     {
         // Get current settings
@@ -67,7 +73,9 @@ public class AdjustReflectionProbe : MonoBehaviour
         }
     }
 
-    // Control reflection probe
+    /// <summary>
+    /// Sets the proper texture of the reflection probes during the day.
+    /// </summary>
     private void AdjustReflection()
     {
         _currentTime = _dayAndNightCycle.CurrentTime;
@@ -95,6 +103,10 @@ public class AdjustReflectionProbe : MonoBehaviour
             _reflectionProbe.customBakedTexture = _nightTex;
     }
 
+    /// <summary>
+    /// Creates temporary blended cubemap that will be use during
+    /// changing the period of the day.
+    /// </summary>
     private void SetProperCubemap(Texture texture1, Texture texture2, bool isReversed)
     {
         // Create render texture

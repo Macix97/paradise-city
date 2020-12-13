@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Controls the state of the selected traffic lights.
+/// </summary>
 public class AdjustPedestrianLights : MonoBehaviour
 {
     // List of light actions
@@ -85,6 +88,9 @@ public class AdjustPedestrianLights : MonoBehaviour
         SwitchPedestrianLights();
     }
 
+    /// <summary>
+    /// Sets the proper color of the pedestrian lights.
+    /// </summary>
     private void SetPedestrianLights(Texture texture, Color color)
     {
         // Set texture
@@ -95,6 +101,9 @@ public class AdjustPedestrianLights : MonoBehaviour
         _light.SetPropertyBlock(_matBlock);
     }
 
+    /// <summary>
+    /// Switches the behavior of pedestrian lights based on the current state.
+    /// </summary>
     private void SwitchPedestrianLights()
     {
         switch (_curState)
@@ -111,6 +120,9 @@ public class AdjustPedestrianLights : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Establishes the beginning state of the pedestrian lights.
+    /// </summary>
     private void StartPedestrianLight()
     {
         // Set proper colors of lights
@@ -129,6 +141,10 @@ public class AdjustPedestrianLights : MonoBehaviour
         _curTime += Time.deltaTime;
     }
 
+    /// <summary>
+    /// Sets walking texture for the pedestrian lights and
+    /// changing their colors.
+    /// </summary>
     private void SetWalking()
     {
         // Set proper color of light
@@ -147,6 +163,10 @@ public class AdjustPedestrianLights : MonoBehaviour
         _curTime += Time.deltaTime;
     }
 
+    /// <summary>
+    /// Sets stopping texture for the pedestrian lights and
+    /// changing their colors.
+    /// </summary>
     private void SetStopping()
     {
         // Set proper color of light

@@ -55,6 +55,32 @@ public class GenerateObject : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Generates some random vehicles in selected positions.
+    /// </summary>
+    private void GenerateVehicles()
+    {
+        // Search vehicle points
+        foreach (GameObject vehiclePoint in _vehiclePoints)
+        {
+            // Get some vehicle
+            int num = DrawVehicle();
+            // Load prefab
+            GameObject vehiclePrefab = Resources.Load<GameObject>("Vehicles/Prefabs/Car0" + num);
+            // Generate vehicle
+            GameObject vehicle = GameObject.Instantiate<GameObject>(vehiclePrefab,
+                vehiclePoint.transform.position, vehiclePoint.transform.rotation,
+                vehiclePoint.transform.parent);
+        }
+    }
+
+    /// <summary>
+    /// Generates some driver in the car when the simulation is starting.
+    /// The gender of the character is random.
+    /// </summary>
+    /// <returns>
+    /// The object that represents the driver.
+    /// </returns>
     public GameObject GenerateDriver(Transform parent, Transform manPoint, Transform womanPoint)
     {
         // Get some gender
@@ -74,25 +100,6 @@ public class GenerateObject : MonoBehaviour
                 womanPoint.position, womanPoint.rotation, parent);
         // return driver
         return driver;
-    }
-
-    /// <summary>
-    /// Generates some random vehicles in selected positions.
-    /// </summary>
-    private void GenerateVehicles()
-    {
-        // Search vehicle points
-        foreach (GameObject vehiclePoint in _vehiclePoints)
-        {
-            // Get some vehicle
-            int num = DrawVehicle();
-            // Load prefab
-            GameObject vehiclePrefab = Resources.Load<GameObject>("Vehicles/Prefabs/Car0" + num);
-            // Generate vehicle
-            GameObject vehicle = GameObject.Instantiate<GameObject>(vehiclePrefab,
-                vehiclePoint.transform.position, vehiclePoint.transform.rotation,
-                vehiclePoint.transform.parent);
-        }
     }
 
     /// <summary>

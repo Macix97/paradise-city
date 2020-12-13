@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
-// Draw lines between points
+/// <summary>
+/// Draws the paths that facilitate to recognize the routes of the characters and the cars.
+/// </summary>
 public class DrawPath : MonoBehaviour
 {
     private void OnDrawGizmos()

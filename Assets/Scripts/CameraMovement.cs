@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-// Controla Camera
+/// <summary>
+/// Controls the behavior of the camera.
+/// Allows to rotate the camera, move in different directions and change the movement speed.
+/// </summary>
 public class CameraMovement : MonoBehaviour
 {
     // Control buttons
@@ -29,7 +32,9 @@ public class CameraMovement : MonoBehaviour
         ControlCamera();
     }
 
-    // Control camera movement
+    /// <summary>
+    /// Describes the detailed behavior of the camera. 
+    /// </summary>
     private void ControlCamera()
     {
         // Rotate camera

@@ -2,7 +2,10 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-// Control character behavior
+/// <summary>
+/// Controls the behavior of the proper character.
+/// Enables walking, turning and making decisions.
+/// </summary>
 public class HumanBehavior : MonoBehaviour
 {
     // List of human actions
@@ -213,7 +216,10 @@ public class HumanBehavior : MonoBehaviour
         _animator.SetBool(_animRotateLeft, _isRotatingLeft);
     }
 
-    // Wait a while in postion
+    /// <summary>
+    /// Stops the character in specific position.
+    /// Sets proper animations and counts some time.
+    /// </summary>
     private void WaitAWhile()
     {
         // Set trigger
@@ -234,7 +240,10 @@ public class HumanBehavior : MonoBehaviour
         _curTime += Time.deltaTime;
     }
 
-    // Go to selected destination
+    /// <summary>
+    /// Sets the proper destination of the character.
+    /// Checks current destination and makes decisions.
+    /// </summary>
     private void GoToDestination()
     {
         // Set new path
@@ -263,7 +272,10 @@ public class HumanBehavior : MonoBehaviour
         _animator.SetBool(_animWalk, _isWalking);
     }
 
-    // Rotate character to destination
+    /// <summary>
+    /// Rotates person to specific object.
+    /// When it is done, another decision will be make.
+    /// </summary>
     private void RotateToDestination()
     {
         // Get child
@@ -310,10 +322,14 @@ public class HumanBehavior : MonoBehaviour
         // Rotate only y axis
         _lookRotation.x = _lookRotation.z = 0f;
         // Rotate smoothly
-        transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * RotationSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation,
+            Time.deltaTime * RotationSpeed);
     }
 
-    // Check if character is rotating right or left
+    /// <summary>
+    /// Calculates the position of the character and then rotates the person.
+    /// It is needed to obtain the proper method for the rotation.
+    /// </summary>
     private bool GetRotateDirection(Quaternion from, Quaternion to)
     {
         // Character
@@ -339,7 +355,9 @@ public class HumanBehavior : MonoBehaviour
         return (clockWise <= counterClockWise);
     }
 
-    // Turn character in opposite direction
+    /// <summary>
+    /// Turns the character to proper position when the person tries to sit on the bench.
+    /// </summary>
     private void TurnCharacter()
     {
         // Set animation
@@ -347,7 +365,9 @@ public class HumanBehavior : MonoBehaviour
         _animator.SetBool(_animTurning, _isTurning);
     }
 
-    // Sit on selected bench
+    /// <summary>
+    /// Corrects the character position when the person is starting sitting.
+    /// </summary>
     private void SitOnBench()
     {
         // Set that character is sitting
@@ -370,27 +390,36 @@ public class HumanBehavior : MonoBehaviour
         transform.Translate(new Vector3(0f, 0f, Time.deltaTime / 2.5f), Space.Self);
     }
 
-    // Wait on bench
+    /// <summary>
+    /// Counts some time when the character is sitting on the bench.
+    /// The Animation event switches the next state.
+    /// </summary>
     private void WaitOnBench()
     {
         // Do nothing
     }
 
-    // Trigger standing action
+    /// <summary>
+    /// Triggers the next animation when the character is getting up.
+    /// </summary>
     public void TriggerStanding()
     {
         if (_curAction.Equals(HumanActionType.Waiting))
             _curAction = HumanActionType.Standing;
     }
 
-    // Trigger sitting action
+    /// <summary>
+    /// Triggers the next animation when the character is sitting down.
+    /// </summary>
     public void TriggerSitting()
     {
         if (_curAction.Equals(HumanActionType.Turning))
             _curAction = HumanActionType.Sitting;
     }
 
-    // Stand up from bench and set new destination
+    /// <summary>
+    /// Calculates the next destination of the character when the person standing up.
+    /// </summary>
     private void StandUpAndSetDestination()
     {
         // Set next human destination
@@ -401,7 +430,9 @@ public class HumanBehavior : MonoBehaviour
         _curAction = HumanActionType.Idling;
     }
 
-    // Stand front of monument and start looking at it
+    /// <summary>
+    /// Establishes the behavior of the character when the person is admiring the monument.
+    /// </summary>
     private void AdmireMonument()
     {
         // Check time
@@ -426,7 +457,9 @@ public class HumanBehavior : MonoBehaviour
         _animator.SetBool(_animAdmiring, _isAdmiring);
     }
 
-    // Stand front of window and start looking through
+    /// <summary>
+    /// Establishes the behavior of the character when the person is watching through the window.
+    /// </summary>
     private void WatchThroughWindow()
     {
         // Check time
@@ -451,7 +484,9 @@ public class HumanBehavior : MonoBehaviour
         _animator.SetBool(_animWatching, _isWatching);
     }
 
-    // Set new destination for human
+    /// <summary>
+    /// Sets the new destination of the character or resets the route.
+    /// </summary>
     private void SetNextHumanDestination()
     {
         // Check current destination
@@ -474,7 +509,9 @@ public class HumanBehavior : MonoBehaviour
         _agent.SetPath(_path);
     }
 
-    // Switch human actions
+    /// <summary>
+    /// Switches character behaviors based on the current state.
+    /// </summary>
     private void SwitchHumanActions()
     {
         switch (_curAction)
