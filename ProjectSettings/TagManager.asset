@@ -16,6 +16,10 @@ TagManager:
   - LightZone01
   - LightZone02
   - LightZone03
+  - LightZone04
+  - LightZone05
+  - LightZone06
+  - LightZone07
   layers:
   - Default
   - TransparentFX

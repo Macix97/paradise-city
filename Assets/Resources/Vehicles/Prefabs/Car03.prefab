@@ -712,6 +712,7 @@ GameObject:
   - component: {fileID: 6313623785273843730}
   - component: {fileID: 3808973327638966371}
   - component: {fileID: 5609862689227673464}
+  - component: {fileID: 7073093788005855326}
   m_Layer: 0
   m_Name: Car03
   m_TagString: Vehicle
@@ -748,7 +749,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 6689446117270370984}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.2
+  m_Radius: 1
   m_Speed: 10
   m_Acceleration: 40
   avoidancePriority: 50
@@ -757,7 +758,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1.5
   m_BaseOffset: 0
   m_WalkableMask: 119
   m_ObstacleAvoidanceType: 4
@@ -773,9 +774,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8df9f9994f137c44be533e7893dbe39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CheckingDistance: 2
+  CheckingDistance: 2.5
   WaitingTime: 0.5
   StoppingDistance: 3
+--- !u!205 &7073093788005855326
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6689446117270370984}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0.71868813, z: 0.009065151}
+  m_Size: 4.6297035
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.054433428
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 4578828112834030379}
+    - renderer: {fileID: 4556316157102551497}
+    - renderer: {fileID: 2473445384238588549}
+    - renderer: {fileID: 5531656331727369707}
+    - renderer: {fileID: 8338418525714444511}
+    - renderer: {fileID: 5872478149279190345}
+    - renderer: {fileID: 5866272178208719799}
+    - renderer: {fileID: 5203974173377865176}
+    - renderer: {fileID: 4401542631939429886}
+    - renderer: {fileID: 4132774801574325887}
+    - renderer: {fileID: 1488765412489600861}
+  m_Enabled: 1
 --- !u!1 &7164401318995146658
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,6 +1045,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 913157732534b30469ece47e30090c89, type: 3}
+--- !u!23 &2473445384238588549 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1007227620302168338, guid: 913157732534b30469ece47e30090c89,
+    type: 3}
+  m_PrefabInstance: {fileID: 3434299658527851415}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3609738062285838826 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2139571508774525565, guid: 913157732534b30469ece47e30090c89,
@@ -1090,6 +1126,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 913157732534b30469ece47e30090c89, type: 3}
+--- !u!23 &4578828112834030379 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1007227620302168338, guid: 913157732534b30469ece47e30090c89,
+    type: 3}
+  m_PrefabInstance: {fileID: 3634730112418171449}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3440872384927928388 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2139571508774525565, guid: 913157732534b30469ece47e30090c89,
@@ -1165,6 +1207,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 913157732534b30469ece47e30090c89, type: 3}
+--- !u!23 &4556316157102551497 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1007227620302168338, guid: 913157732534b30469ece47e30090c89,
+    type: 3}
+  m_PrefabInstance: {fileID: 3657254162488021211}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3418343971551152806 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2139571508774525565, guid: 913157732534b30469ece47e30090c89,
@@ -1240,6 +1288,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 913157732534b30469ece47e30090c89, type: 3}
+--- !u!23 &5531656331727369707 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1007227620302168338, guid: 913157732534b30469ece47e30090c89,
+    type: 3}
+  m_PrefabInstance: {fileID: 4701195125784892665}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6669629822948970116 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2139571508774525565, guid: 913157732534b30469ece47e30090c89,

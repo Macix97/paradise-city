@@ -19,13 +19,13 @@ public class VehicleBehavior : MonoBehaviour
         Riding,
     };
     // Checking distance during riding
-    [Range(2f, 6f)]
+    [Range(2f, 3f)]
     public float CheckingDistance;
     // Waiting time in way point
     [Range(0.25f, 1.5f)]
     public float WaitingTime;
     // Stoping distance during riding
-    [Range(2f, 4f)]
+    [Range(2f, 3f)]
     public float StoppingDistance;
     // Destinations (way points)
     private Transform[] _destinations;
