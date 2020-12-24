@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Controls the state of the selected traffic lights.
-/// </summary>
+// Control state of traffic lights
 public class AdjustPedestrianLights : MonoBehaviour
 {
     // List of light actions
@@ -88,9 +86,7 @@ public class AdjustPedestrianLights : MonoBehaviour
         SwitchPedestrianLights();
     }
 
-    /// <summary>
-    /// Sets the proper color of the pedestrian lights.
-    /// </summary>
+    // Set proper color of pedestrian lights
     private void SetPedestrianLights(Texture texture, Color color)
     {
         // Set texture
@@ -101,9 +97,7 @@ public class AdjustPedestrianLights : MonoBehaviour
         _light.SetPropertyBlock(_matBlock);
     }
 
-    /// <summary>
-    /// Switches the behavior of pedestrian lights based on the current state.
-    /// </summary>
+    // Switch behavior of pedestrian lights
     private void SwitchPedestrianLights()
     {
         switch (_curState)
@@ -120,9 +114,7 @@ public class AdjustPedestrianLights : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Establishes the beginning state of the pedestrian lights.
-    /// </summary>
+    // Establish beginning state of pedestrian lights
     private void StartPedestrianLight()
     {
         // Set proper colors of lights
@@ -141,10 +133,7 @@ public class AdjustPedestrianLights : MonoBehaviour
         _curTime += Time.deltaTime;
     }
 
-    /// <summary>
-    /// Sets walking texture for the pedestrian lights and
-    /// changing their colors.
-    /// </summary>
+    // Set walking texture for pedestrian lights
     private void SetWalking()
     {
         // Set proper color of light
@@ -163,10 +152,7 @@ public class AdjustPedestrianLights : MonoBehaviour
         _curTime += Time.deltaTime;
     }
 
-    /// <summary>
-    /// Sets stopping texture for the pedestrian lights and
-    /// changing their colors.
-    /// </summary>
+    // Set stopping texture for pedestrian lights
     private void SetStopping()
     {
         // Set proper color of light

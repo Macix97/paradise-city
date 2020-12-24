@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Draws the paths that facilitate to recognize the routes of the characters and the cars.
-/// </summary>
+// Draw auxiliary paths
 public class DrawPath : MonoBehaviour
 {
     private void OnDrawGizmos()

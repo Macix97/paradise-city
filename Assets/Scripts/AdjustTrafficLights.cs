@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Controls the state of the selected traffic lights.
-/// </summary>
+// Control state of selected traffic lights
 public class AdjustTrafficLights : MonoBehaviour
 {
     // List of traffic lights actions
@@ -104,9 +102,7 @@ public class AdjustTrafficLights : MonoBehaviour
         SwitchTrafficLights();
     }
 
-    /// <summary>
-    /// Sets the proper color of the traffic lights.
-    /// </summary>
+    // Set proper color of traffic lights
     private void SetTrafficLights(ref Renderer renderer, Color color)
     {
         // Set emission
@@ -115,9 +111,7 @@ public class AdjustTrafficLights : MonoBehaviour
         renderer.SetPropertyBlock(_matBlock);
     }
 
-    /// <summary>
-    /// Switches the behavior of traffic lights based on the current state.
-    /// </summary>
+    // Switch behavior of traffic lights
     private void SwitchTrafficLights()
     {
         switch (_curState)
@@ -140,9 +134,7 @@ public class AdjustTrafficLights : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Establishes the beginning state of the traffic lights.
-    /// </summary>
+    // Establish beginning state of traffic lights
     private void StartTrafficLight()
     {
         // Set proper colors of lights
@@ -163,10 +155,7 @@ public class AdjustTrafficLights : MonoBehaviour
         _curTime += Time.deltaTime;
     }
 
-    /// <summary>
-    /// Sets the yellow color of the traffic lights.
-    /// The action starts when the red light is turned off.
-    /// </summary>
+    // Set yellow color of traffic lights (first time)
     private void LightYellowFirst()
     {
         // Set proper colors of lights
@@ -187,10 +176,7 @@ public class AdjustTrafficLights : MonoBehaviour
         _curTime += Time.deltaTime;
     }
 
-    /// <summary>
-    /// Sets the green color of the traffic lights.
-    /// The action starts when the yellow light is turned off.
-    /// </summary>
+    // Set green color of traffic light
     private void LightGreen()
     {
         // Set proper colors of lights
@@ -215,10 +201,7 @@ public class AdjustTrafficLights : MonoBehaviour
         _curTime += Time.deltaTime;
     }
 
-    /// <summary>
-    /// Sets the yellow color of the traffic lights.
-    /// The action starts when the green light is turned off.
-    /// </summary>
+    // Set yellow color of traffic lights (second time)
     private void LightYellowSecond()
     {
         // Set proper colors of lights
@@ -239,11 +222,7 @@ public class AdjustTrafficLights : MonoBehaviour
         _curTime += Time.deltaTime;
     }
 
-    /// <summary>
-    /// Sets the red color of the traffic lights.
-    /// The action starts when the yellow light is turned off.
-    /// This stage begins the next cycle.
-    /// </summary>
+    // Set red color of traffic lights
     private void LightRed()
     {
         // Set proper colors of lights

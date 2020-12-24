@@ -2,9 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-/// <summary>
-/// Controls the behavior of a selected vehicle during the simulation.
-/// </summary>
+// Control behavior of vehicle during simulation
 public class VehicleBehavior : MonoBehaviour
 {
     public struct TrafficPoint
@@ -25,7 +23,7 @@ public class VehicleBehavior : MonoBehaviour
     [Range(0.25f, 1.5f)]
     public float WaitingTime;
     // Stoping distance during riding
-    [Range(2f, 3f)]
+    [Range(2.5f, 3.5f)]
     public float StoppingDistance;
     // Destinations (way points)
     private Transform[] _destinations;
@@ -104,6 +102,29 @@ public class VehicleBehavior : MonoBehaviour
                 // Set animation
                 animator.SetBool("isLeft", true);
         }
+        // Check if vehicle is static
+        if (transform.parent.name.Contains("Parking"))
+        {
+            // Find headlights
+            Renderer headlights = transform.Find("Car/Headlights").GetComponent<Renderer>();
+            // Disable emission
+            _matBlock.SetColor("_EmissionColor", Color.black);
+            // Apply changes
+            headlights.SetPropertyBlock(_matBlock);
+            // Disable rear lights
+            _rearLights.SetPropertyBlock(_matBlock);
+            // Find lights
+            Light[] lights = GetComponentsInChildren<Light>();
+            // Search lights
+            foreach (Light light in lights)
+                // Disable light
+                light.enabled = false;
+            // Destroy additional components
+            Destroy(GetComponent<NavMeshAgent>());
+            Destroy(GetComponent<VehicleBehavior>());
+            // Break action
+            return;
+        }
         // Set proper vehicle area
         GameObject area = transform.parent.gameObject;
         // Get all area children
@@ -159,10 +180,7 @@ public class VehicleBehavior : MonoBehaviour
         _curTime = 0f;
     }
 
-    /// <summary>
-    /// Searches the vehicle befor the start of the symulation.
-    /// It allows to obtain the information about the front and the back of the specific vehicle.
-    /// </summary>
+    // Search vehicle befor start of symulation
     private void PrepareVehicles()
     {
         // Get all vehicles
@@ -184,10 +202,7 @@ public class VehicleBehavior : MonoBehaviour
         _frontPoint = transform.Find("Front");
     }
 
-    /// <summary>
-    /// Generates the driver in the specific position.
-    /// The final position is related to the gender of the person and the type of the car.
-    /// </summary>
+    // Generate driver in specific position
     private void PrepareDriver()
     {
         // Find game controller and get proper script
@@ -218,10 +233,7 @@ public class VehicleBehavior : MonoBehaviour
         SwitchVehicleActions();
     }
 
-    /// <summary>
-    /// Sets proper color of the rear lights.
-    /// If the car stopped the lights are lighter, otherwise there are darker.
-    /// </summary>
+    // Set proper color of rear lights
     private void SetRearLights(Color color)
     {
         // Set emission
@@ -230,10 +242,7 @@ public class VehicleBehavior : MonoBehaviour
         _rearLights.SetPropertyBlock(_matBlock);
     }
 
-    /// <summary>
-    /// Stops the vehicle in the specific position.
-    /// The stopped car stays in the position some time.
-    /// </summary>
+    // Stop vehicle in specific position
     private void StopVehicleAndWait()
     {
         // Set rear lights color
@@ -285,10 +294,7 @@ public class VehicleBehavior : MonoBehaviour
         SetVehicleAnimation();
     }
 
-    /// <summary>
-    /// Navigates the specific vehicle to the destination.
-    /// Checks the position of the car and makes proper decision.
-    /// </summary>
+    // Navigate specific vehicle to destination
     private void RideToDestination()
     {
         // Check vehicles distance
@@ -339,10 +345,7 @@ public class VehicleBehavior : MonoBehaviour
         SetVehicleAnimation();
     }
 
-    /// <summary>
-    /// Sets the proper destination for the vehicle.
-    /// If the route is over then is resetting.
-    /// </summary>
+    // Set proper destination for vehicle
     private void SetNextVehicleDestinaton()
     {
         // Check current destination
@@ -354,9 +357,7 @@ public class VehicleBehavior : MonoBehaviour
             _curDestination++;
     }
 
-    /// <summary>
-    /// Calculates the next path for the vehicle and sets the proper destination.
-    /// </summary>
+    // Calculate next path for vehicle and set proper destination
     private void SetNewVehiclePath(int destIndex)
     {
         // Calculate path
@@ -365,10 +366,7 @@ public class VehicleBehavior : MonoBehaviour
         _agent.SetPath(_path);
     }
 
-    /// <summary>
-    /// Sets the proper animation for the vehicle.
-    /// If the car stays in position then the wheels does not rotate.
-    /// </summary>
+    // Set proper animation for vehicle
     private void SetVehicleAnimation()
     {
         // Search animators
@@ -377,11 +375,7 @@ public class VehicleBehavior : MonoBehaviour
             animator.SetBool("isMoving", _isMoving);
     }
 
-    /// <summary>
-    /// Checks distance between the vehicles in the same zone.
-    /// If some car is near then the car stops.
-    /// The actions include the cars that are behind some vehicle at time.
-    /// </summary>
+    // Check distance between vehicles in same zone
     private bool IsVehicleNear()
     {
         // Search vehicles
@@ -398,10 +392,7 @@ public class VehicleBehavior : MonoBehaviour
         return false;
     }
 
-    /// <summary>
-    /// Switches the actions of the vehicle.
-    /// Based on the current action, it determines the state of the vehicle.
-    /// </summary>
+    // Switch actions of vehicle
     private void SwitchVehicleActions()
     {
         switch (_curAction)

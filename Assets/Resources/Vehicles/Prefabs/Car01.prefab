@@ -645,7 +645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CheckingDistance: 2.5
   WaitingTime: 0.5
-  StoppingDistance: 3
+  StoppingDistance: 3.5
 --- !u!205 &7374308051605725093
 LODGroup:
   m_ObjectHideFlags: 0

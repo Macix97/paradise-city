@@ -1,14 +1,8 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Generates objects in specific positions after starting the program.
-/// </summary>
+// Generate objects in specific positions after starting program
 public class GenerateObject : MonoBehaviour
 {
-    // Human points
-    private GameObject[] _humanPoints;
-    // Vehicle points
-    private GameObject[] _vehiclePoints;
     // Number of vehicles
     private int _vehiclesNum;
 
@@ -16,34 +10,21 @@ public class GenerateObject : MonoBehaviour
     private void Start()
     {
         Init();
-        GeneratePeople();
-        GenerateVehicles();
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        // TODO: Manipulate human types in run-time
     }
 
     // Initializate parameters
     private void Init()
     {
-        // Get human points
-        _humanPoints = GameObject.FindGameObjectsWithTag("HumanPoint");
-        // Get vehicle points
-        _vehiclePoints = GameObject.FindGameObjectsWithTag("VehiclePoint");
         // Get number of vehicles
         _vehiclesNum = Resources.LoadAll<GameObject>("Vehicles/Prefabs").Length;
-    }
-
-    /// <summary>
-    /// Generates some random people in selected positions.
-    /// </summary>
-    private void GeneratePeople()
-    {
+        // Get human points
+        GameObject[] humanPoints = GameObject.FindGameObjectsWithTag("HumanPoint");
+        // Get vehicle points
+        GameObject[] vehiclePoints = GameObject.FindGameObjectsWithTag("VehiclePoint");
+        // Get static vehicle points
+        GameObject[] staticVehiclePoints = GameObject.FindGameObjectsWithTag("StaticVehiclePoint");
         // Search human points
-        foreach (GameObject humanPoint in _humanPoints)
+        foreach (GameObject humanPoint in humanPoints)
         {
             // Get some gender
             string gender = DrawGender();
@@ -53,15 +34,8 @@ public class GenerateObject : MonoBehaviour
             GameObject human = GameObject.Instantiate<GameObject>(humanPrefab,
                 humanPoint.transform.position, Quaternion.identity, humanPoint.transform.parent);
         }
-    }
-
-    /// <summary>
-    /// Generates some random vehicles in selected positions.
-    /// </summary>
-    private void GenerateVehicles()
-    {
         // Search vehicle points
-        foreach (GameObject vehiclePoint in _vehiclePoints)
+        foreach (GameObject vehiclePoint in vehiclePoints)
         {
             // Get some vehicle
             int num = DrawVehicle();
@@ -72,15 +46,21 @@ public class GenerateObject : MonoBehaviour
                 vehiclePoint.transform.position, vehiclePoint.transform.rotation,
                 vehiclePoint.transform.parent);
         }
+        // Search static vehicle points
+        foreach (GameObject staticVehiclePoint in staticVehiclePoints)
+        {
+            // Get some vehicle
+            int num = DrawVehicle();
+            // Load prefab
+            GameObject vehiclePrefab = Resources.Load<GameObject>("Vehicles/Prefabs/Car0" + num);
+            // Generate vehicle
+            GameObject vehicle = GameObject.Instantiate<GameObject>(vehiclePrefab,
+                staticVehiclePoint.transform.position, staticVehiclePoint.transform.rotation,
+                staticVehiclePoint.transform.parent);
+        }
     }
 
-    /// <summary>
-    /// Generates some driver in the car when the simulation is starting.
-    /// The gender of the character is random.
-    /// </summary>
-    /// <returns>
-    /// The object that represents the driver.
-    /// </returns>
+    // Generate some driver in car
     public GameObject GenerateDriver(Transform parent, Transform manPoint, Transform womanPoint)
     {
         // Get some gender
@@ -102,9 +82,7 @@ public class GenerateObject : MonoBehaviour
         return driver;
     }
 
-    /// <summary>
-    /// Draws some gender (man or woman).
-    /// </summary>
+    // Draw some gender (man or woman)
     private string DrawGender()
     {
         // Draw number
@@ -116,9 +94,7 @@ public class GenerateObject : MonoBehaviour
         return "Woman";
     }
 
-    /// <summary>
-    /// Draws some vehicle (car).
-    /// </summary>
+    // Draw some vehicle (car)
     private int DrawVehicle()
     {
         // Draw number

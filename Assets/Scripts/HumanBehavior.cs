@@ -2,10 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-/// <summary>
-/// Controls the behavior of the proper character.
-/// Enables walking, turning and making decisions.
-/// </summary>
+// Control behavior of character
 public class HumanBehavior : MonoBehaviour
 {
     // List of human actions
@@ -216,10 +213,7 @@ public class HumanBehavior : MonoBehaviour
         _animator.SetBool(_animRotateLeft, _isRotatingLeft);
     }
 
-    /// <summary>
-    /// Stops the character in specific position.
-    /// Sets proper animations and counts some time.
-    /// </summary>
+    // Stop character in specific position
     private void WaitAWhile()
     {
         // Set trigger
@@ -240,10 +234,7 @@ public class HumanBehavior : MonoBehaviour
         _curTime += Time.deltaTime;
     }
 
-    /// <summary>
-    /// Sets the proper destination of the character.
-    /// Checks current destination and makes decisions.
-    /// </summary>
+    // Set proper destination for character
     private void GoToDestination()
     {
         // Set new path
@@ -272,10 +263,7 @@ public class HumanBehavior : MonoBehaviour
         _animator.SetBool(_animWalk, _isWalking);
     }
 
-    /// <summary>
-    /// Rotates person to specific object.
-    /// When it is done, another decision will be make.
-    /// </summary>
+    // Rotate person to specific object
     private void RotateToDestination()
     {
         // Get child
@@ -326,10 +314,7 @@ public class HumanBehavior : MonoBehaviour
             Time.deltaTime * RotationSpeed);
     }
 
-    /// <summary>
-    /// Calculates the position of the character and then rotates the person.
-    /// It is needed to obtain the proper method for the rotation.
-    /// </summary>
+    // Calculate position of character and then rotate person
     private bool GetRotateDirection(Quaternion from, Quaternion to)
     {
         // Character
@@ -355,9 +340,7 @@ public class HumanBehavior : MonoBehaviour
         return (clockWise <= counterClockWise);
     }
 
-    /// <summary>
-    /// Turns the character to proper position when the person tries to sit on the bench.
-    /// </summary>
+    // Turn character to proper position when person is sitting
     private void TurnCharacter()
     {
         // Set animation
@@ -365,9 +348,7 @@ public class HumanBehavior : MonoBehaviour
         _animator.SetBool(_animTurning, _isTurning);
     }
 
-    /// <summary>
-    /// Corrects the character position when the person is starting sitting.
-    /// </summary>
+    // Correct character position when person is standing
     private void SitOnBench()
     {
         // Set that character is sitting
@@ -390,36 +371,27 @@ public class HumanBehavior : MonoBehaviour
         transform.Translate(new Vector3(0f, 0f, Time.deltaTime / 2.5f), Space.Self);
     }
 
-    /// <summary>
-    /// Counts some time when the character is sitting on the bench.
-    /// The Animation event switches the next state.
-    /// </summary>
+    // Count some time when character is sitting
     private void WaitOnBench()
     {
         // Do nothing
     }
 
-    /// <summary>
-    /// Triggers the next animation when the character is getting up.
-    /// </summary>
+    // Trigger next animation when character is getting up
     public void TriggerStanding()
     {
         if (_curAction.Equals(HumanActionType.Waiting))
             _curAction = HumanActionType.Standing;
     }
 
-    /// <summary>
-    /// Triggers the next animation when the character is sitting down.
-    /// </summary>
+    // Trigger next animation when character is sitting down
     public void TriggerSitting()
     {
         if (_curAction.Equals(HumanActionType.Turning))
             _curAction = HumanActionType.Sitting;
     }
 
-    /// <summary>
-    /// Calculates the next destination of the character when the person standing up.
-    /// </summary>
+    // Calculate next destination when person is standing up
     private void StandUpAndSetDestination()
     {
         // Set next human destination
@@ -430,9 +402,7 @@ public class HumanBehavior : MonoBehaviour
         _curAction = HumanActionType.Idling;
     }
 
-    /// <summary>
-    /// Establishes the behavior of the character when the person is admiring the monument.
-    /// </summary>
+    // Establish behavior when person is admiring monument
     private void AdmireMonument()
     {
         // Check time
@@ -457,9 +427,7 @@ public class HumanBehavior : MonoBehaviour
         _animator.SetBool(_animAdmiring, _isAdmiring);
     }
 
-    /// <summary>
-    /// Establishes the behavior of the character when the person is watching through the window.
-    /// </summary>
+    // Establish behavior when person is watching through window
     private void WatchThroughWindow()
     {
         // Check time
@@ -484,9 +452,7 @@ public class HumanBehavior : MonoBehaviour
         _animator.SetBool(_animWatching, _isWatching);
     }
 
-    /// <summary>
-    /// Sets the new destination of the character or resets the route.
-    /// </summary>
+    // Set new destination or reset route
     private void SetNextHumanDestination()
     {
         // Check current destination
@@ -498,9 +464,7 @@ public class HumanBehavior : MonoBehaviour
             _curDestination++;
     }
 
-    /// <summary>
-    /// Calculates the next path for the human and sets proper destination.
-    /// </summary>
+    // Calculate next path for human and set proper destination
     private void SetNewHumanPath(int destIndex)
     {
         // Calculate path
@@ -509,9 +473,7 @@ public class HumanBehavior : MonoBehaviour
         _agent.SetPath(_path);
     }
 
-    /// <summary>
-    /// Switches character behaviors based on the current state.
-    /// </summary>
+    // Switch character behavior
     private void SwitchHumanActions()
     {
         switch (_curAction)

@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Controls the light of the streetlights.
-/// </summary>
+// Control light of streetlights
 public class AdjustStreetLight : MonoBehaviour
 {
     // Light intensity
@@ -64,9 +62,7 @@ public class AdjustStreetLight : MonoBehaviour
         _lightRenderer.SetPropertyBlock(_matBlock);
     }
 
-    /// <summary>
-    /// Changes the intensity of the lights and controls their color.
-    /// </summary>
+    // Change intensity of lights and control their color
     private void AdjustLight()
     {
         _currentTime = _dayAndNightCycle.CurrentTime;

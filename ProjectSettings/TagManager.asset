@@ -20,6 +20,7 @@ TagManager:
   - LightZone05
   - LightZone06
   - LightZone07
+  - StaticVehiclePoint
   layers:
   - Default
   - TransparentFX
