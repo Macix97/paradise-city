@@ -4,21 +4,20 @@
 public class CameraMovement : MonoBehaviour
 {
     // Control buttons
-    public KeyCode MoveForward = KeyCode.W;
-    public KeyCode MoveBack = KeyCode.S;
-    public KeyCode MoveLeft = KeyCode.A;
-    public KeyCode MoveRight = KeyCode.D;
-    public KeyCode Climb = KeyCode.Q;
-    public KeyCode Drop = KeyCode.E;
-    public KeyCode MoveFaster = KeyCode.LeftShift;
-    public KeyCode MoveSlower = KeyCode.LeftControl;
-    public KeyCode LockCursor = KeyCode.Tab;
+    internal KeyCode MoveForward;
+    internal KeyCode MoveBack;
+    internal KeyCode MoveLeft;
+    internal KeyCode MoveRight;
+    internal KeyCode Climb;
+    internal KeyCode Drop;
+    internal KeyCode MoveFaster;
+    internal KeyCode MoveSlower;
     // Factors
-    public float CameraSensitivity = 90f;
-    public float ClimbSpeed = 4f;
-    public float NormalMoveSpeed = 10f;
-    public float SlowMoveFactor = 0.25f;
-    public float FastMoveFactor = 3f;
+    private float CameraSensitivity = 90f;
+    private float ClimbSpeed = 4f;
+    private float NormalMoveSpeed = 10f;
+    private float SlowMoveFactor = 0.25f;
+    private float FastMoveFactor = 3f;
     // Rotation
     private float _rotationX = 0f;
     private float _rotationY = 0f;
@@ -80,13 +79,5 @@ public class CameraMovement : MonoBehaviour
         // Drop
         if (Input.GetKey(Drop))
             transform.position -= transform.up * ClimbSpeed * Time.deltaTime;
-        // Lock cursor
-        if (Input.GetKeyDown(LockCursor))
-        {
-            if (Cursor.lockState == CursorLockMode.None)
-                Cursor.lockState = CursorLockMode.Locked;
-            else
-                Cursor.lockState = CursorLockMode.None;
-        }
     }
 }

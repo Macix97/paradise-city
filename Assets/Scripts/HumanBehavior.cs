@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -33,8 +34,15 @@ public class HumanBehavior : MonoBehaviour
     // Rotation speed
     [Range(1f, 5f)]
     public float RotationSpeed;
+    // Setting offset
     [Range(-0.05f, -0.01f)]
     public float SittingOffset;
+    // Offset between collisions of agents
+    [Range(0.1f, 0.5f)]
+    public float CollisionOffset;
+    // Gap between another speaking sentences
+    [Range(1f, 2f)]
+    public float SpeakingGap;
     // Destinations (way points)
     private Transform[] _destinations;
     // Agent offset
@@ -71,6 +79,8 @@ public class HumanBehavior : MonoBehaviour
     private string _animWatching = "isWatching";
     // Animator idle trigger
     private string _animIdle = "idle";
+    // Animator reset trigger
+    private string _animReset = "reset";
     // Current destination index
     private int _curDestination;
     // Current waiting time
@@ -81,10 +91,20 @@ public class HumanBehavior : MonoBehaviour
     private HumanActionType _curAction;
     // Human types
     private Transform[] _humanTypes;
+    // Navigation of people
+    private Transform[] _navPoints;
+    // Navigation point of this person
+    private Transform _thisNavPoint;
     // Nav mesh path
     private NavMeshPath _path;
     // Gender
     private string _gender;
+    // Audio source
+    private AudioSource _audioSrc;
+    // Excuse me clip
+    private AudioClip _excuseMe;
+    // Check if "excuse me" is playing
+    private bool _isExcuseMe;
 
     // Awake is called when the script instance is being loaded
     private void Awake()
@@ -92,10 +112,17 @@ public class HumanBehavior : MonoBehaviour
         Init();
     }
 
+    // Start is called before the first frame update
+    private void Start()
+    {
+        PreparePeople();
+    }
+
     // Update is called once per frame
     private void Update()
     {
         SwitchHumanActions();
+        PlayExcuseMe();
     }
 
     // Initializate parameters
@@ -105,6 +132,10 @@ public class HumanBehavior : MonoBehaviour
         Material[] eyesMaterials = Resources.LoadAll<Material>("People/Materials/Eyes");
         // Get person gender
         _gender = name = name.Replace("(Clone)", "");
+        // Get audio source
+        _audioSrc = GetComponent<AudioSource>();
+        // Get proper clip
+        _excuseMe = Resources.Load<AudioClip>("Sounds/" + _gender + "ExcuseMe");
         // Get all objects in human
         Transform[] humanTransforms = transform.GetComponentsInChildren<Transform>();
         // Create temporary list
@@ -200,7 +231,8 @@ public class HumanBehavior : MonoBehaviour
         _destinations = wayPointsList.ToArray();
         _agent = gameObject.GetComponent<NavMeshAgent>();
         _animator = gameObject.GetComponent<Animator>();
-        _isWalking = _isRotatingRight = _isRotatingLeft = _isAdmiring = _isTurning = _isWatching = false;
+        _isWalking = _isRotatingRight = _isRotatingLeft = _isAdmiring = _isTurning =
+            _isWatching = _isExcuseMe = false;
         _curAction = HumanActionType.Idling;
         _curDestination = 0;
         _curTime = 0f;
@@ -213,9 +245,31 @@ public class HumanBehavior : MonoBehaviour
         _animator.SetBool(_animRotateLeft, _isRotatingLeft);
     }
 
+    // Search people befor start of simulation
+    private void PreparePeople()
+    {
+        // Get all people
+        GameObject[] people = GameObject.FindGameObjectsWithTag("Human");
+        // Create temporary list of navigation points
+        List<Transform> navPoints = new List<Transform>();
+        // Search people
+        foreach (GameObject person in people)
+            // Check person (compare parent of parent (regions))
+            if (person.transform.parent.parent.name.Equals(transform.parent.parent.name)
+                && !person.transform.parent.name.Equals(transform.parent.name))
+                // Add navigation point to list
+                navPoints.Add(person.transform.Find("Navigation"));
+        // Transform list
+        _navPoints = navPoints.ToArray();
+        // Set navigation point of this person
+        _thisNavPoint = transform.Find("Navigation");
+    }
+
     // Stop character in specific position
     private void WaitAWhile()
     {
+        // Reset auxiliary trigger
+        _animator.ResetTrigger(_animReset);
         // Set trigger
         _animator.SetTrigger(_animIdle);
         // Check waiting time
@@ -368,6 +422,7 @@ public class HumanBehavior : MonoBehaviour
         _agent.baseOffset = SittingOffset;
         // Increase translation time
         _translationTime += Time.deltaTime;
+        // Correct translation
         transform.Translate(new Vector3(0f, 0f, Time.deltaTime / 2.5f), Space.Self);
     }
 
@@ -471,6 +526,70 @@ public class HumanBehavior : MonoBehaviour
         _agent.CalculatePath(_destinations[destIndex].position, _path);
         // Assign new path
         _agent.SetPath(_path);
+    }
+
+    // Reset state and position of person
+    public void ResetPerson()
+    {
+        // Pause audio
+        _audioSrc.Pause();
+        // Set standard offset
+        _standardOffset = _agent.baseOffset;
+        // Disable agent
+        _agent.enabled = false;
+        // Disable other animations
+        _isWalking = _isRotatingRight = _isRotatingLeft = _isAdmiring = _isTurning =
+            _isWatching = _isExcuseMe = false;
+        _animator.SetBool(_animTurning, _isTurning);
+        _animator.SetBool(_animAdmiring, _isAdmiring);
+        _animator.SetBool(_animWalk, _isWalking);
+        _animator.SetBool(_animRotateRight, _isRotatingRight);
+        _animator.SetBool(_animRotateLeft, _isRotatingLeft);
+        // Reset time
+        _curTime = 0f;
+        // Reset animations
+        _animator.SetTrigger(_animReset);
+        // Reset person state
+        _curAction = HumanActionType.Idling;
+        // Set new destination
+        _curDestination = 0;
+        // Get start point
+        Transform humanPoint = transform.parent.GetChild(0);
+        // Change person position
+        transform.position = humanPoint.position;
+        // Change person rotation
+        transform.rotation = humanPoint.rotation;
+        // Enable agent
+        _agent.enabled = true;
+    }
+
+    // Play "excuse me" sound when people collide
+    private void PlayExcuseMe()
+    {
+        // Search people
+        foreach (Transform navPoint in _navPoints)
+        {
+            // Distance is correct or person is speaking
+            if (Vector3.Distance(navPoint.position, _thisNavPoint.position)
+                > _agent.radius * 2f + CollisionOffset || _isExcuseMe)
+                // Check another person
+                continue;
+            // Distance is too close (Play "excuse me")
+            _audioSrc.PlayOneShot(_excuseMe);
+            // Set that sound is playing
+            _isExcuseMe = true;
+            // Wait some time
+            StartCoroutine(WaitForExcuseMe());
+        }
+    }
+
+    // Wait for another "excuse me"
+    private IEnumerator WaitForExcuseMe()
+    {
+        // Wait some time with some gap
+        yield return new WaitForSeconds(_excuseMe.length + SpeakingGap);
+        // Set that sound is not playing
+        _isExcuseMe = false;
     }
 
     // Switch character behavior

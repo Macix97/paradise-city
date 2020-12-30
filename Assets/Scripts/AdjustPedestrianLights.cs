@@ -34,12 +34,20 @@ public class AdjustPedestrianLights : MonoBehaviour
     private float _cycleTime;
     // Waiting time
     private float _waitingTime;
+    // Audio source
+    private AudioSource _audioSrc;
+    // Check if sound is playing
+    private bool _isPlaying;
 
     // Start is called before the first frame update
     private void Start()
     {
         // Get all renderers
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        // Get audio source
+        _audioSrc = GetComponent<AudioSource>();
+        // Set proper clip
+        _audioSrc.clip = Resources.Load<AudioClip>("Sounds/PedestrianLights");
         // Search renderers
         foreach (Renderer renderer in renderers)
         {
@@ -76,6 +84,7 @@ public class AdjustPedestrianLights : MonoBehaviour
         // Set cycle time
         _cycleTime = _waitingTime * (groupSize - 1);
         _curTime = 0f;
+        _isPlaying = false;
         // Set starting state
         _curState = PedestrianActionType.StartingLighting;
     }
@@ -138,11 +147,23 @@ public class AdjustPedestrianLights : MonoBehaviour
     {
         // Set proper color of light
         SetPedestrianLights(_walkTexture, _green);
+        // Check if sound is playing
+        if (!_isPlaying)
+        {
+            // Play proper sound
+            _audioSrc.Play();
+            // Set that sound is playing
+            _isPlaying = true;
+        }
         // Check waiting time
         if (_curTime > _waitingTime)
         {
             // Reset current time
             _curTime = 0f;
+            // Stop playing sound
+            _audioSrc.Stop();
+            // Set that sound is not playing
+            _isPlaying = false;
             // Set next state
             _curState = PedestrianActionType.LightingStop;
             // Break action

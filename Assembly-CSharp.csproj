@@ -38,16 +38,16 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\AdjustPedestrianLights.cs" />
      <Compile Include="Assets\Scripts\AdjustReflectionProbe.cs" />
-     <Compile Include="Assets\Scripts\AdjustStreetLight.cs" />
+     <Compile Include="Assets\Scripts\AdjustStreetLights.cs" />
      <Compile Include="Assets\Scripts\AdjustTrafficLights.cs" />
      <Compile Include="Assets\Scripts\CameraMovement.cs" />
      <Compile Include="Assets\Scripts\DayAndNightCycle.cs" />
      <Compile Include="Assets\Scripts\DrawPath.cs" />
+     <Compile Include="Assets\Scripts\GameSettingsManager.cs" />
      <Compile Include="Assets\Scripts\GenerateObject.cs" />
      <Compile Include="Assets\Scripts\HumanBehavior.cs" />
-     <Compile Include="Assets\Scripts\LODManager.cs" />
-     <Compile Include="Assets\Scripts\QualitySettingsManager.cs" />
-     <Compile Include="Assets\Scripts\ReplaceWithPrefab.cs" />
+     <Compile Include="Assets\Scripts\MenuSettingsManager.cs" />
+     <Compile Include="Assets\Scripts\SettingsDatabase.cs" />
      <Compile Include="Assets\Scripts\VehicleBehavior.cs" />
      <None Include="Assets\Resources\Shaders\Decal Road Trial.shader" />
      <None Include="Assets\Resources\Shaders\Decal Road Array.shader" />

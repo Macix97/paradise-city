@@ -21,6 +21,9 @@ TagManager:
   - LightZone06
   - LightZone07
   - StaticVehiclePoint
+  - Human
+  - StaticVehicle
+  - PedestrianSound
   layers:
   - Default
   - TransparentFX

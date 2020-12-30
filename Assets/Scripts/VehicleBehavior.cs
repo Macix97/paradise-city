@@ -23,8 +23,12 @@ public class VehicleBehavior : MonoBehaviour
     [Range(0.25f, 1.5f)]
     public float WaitingTime;
     // Stoping distance during riding
-    [Range(2.5f, 3.5f)]
+    [Range(5f, 6f)]
     public float StoppingDistance;
+    // Current destination index
+    private int _curDestination;
+    // Current action
+    private VehicleActionType _curAction;
     // Destinations (way points)
     private Transform[] _destinations;
     // Nav mesh agent
@@ -33,10 +37,6 @@ public class VehicleBehavior : MonoBehaviour
     private Animator[] _animators;
     // Check if vehicle is moving
     private bool _isMoving;
-    // Current destination index
-    private int _curDestination;
-    // Current action
-    private VehicleActionType _curAction;
     // Current waiting time
     private float _curTime;
     // Angular speed
@@ -57,6 +57,14 @@ public class VehicleBehavior : MonoBehaviour
     private Renderer _rearLights;
     // Material property block
     private MaterialPropertyBlock _matBlock;
+    // Audio source
+    private AudioSource _audioSrc;
+    // Car drive clip
+    private AudioClip _carDriveClip;
+    // Car idle clip
+    private AudioClip _carIdleClip;
+    // Car horn clip
+    private AudioClip _carHornClip;
 
     // Awake is called when the script instance is being loaded
     private void Awake()
@@ -119,9 +127,12 @@ public class VehicleBehavior : MonoBehaviour
             foreach (Light light in lights)
                 // Disable light
                 light.enabled = false;
+            // Change vehicle tag
+            gameObject.tag = "StaticVehicle";
             // Destroy additional components
             Destroy(GetComponent<NavMeshAgent>());
             Destroy(GetComponent<VehicleBehavior>());
+            Destroy(GetComponent<AudioSource>());
             // Break action
             return;
         }
@@ -169,6 +180,15 @@ public class VehicleBehavior : MonoBehaviour
                 trafficPointsList.Add(trafficPoint);
             }
         }
+        // Get audio source
+        _audioSrc = GetComponent<AudioSource>();
+        // Load clips
+        _carDriveClip = Resources.Load<AudioClip>("Sounds/CarDrive");
+        _carIdleClip = Resources.Load<AudioClip>("Sounds/CarIdle");
+        _carHornClip = Resources.Load<AudioClip>("Sounds/CarHorn");
+        // Play idle clip
+        _audioSrc.clip = _carIdleClip;
+        _audioSrc.Play();
         // Transform lists
         _destinations = wayPointsList.ToArray();
         _trafficPoints = trafficPointsList.ToArray();
@@ -180,7 +200,7 @@ public class VehicleBehavior : MonoBehaviour
         _curTime = 0f;
     }
 
-    // Search vehicle befor start of symulation
+    // Search vehicle befor start of simulation
     private void PrepareVehicles()
     {
         // Get all vehicles
@@ -189,13 +209,11 @@ public class VehicleBehavior : MonoBehaviour
         List<Transform> backPoints = new List<Transform>();
         // Search vehicles
         foreach (GameObject vehicle in vehicles)
-        {
             // Check vehicle (compare parent of parent (zones))
             if (vehicle.transform.parent.parent.name.Equals(transform.parent.parent.name)
                 && !vehicle.transform.parent.name.Equals(transform.parent.name))
                 // Add navigation point to list
                 backPoints.Add(vehicle.transform.Find("Back"));
-        }
         // Transform list
         _backPoints = backPoints.ToArray();
         // Set front point of this vehicle
@@ -285,6 +303,8 @@ public class VehicleBehavior : MonoBehaviour
             SetNextVehicleDestinaton();
             // Set angular speed
             _agent.angularSpeed = _angularSpeed;
+            // Play drive clip
+            PlayProperClip(_carDriveClip);
             // Break action
             return;
         }
@@ -302,6 +322,10 @@ public class VehicleBehavior : MonoBehaviour
         {
             // Stop vehicle
             _curAction = VehicleActionType.Stopping;
+            // Play idle clip
+            PlayProperClip(_carIdleClip);
+            // Play horn clip
+            _audioSrc.PlayOneShot(_carHornClip);
             // Break action
             return;
         }
@@ -328,6 +352,8 @@ public class VehicleBehavior : MonoBehaviour
                         break;
                     // Stop vehicle (traffic lights are red)
                     _curAction = VehicleActionType.Stopping;
+                    // Play idle clip
+                    PlayProperClip(_carIdleClip);
                     // Break action
                     return;
                 }
@@ -381,15 +407,53 @@ public class VehicleBehavior : MonoBehaviour
         // Search vehicles
         foreach (Transform backPoint in _backPoints)
         {
+            // Vehicle is deactivated
+            if (!backPoint.parent.gameObject.activeSelf)
+                // Check next vehicle
+                continue;
             // Calculate distance between front point and back points
             float dist = Vector3.Distance(_frontPoint.position, backPoint.position);
-            // Check distance
+            // Check distance for active vehicles
             if (dist <= StoppingDistance)
                 // Some vehicle is near
                 return true;
         }
         // Vehicles are far
         return false;
+    }
+
+    // Reset state and position of vehicle
+    public void ResetVehicle()
+    {
+        // Pause audio
+        _audioSrc.Pause();
+        // Disable agent
+        _agent.enabled = false;
+        // Reset vehicle state
+        _curAction = VehicleActionType.Stopping;
+        // Reset time
+        _curTime = 0f;
+        // Set new destination
+        _curDestination = 0;
+        // Get start point
+        Transform vehiclePoint = transform.parent.GetChild(0);
+        // Change vehicle position
+        transform.position = vehiclePoint.position;
+        // Change vehicle rotation
+        transform.rotation = vehiclePoint.rotation;
+        // Enable agent
+        _agent.enabled = true;
+    }
+
+    // Set and play proper audio clip
+    private void PlayProperClip(AudioClip clip)
+    {
+        // Stop clip
+        _audioSrc.Stop();
+        // Set clip
+        _audioSrc.clip = clip;
+        // Play clip
+        _audioSrc.Play();
     }
 
     // Switch actions of vehicle
