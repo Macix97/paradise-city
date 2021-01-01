@@ -1,0 +1,8 @@
+# Ignore Artifacts folder
+Library/Artifacts*
+
+# Ignore PlayerDataCache folder
+Library/PlayerDataCache*
+
+# Ignore ShaderCache folder
+Library/ShaderCache*

@@ -1,0 +1,79 @@
+Below is a list of materials used in the program that are covered by the Creative Commons Attribution license:
+Creative Commons Attribution 3.0: https://creativecommons.org/licenses/by/3.0/
+Creative Commons Attribution 4.0: https://creativecommons.org/licenses/by/4.0/
+
+The game also contains characters and animations from mixamo:
+Mixamo: https://www.mixamo.com/
+
+Some resources were obtained by Unity Asset Store:
+https://assetstore.unity.com/
+
+Fonts provides 1001 Fonts:
+1001 Fonts: https://www.1001fonts.com/
+
+1. chill tune for a game
+Author: Xythe
+Link: https://freesound.org/people/Xythe/sounds/516912/
+Changes: No changes
+
+2. Burp with "Excuse Me"
+Author: tpatishnock
+Link: https://freesound.org/people/tpatishnock/sounds/328635/
+Changes: Used fragment of file
+
+3. F Dress 01
+Author: Mindfront
+Link: MakeHuman Community Asset
+Changes: No changes
+
+4. F Dress 02
+Author: Mindfront
+Link: MakeHuman Community Asset
+Changes: No changes
+
+5. F Dress 09
+Author: Mindfront
+Link: MakeHuman Community Asset
+Changes: No changes
+
+6. F Dress 11
+Author: Mindfront
+Link: MakeHuman Community Asset
+Changes: No changes
+
+7. Chunky Chain~Heart Necklace
+Author: Elvaerwyn
+Link: MakeHuman Community Asset
+Changes: No changes
+
+8. Hairstyle Long (alpha 7 adaptation)
+Author: punkduck
+Link: MakeHuman Community Asset
+Changes: No changes
+
+9. Elvs Multi Bangle Bracelet1
+Author: Elvaerwyn
+Link: MakeHuman Community Asset
+Changes: No changes
+
+10. Elvs Bracelet Pearls-L1
+Author: Elvaerwyn
+Link: MakeHuman Community Asset
+Changes: No changes
+
+11. Shoes Monk Strap male
+Author: Mindfront
+Link: MakeHuman Community Asset
+Changes: No changes
+
+12. Elvs Bangle Bracelet1
+Author: Elvaerwyn
+Link: MakeHuman Community Asset
+Changes: No changes
+
+13. Elvs Twisty Hoops1
+Author: Elvaerwyn
+Link: MakeHuman Community Asset
+Changes: No changes
+
+The author of the project would like to thank you for the provided materials.

@@ -22,8 +22,11 @@ TagManager:
   - LightZone07
   - StaticVehiclePoint
   - Human
-  - StaticVehicle
   - PedestrianSound
+  - LeftWheel
+  - RightWheel
+  - StaticVehicle
+  - Driver
   layers:
   - Default
   - TransparentFX

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,6 +39,8 @@ public class GameSettingsManager : MonoBehaviour
 
     //--- Images ---//
 
+    // Background image
+    private Image _backgroundImage;
     // Menu panel
     private Image _menuPanel;
     // Settings panel
@@ -184,6 +187,7 @@ public class GameSettingsManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        ChangeCursorVisible();
         SwitchGameMenu();
         GetNewKey();
     }
@@ -195,6 +199,7 @@ public class GameSettingsManager : MonoBehaviour
         Volume = GameObject.Find("Post Process Volume").GetComponent<PostProcessVolume>();
         Layer = Camera.main.GetComponent<PostProcessLayer>();
         // Images
+        _backgroundImage = GameObject.Find("BackgroundImage").GetComponent<Image>();
         _menuPanel = GameObject.Find("MenuPanel").GetComponent<Image>();
         _settingsPanel = GameObject.Find("SettingsPanel").GetComponent<Image>();
         _controlPanel = GameObject.Find("ControlPanel").GetComponent<Image>();
@@ -254,6 +259,7 @@ public class GameSettingsManager : MonoBehaviour
         // Day and night cycle
         DayAndNightCycle = GameObject.Find("Day And Night Cycle").GetComponent<DayAndNightCycle>();
         // Hide selected panels
+        _backgroundImage.gameObject.SetActive(false);
         _settingsPanel.gameObject.SetActive(false);
         _menuPanel.gameObject.SetActive(false);
         _warningPanel.gameObject.SetActive(false);
@@ -375,6 +381,18 @@ public class GameSettingsManager : MonoBehaviour
         audioSourcesList.Add(_clickSrc);
         // Convert list to array
         _allAudioSources = audioSourcesList.ToArray();
+    }
+
+    // Show or hide mouse cursor
+    private void ChangeCursorVisible()
+    {
+        // It is game
+        if (_curGameState.Equals(GameState.Game))
+            // Hide cursor
+            Cursor.visible = false;
+        // It is part of menu
+        else
+            Cursor.visible = true;
     }
 
     // Switch panels in game menu
@@ -512,8 +530,8 @@ public class GameSettingsManager : MonoBehaviour
         if (isValid01 && isValid02 && isValid03 && isValid04 && isValid05
             && isValid06 && isValid07 && isValid08)
         {
-            // Set new label for button in control menu
-            text.text = newKeyCode.ToString();
+            // Set proper label
+            text.text = KeyCodeToString(newKeyCode);
             // Set new key
             oldKeyCode = newKeyCode;
             // Hide key message
@@ -522,6 +540,31 @@ public class GameSettingsManager : MonoBehaviour
         // Some key is wrong
         else
             ShowKeyWarning();
+    }
+
+    // Convert selected key code to string
+    public string KeyCodeToString(KeyCode keyCode)
+    {
+        // Prepare temporary string
+        string str = keyCode.ToString();
+        // Prepare string builder
+        StringBuilder stringBuilder = new StringBuilder();
+        // Set previous character
+        char previousChar = Char.MinValue;
+        // Search characters
+        foreach (char c in str)
+        {
+            // It i uppercase and it is not first character
+            if (char.IsUpper(c) && stringBuilder.Length != 0 && previousChar != ' ')
+                // Append space to string builder
+                stringBuilder.Append(' ');
+            // Append another character
+            stringBuilder.Append(c);
+            // Set proper previous character
+            previousChar = c;
+        }
+        // Return proper string
+        return stringBuilder.ToString();
     }
 
     // Check if key is valid
@@ -601,6 +644,8 @@ public class GameSettingsManager : MonoBehaviour
     // Show game menu after pause game
     public void ShowMenu()
     {
+        // Activate background
+        _backgroundImage.gameObject.SetActive(true);
         // Activate menu panel
         _menuPanel.gameObject.SetActive(true);
         // Search audio sources
@@ -616,6 +661,8 @@ public class GameSettingsManager : MonoBehaviour
     // Return to game
     public void ResumeGame()
     {
+        // Deactivate background
+        _backgroundImage.gameObject.SetActive(false);
         // Deactivate menu panel
         _menuPanel.gameObject.SetActive(false);
         // Deactivate settings panel
@@ -738,9 +785,11 @@ public class GameSettingsManager : MonoBehaviour
             for (int cnt = 0; cnt < _allPeople.Length; cnt++)
             {
                 // Activate every second person
-                if ((cnt % 2).Equals(0))
-                    // Activate this person
-                    _allPeople[cnt].SetActive(true);
+                if (!(cnt % 2).Equals(0))
+                    // Check another person
+                    continue;
+                // Activate this person
+                _allPeople[cnt].SetActive(true);
                 // Reset person
                 _allPeople[cnt].GetComponent<HumanBehavior>().ResetPerson();
             }
@@ -806,10 +855,16 @@ public class GameSettingsManager : MonoBehaviour
         {
             // Search static vehicles
             for (int cnt = 0; cnt < _allStaticVehicles.Length; cnt++)
+            {
                 // Activate every second static vehicle
-                if ((cnt % 2).Equals(0))
-                    // Activate this static vehicle
-                    _allStaticVehicles[cnt].SetActive(true);
+                if (!(cnt % 2).Equals(0))
+                    // Check another vehicle
+                    continue;
+                // Activate this static vehicle
+                _allStaticVehicles[cnt].SetActive(true);
+                // Set wheels
+                _allStaticVehicles[cnt].GetComponent<VehicleBehavior>().SetWheels();
+            }
             // Set new label
             CurStaticVehiclesText.text = SettingsDatabase.Low;
         }
@@ -818,8 +873,12 @@ public class GameSettingsManager : MonoBehaviour
         {
             // Search static vehicles
             for (int cnt = 0; cnt < _allStaticVehicles.Length; cnt++)
+            {
                 // Activate every static vehicles
                 _allStaticVehicles[cnt].SetActive(true);
+                // Set wheels
+                _allStaticVehicles[cnt].GetComponent<VehicleBehavior>().SetWheels();
+            }
             // Set new label
             CurStaticVehiclesText.text = SettingsDatabase.High;
             // Disable button
@@ -870,11 +929,15 @@ public class GameSettingsManager : MonoBehaviour
             for (int cnt = 0; cnt < _allMobileVehicles.Length; cnt++)
             {
                 // Activate every second vehicle
-                if ((cnt % 2).Equals(0))
-                    // Activate this vehicle
-                    _allMobileVehicles[cnt].SetActive(true);
+                if (!(cnt % 2).Equals(0))
+                    // Check another vehicle
+                    continue;
+                // Activate this vehicle
+                _allMobileVehicles[cnt].SetActive(true);
+                // Get vehicle behavior
+                VehicleBehavior vehicleBehavior = _allMobileVehicles[cnt].GetComponent<VehicleBehavior>();
                 // Reset vehicle
-                _allMobileVehicles[cnt].GetComponent<VehicleBehavior>().ResetVehicle();
+                vehicleBehavior.ResetVehicle();
             }
             // Set new label
             CurVehiclesText.text = SettingsDatabase.Low;
@@ -887,8 +950,10 @@ public class GameSettingsManager : MonoBehaviour
             {
                 // Activate every vehicles
                 _allMobileVehicles[cnt].SetActive(true);
+                // Get vehicle behavior
+                VehicleBehavior vehicleBehavior = _allMobileVehicles[cnt].GetComponent<VehicleBehavior>();
                 // Reset vehicle
-                _allMobileVehicles[cnt].GetComponent<VehicleBehavior>().ResetVehicle();
+                vehicleBehavior.ResetVehicle();
             }
             // Set new label
             CurVehiclesText.text = SettingsDatabase.High;

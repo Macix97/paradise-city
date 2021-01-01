@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 // Generate objects in specific positions after starting program
 public class GenerateObject : MonoBehaviour
@@ -6,8 +7,8 @@ public class GenerateObject : MonoBehaviour
     // Number of vehicles
     private int _vehiclesNum;
 
-    // Start is called before the first frame update
-    private void Start()
+    // Awake is called when the script instance is being loaded
+    private void Awake()
     {
         Init();
     }
@@ -23,6 +24,10 @@ public class GenerateObject : MonoBehaviour
         GameObject[] vehiclePoints = GameObject.FindGameObjectsWithTag("VehiclePoint");
         // Get static vehicle points
         GameObject[] staticVehiclePoints = GameObject.FindGameObjectsWithTag("StaticVehiclePoint");
+        // Temporary list for people
+        List<HumanBehavior> peopleList = new List<HumanBehavior>();
+        // Temporary list for vehicles
+        List<VehicleBehavior> vehiclesList = new List<VehicleBehavior>();
         // Search human points
         foreach (GameObject humanPoint in humanPoints)
         {
@@ -33,7 +38,15 @@ public class GenerateObject : MonoBehaviour
             // Generate person
             GameObject human = GameObject.Instantiate<GameObject>(humanPrefab,
                 humanPoint.transform.position, Quaternion.identity, humanPoint.transform.parent);
+            // Add script to list
+            peopleList.Add(human.GetComponent<HumanBehavior>());
         }
+        // Convert list to array
+        HumanBehavior[] humanBehaviors = peopleList.ToArray();
+        // Search people
+        foreach (HumanBehavior humanBehavior in humanBehaviors)
+            // Prepare people
+            humanBehavior.PreparePeople();
         // Search vehicle points
         foreach (GameObject vehiclePoint in vehiclePoints)
         {
@@ -45,6 +58,17 @@ public class GenerateObject : MonoBehaviour
             GameObject vehicle = GameObject.Instantiate<GameObject>(vehiclePrefab,
                 vehiclePoint.transform.position, vehiclePoint.transform.rotation,
                 vehiclePoint.transform.parent);
+            // Add script to list
+            vehiclesList.Add(vehicle.GetComponent<VehicleBehavior>());
+        }
+        // Convert list to array
+        VehicleBehavior[] vehicleBehaviors = vehiclesList.ToArray();
+        // Search vehicles
+        foreach (VehicleBehavior vehicleBehavior in vehicleBehaviors)
+        {
+            // Prepare vehicles
+            vehicleBehavior.PrepareVehicles();
+            vehicleBehavior.PrepareDriver();
         }
         // Search static vehicle points
         foreach (GameObject staticVehiclePoint in staticVehiclePoints)

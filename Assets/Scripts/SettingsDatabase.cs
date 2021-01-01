@@ -279,14 +279,14 @@ public static class SettingsDatabase
         // Set drawing distance
         Camera.main.farClipPlane = RenderSettings.fogEndDistance = GameConfig.DrawingDist;
         // Set labels for keys
-        settingsManager.MoveForwardText.text = GameConfig.MoveForward.ToString();
-        settingsManager.MoveBackText.text = GameConfig.MoveBack.ToString();
-        settingsManager.MoveLeftText.text = GameConfig.MoveLeft.ToString();
-        settingsManager.MoveRightText.text = GameConfig.MoveRight.ToString();
-        settingsManager.ClimbText.text = GameConfig.Climb.ToString();
-        settingsManager.DropText.text = GameConfig.Drop.ToString();
-        settingsManager.MoveFasterText.text = GameConfig.MoveFaster.ToString();
-        settingsManager.MoveSlowerText.text = GameConfig.MoveSlower.ToString();
+        settingsManager.MoveForwardText.text = settingsManager.KeyCodeToString(GameConfig.MoveForward);
+        settingsManager.MoveBackText.text = settingsManager.KeyCodeToString(GameConfig.MoveBack);
+        settingsManager.MoveLeftText.text = settingsManager.KeyCodeToString(GameConfig.MoveLeft);
+        settingsManager.MoveRightText.text = settingsManager.KeyCodeToString(GameConfig.MoveRight);
+        settingsManager.ClimbText.text = settingsManager.KeyCodeToString(GameConfig.Climb);
+        settingsManager.DropText.text = settingsManager.KeyCodeToString(GameConfig.Drop);
+        settingsManager.MoveFasterText.text = settingsManager.KeyCodeToString(GameConfig.MoveFaster);
+        settingsManager.MoveSlowerText.text = settingsManager.KeyCodeToString(GameConfig.MoveSlower);
         // Set keys
         cameraMovement.MoveForward = GameConfig.MoveForward;
         cameraMovement.MoveBack = GameConfig.MoveBack;

@@ -5,6 +5,9 @@ using UnityEngine.AI;
 // Control behavior of vehicle during simulation
 public class VehicleBehavior : MonoBehaviour
 {
+    // Static vehicle tag
+    public const string StaticVehicle = "StaticVehicle";
+    // Traffic point structure
     public struct TrafficPoint
     {
         public string ID;
@@ -72,13 +75,6 @@ public class VehicleBehavior : MonoBehaviour
         Init();
     }
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        PrepareVehicles();
-        PrepareDriver();
-    }
-
     // Initializate parameters
     private void Init()
     {
@@ -98,18 +94,8 @@ public class VehicleBehavior : MonoBehaviour
         _matBlock = new MaterialPropertyBlock();
         // Find rear lights
         _rearLights = transform.Find("Car/RearLights").GetComponent<Renderer>();
-        // Search animators
-        foreach (Animator animator in _animators)
-        {
-            // It is right wheel
-            if (animator.transform.localEulerAngles.y.Equals(180))
-                // Set animation
-                animator.SetBool("isRight", true);
-            // It is left wheel
-            else
-                // Set animation
-                animator.SetBool("isLeft", true);
-        }
+        // Set wheels
+        SetWheels();
         // Check if vehicle is static
         if (transform.parent.name.Contains("Parking"))
         {
@@ -128,10 +114,9 @@ public class VehicleBehavior : MonoBehaviour
                 // Disable light
                 light.enabled = false;
             // Change vehicle tag
-            gameObject.tag = "StaticVehicle";
+            gameObject.tag = StaticVehicle;
             // Destroy additional components
             Destroy(GetComponent<NavMeshAgent>());
-            Destroy(GetComponent<VehicleBehavior>());
             Destroy(GetComponent<AudioSource>());
             // Break action
             return;
@@ -201,7 +186,7 @@ public class VehicleBehavior : MonoBehaviour
     }
 
     // Search vehicle befor start of simulation
-    private void PrepareVehicles()
+    public void PrepareVehicles()
     {
         // Get all vehicles
         GameObject[] vehicles = GameObject.FindGameObjectsWithTag("Vehicle");
@@ -209,19 +194,38 @@ public class VehicleBehavior : MonoBehaviour
         List<Transform> backPoints = new List<Transform>();
         // Search vehicles
         foreach (GameObject vehicle in vehicles)
+        {
             // Check vehicle (compare parent of parent (zones))
             if (vehicle.transform.parent.parent.name.Equals(transform.parent.parent.name)
                 && !vehicle.transform.parent.name.Equals(transform.parent.name))
                 // Add navigation point to list
                 backPoints.Add(vehicle.transform.Find("Back"));
+        }
         // Transform list
         _backPoints = backPoints.ToArray();
         // Set front point of this vehicle
         _frontPoint = transform.Find("Front");
     }
 
+    // Set wheels before drive (set proper direction)
+    public void SetWheels()
+    {
+        // Search animators
+        foreach (Animator animator in _animators)
+        {
+            // It is right wheel
+            if (animator.tag.Equals("RightWheel"))
+                // Set animation
+                animator.SetBool("isRight", true);
+            // It is left wheel
+            if (animator.tag.Equals("LeftWheel"))
+                // Set animation
+                animator.SetBool("isLeft", true);
+        }
+    }
+
     // Generate driver in specific position
-    private void PrepareDriver()
+    public void PrepareDriver()
     {
         // Find game controller and get proper script
         GenerateObject generateObject = GameObject.Find("Game Controller")
@@ -232,10 +236,12 @@ public class VehicleBehavior : MonoBehaviour
         Transform womanPoint = transform.Find("WomanDriver");
         // Generate driver
         GameObject driver = generateObject.GenerateDriver(transform, manPoint, womanPoint);
-        // Disable nav mesh agent
-        driver.GetComponent<NavMeshAgent>().enabled = false;
-        // Disable behavior script
-        driver.GetComponent<HumanBehavior>().enabled = false;
+        // Change driver tag
+        driver.tag = "Driver";
+        // Destroy nav mesh agent
+        Destroy(driver.GetComponent<NavMeshAgent>());
+        // Destroy behavior script
+        Destroy(driver.GetComponent<HumanBehavior>());
         // Create new animator controller
         RuntimeAnimatorController controller =
             Resources.Load<RuntimeAnimatorController>("Animators/Driver");
@@ -248,6 +254,8 @@ public class VehicleBehavior : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (tag.Equals(StaticVehicle))
+            return;
         SwitchVehicleActions();
     }
 
@@ -407,14 +415,10 @@ public class VehicleBehavior : MonoBehaviour
         // Search vehicles
         foreach (Transform backPoint in _backPoints)
         {
-            // Vehicle is deactivated
-            if (!backPoint.parent.gameObject.activeSelf)
-                // Check next vehicle
-                continue;
             // Calculate distance between front point and back points
             float dist = Vector3.Distance(_frontPoint.position, backPoint.position);
             // Check distance for active vehicles
-            if (dist <= StoppingDistance)
+            if (dist <= StoppingDistance && backPoint.parent.gameObject.activeSelf)
                 // Some vehicle is near
                 return true;
         }
@@ -441,6 +445,8 @@ public class VehicleBehavior : MonoBehaviour
         transform.position = vehiclePoint.position;
         // Change vehicle rotation
         transform.rotation = vehiclePoint.rotation;
+        // Set wheels
+        SetWheels();
         // Enable agent
         _agent.enabled = true;
     }

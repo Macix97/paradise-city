@@ -646,7 +646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CheckingDistance: 2.5
   WaitingTime: 0.5
-  StoppingDistance: 5.5
+  StoppingDistance: 6
 --- !u!205 &7374308051605725093
 LODGroup:
   m_ObjectHideFlags: 0
@@ -1426,6 +1426,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CarWheel01
       objectReference: {fileID: 0}
+    - target: {fileID: 2144880501749774777, guid: 5bbc69a708f29c249bdfd20701b35856,
+        type: 3}
+      propertyPath: m_TagString
+      value: LeftWheel
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bbc69a708f29c249bdfd20701b35856, type: 3}
 --- !u!23 &1347162682007328267 stripped
@@ -1534,6 +1539,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CarWheel01
+      objectReference: {fileID: 0}
+    - target: {fileID: 2144880501749774777, guid: 5bbc69a708f29c249bdfd20701b35856,
+        type: 3}
+      propertyPath: m_TagString
+      value: LeftWheel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bbc69a708f29c249bdfd20701b35856, type: 3}
@@ -1644,6 +1654,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CarWheel01
       objectReference: {fileID: 0}
+    - target: {fileID: 2144880501749774777, guid: 5bbc69a708f29c249bdfd20701b35856,
+        type: 3}
+      propertyPath: m_TagString
+      value: RightWheel
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bbc69a708f29c249bdfd20701b35856, type: 3}
 --- !u!23 &8222032945951616672 stripped
@@ -1752,6 +1767,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CarWheel01
+      objectReference: {fileID: 0}
+    - target: {fileID: 2144880501749774777, guid: 5bbc69a708f29c249bdfd20701b35856,
+        type: 3}
+      propertyPath: m_TagString
+      value: RightWheel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bbc69a708f29c249bdfd20701b35856, type: 3}

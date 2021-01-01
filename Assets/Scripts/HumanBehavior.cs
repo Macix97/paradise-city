@@ -112,12 +112,6 @@ public class HumanBehavior : MonoBehaviour
         Init();
     }
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        PreparePeople();
-    }
-
     // Update is called once per frame
     private void Update()
     {
@@ -246,7 +240,7 @@ public class HumanBehavior : MonoBehaviour
     }
 
     // Search people befor start of simulation
-    private void PreparePeople()
+    public void PreparePeople()
     {
         // Get all people
         GameObject[] people = GameObject.FindGameObjectsWithTag("Human");
@@ -254,11 +248,13 @@ public class HumanBehavior : MonoBehaviour
         List<Transform> navPoints = new List<Transform>();
         // Search people
         foreach (GameObject person in people)
+        {
             // Check person (compare parent of parent (regions))
             if (person.transform.parent.parent.name.Equals(transform.parent.parent.name)
                 && !person.transform.parent.name.Equals(transform.parent.name))
                 // Add navigation point to list
                 navPoints.Add(person.transform.Find("Navigation"));
+        }
         // Transform list
         _navPoints = navPoints.ToArray();
         // Set navigation point of this person
