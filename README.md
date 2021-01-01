@@ -2,7 +2,11 @@
 
 ## Abstract
 
-Paradise City is a real-time simulation which presents behaviors occur in big city. In the project many actions are performing independently of each other. The main goal is created the full of life environment with a lot of characters and vehicles. Specific people have their own sequences of the behaviors which is executed in proper order. 
+Paradise City is a real-time simulation which presents behaviors occur in big city. In the project many actions are performing independently of each other. The main goal is created the full of life environment with a lot of characters and vehicles. Specific people have their own sequences of the behaviors which is executed in proper order.
+
+## Application
+
+The created project is a kind of benchmark. The user can use the existing settings to test their own computer hardware. This allows to rate the advantages and disadvantages of individual components. Additionally, the developer can get to know the test environment used better. The obtained knowledge will enable the creation of more efficient programs using Unity in the future.
 
 ## Features
 
