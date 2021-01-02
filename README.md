@@ -1,4 +1,6 @@
-# Paradise City
+<p align="center">
+  <img src="Media/Logo/Logo.png" alt="Logo" />
+</p>
 
 ## Abstract
 
