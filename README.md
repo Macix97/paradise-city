@@ -24,7 +24,7 @@ The list below presents most important properties:
 
 ## Game visualization
 
-### The pictures below show the most important aspects of the game:
+### The pictures below show the most important aspects of the program:
 
 #### Main Menu
 ![Main Menu](./Media/Pictures/MainMenu.png)
