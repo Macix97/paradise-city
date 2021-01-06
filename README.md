@@ -44,13 +44,13 @@ The list below presents most important properties:
 ## Used technologies
 
 The list of used solutions:
-* Unity 2019.4.2f1
-* Visual Studio Code 1.52.1
-* Blender 2.83
-* GIMP 2.10
-* Mixamo 2020
-* Audacity 2.3.2
-* MakeHuman 1.2.0
+* Unity 2019.4.2f1 - Efficient and expanded game engine.
+* Visual Studio Code 1.52.1 - Primary, lightweight IDE.
+* Blender 2.83 - 3D computer graphics software used for creating visual effects.
+* GIMP 2.10 - Open source image editor.
+* Mixamo 2020 - Web service that provides animations with characters.
+* Audacity 2.3.2 - Easy-to-use audio editing software.
+* MakeHuman 1.2.0 - 3D graphics middleware for prototyping humanoids.
 
 ## Credits
 
