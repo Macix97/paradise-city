@@ -2,7 +2,9 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-// Control settings in menu
+/// <summary>
+/// Manages settings that could be changed via the main menu.
+/// </summary>
 public class MenuSettingsManager : MonoBehaviour
 {
     // List of menu states
@@ -93,7 +95,9 @@ public class MenuSettingsManager : MonoBehaviour
         _curMenuState = MenuState.Menu;
     }
 
-    // Set proper configuration before start program
+    /// <summary>
+    /// Sets proper configuration before starting the program.
+    /// </summary>
     private void SetMenuConfiguration()
     {
         // Set reference to this script (needed to apply changes)
@@ -123,7 +127,9 @@ public class MenuSettingsManager : MonoBehaviour
         AdjustMusicVolume();
     }
 
-    // Switch panels in main menu
+    /// <summary>
+    /// Switches the state of the main menu.
+    /// </summary>
     public void SwitchMainMenu()
     {
         // Check if key is pressed
@@ -144,14 +150,18 @@ public class MenuSettingsManager : MonoBehaviour
         }
     }
 
-    // Play click sound after press button
+    /// <summary>
+    /// Plays click sound after press button.
+    /// </summary>
     public void PlayClickSound()
     {
         // Play click sound
         MenuSoundsSrc.PlayOneShot(_click);
     }
 
-    // Set proper event listeners to sliders
+    /// <summary>
+    /// Sets the event listeners to the selected sliders.
+    /// </summary>
     private void SetEventListeners()
     {
         // Add event listeners
@@ -159,7 +169,9 @@ public class MenuSettingsManager : MonoBehaviour
         MusicSld.onValueChanged.AddListener(delegate { AdjustMusicVolume(); });
     }
 
-    // Adjust sounds volume via slider
+    /// <summary>
+    /// Changes the sounds' volume via slider.
+    /// </summary>
     public void AdjustSoundsVolume()
     {
         // Prepare volume label
@@ -170,7 +182,9 @@ public class MenuSettingsManager : MonoBehaviour
         MenuSoundsSrc.volume = SoundsSld.value;
     }
 
-    // Adjust music volume via slider
+    /// <summary>
+    /// Changes the music volume via slider.
+    /// </summary>
     public void AdjustMusicVolume()
     {
         // Prepare volume label
@@ -181,7 +195,9 @@ public class MenuSettingsManager : MonoBehaviour
         MenuMusicSrc.volume = MusicSld.value;
     }
 
-    // Show settings in main menu
+    /// <summary>
+    /// Shows settings window in the main menu.
+    /// </summary>
     public void ShowSettings()
     {
         // Activate settings panel
@@ -192,7 +208,9 @@ public class MenuSettingsManager : MonoBehaviour
         _curMenuState = MenuState.Settings;
     }
 
-    // Show credits in main menu
+    /// <summary>
+    /// Shows credits window in the main menu.
+    /// </summary>
     public void ShowCredits()
     {
         // Activate credits panel
@@ -203,7 +221,9 @@ public class MenuSettingsManager : MonoBehaviour
         _curMenuState = MenuState.Credits;
     }
 
-    // Return to main menu from another window
+    /// <summary>
+    /// Shows the main window in the main menu and hides other windows.
+    /// </summary>
     public void ReturnToMainMenu()
     {
         // Activate menu panel
@@ -215,14 +235,18 @@ public class MenuSettingsManager : MonoBehaviour
         _curMenuState = MenuState.Menu;
     }
 
-    // Hide main menu warning about damaged file
+    /// <summary>
+    /// Hides warning about damaged menu configuration file.
+    /// </summary>
     public void HideMenuWarning()
     {
         // Hide warning panel
         _warningPanel.gameObject.SetActive(false);
     }
 
-    // Start simulation, display new scene and close main menu
+    /// <summary>
+    /// Starts the simulation and hides the main menu.
+    /// </summary>
     public void StartSimulation()
     {
         // Copy variables to configuration structure
@@ -238,7 +262,9 @@ public class MenuSettingsManager : MonoBehaviour
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }
 
-    // Save menu configuration and exit program
+    /// <summary>
+    /// Saves the menu configuration and quits the program.
+    /// </summary>
     public void ExitProgram()
     {
         // Copy variables to configuration structure

@@ -4,6 +4,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
+/// <summary>
+/// Stores information about configuration files and their parameters.
+/// </summary>
 public static class SettingsDatabase
 {
     // Game configuration file name
@@ -133,7 +136,9 @@ public static class SettingsDatabase
     // Menu configuration structure
     public static MenuConfiguration MenuConfig;
 
-    // Set default simulation settings (first start, damaged configuration file)
+    /// <summary>
+    /// Set default values for the settings of the simulation.
+    /// </summary>
     public static void SetDefaultGameSettings()
     {
         // Set proper settings
@@ -167,14 +172,20 @@ public static class SettingsDatabase
         GameConfig.MoveSlower = KeyCode.LeftControl;
     }
 
-    // Set default menu settings (first start, damaged configuration file)
+    /// <summary>
+    /// Set default values for the settings of the main menu.
+    /// </summary>
     public static void SetDefaultMenuSettings()
     {
         // Set proper settings
         MenuConfig.MenuSoundsVolume = MenuConfig.MenuMusicVolume = 1f;
     }
 
-    // Copy parameters from variables to configuration structure when simulation is running
+    /// <summary>
+    /// Copies the simulation parameters from the variables to the configuration structure.
+    /// </summary>
+    /// <param name="settingsManager">An object that represents the game settings manager.</param>
+    /// <param name="cameraMovement">An object that represents the camera movement.</param>
     public static void CopyGameToConfig(GameSettingsManager settingsManager,
         CameraMovement cameraMovement)
     {
@@ -221,7 +232,10 @@ public static class SettingsDatabase
         GameConfig.MoveSlower = cameraMovement.MoveSlower;
     }
 
-    // Copy parameters from variables to configuration structure when main menu is active
+    /// <summary>
+    /// Copies the menu parameters from the variables to the configuration structure.
+    /// </summary>
+    /// <param name="settingsManager">An object that represents the menu settings manager.</param>
     public static void CopyMenuToConfig(MenuSettingsManager settingsManager)
     {
         // Sliders
@@ -229,7 +243,11 @@ public static class SettingsDatabase
         MenuConfig.MenuMusicVolume = settingsManager.MusicSld.value;
     }
 
-    // Write parameters from configuration structure before start simulation
+    /// <summary>
+    /// Sets the simulation parameters from the configuration structure to the variables.
+    /// </summary>
+    /// <param name="settingsManager">An object that represents the game settings manager.</param>
+    /// <param name="cameraMovement">An object that represents the camera movement.</param>
     public static void SetGameFromConfig(ref GameSettingsManager settingsManager,
         ref CameraMovement cameraMovement)
     {
@@ -300,7 +318,10 @@ public static class SettingsDatabase
         GameConfig = new GameConfiguration();
     }
 
-    // Write parameters from configuration structure before start program
+    /// <summary>
+    /// Sets the menu parameters from the configuration structure to the variables.
+    /// </summary>
+    /// <param name="settingsManager">An object that represents the menu settings manager.</param>
     public static void SetMenuFromConfig(ref MenuSettingsManager settingsManager)
     {
         // Set sounds volume
@@ -311,7 +332,15 @@ public static class SettingsDatabase
         MenuConfig = new MenuConfiguration();
     }
 
-    // Try save settings to configuration file
+    /// <summary>
+    /// Tries save the information about the configuration to the file.
+    /// </summary>
+    /// <param name="path">A label that represents the path to a file.</param>
+    /// <param name="fileName">A label that the name of a file.</param>
+    /// <param name="type">A structure that represents the type of the configuration.</param>
+    /// <returns>
+    /// The boolean that is true if the operation is succeeded or false if not.
+    /// </returns>
     public static bool TrySaveConfig(string path, string fileName, ConfigType type)
     {
         // Check operation result
@@ -361,7 +390,15 @@ public static class SettingsDatabase
         return isSucceed;
     }
 
-    // Try load settings from configuration file
+    /// <summary>
+    /// Tries load the information about the configuration from the file.
+    /// </summary>
+    /// <param name="path">A label that represents the path to a file.</param>
+    /// <param name="fileName">A label that the name of a file.</param>
+    /// <param name="type">A structure that represents the type of the configuration.</param>
+    /// <returns>
+    /// The value that represents the result of the operation.
+    /// </returns>
     public static LoadResult TryLoadConfig(string path, string fileName, ConfigType type)
     {
         // Check operation result

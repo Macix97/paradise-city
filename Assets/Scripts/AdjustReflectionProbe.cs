@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
-// Modify state of reflection probe
+/// <summary>
+/// Manages the state of the reflection probe.
+/// </summary>
 public class AdjustReflectionProbe : MonoBehaviour
 {
     // Day and night cycle
@@ -47,8 +49,10 @@ public class AdjustReflectionProbe : MonoBehaviour
         _blendFac = 0f;
     }
 
-    // Load auxiliary textures
-    public void LoadProperTextures()
+    /// <summary>
+    /// Loads proper textures depending on the current quality settings.
+    /// </summary>
+    private void LoadProperTextures()
     {
         // Get current settings
         int level = QualitySettings.GetQualityLevel();
@@ -68,7 +72,9 @@ public class AdjustReflectionProbe : MonoBehaviour
         }
     }
 
-    // Set proper texture of reflection probe
+    /// <summary>
+    /// Sets proper textures depending on the current time of a day.
+    /// </summary>
     private void AdjustReflection()
     {
         _currentTime = _dayAndNightCycle.CurrentTime;
@@ -96,7 +102,12 @@ public class AdjustReflectionProbe : MonoBehaviour
             _reflectionProbe.customBakedTexture = _nightTex;
     }
 
-    // Create temporary blended cubemap
+    /// <summary>
+    /// Creates and sets the temporary blended texture from two different maps.
+    /// </summary>
+    /// <param name="texture1">An object that represents the first texture.</param>
+    /// <param name="texture1">An object that represents the second texture.</param>
+    /// <param name="isReversed">A boolean that informs if the blended texture will be reversed.</param>
     private void SetProperCubemap(Texture texture1, Texture texture2, bool isReversed)
     {
         // Create render texture

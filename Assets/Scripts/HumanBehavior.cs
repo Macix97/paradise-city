@@ -3,7 +3,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-// Control behavior of character
+/// <summary>
+/// Controls the behavior of the character.
+/// </summary>
 public class HumanBehavior : MonoBehaviour
 {
     // List of human actions
@@ -149,7 +151,8 @@ public class HumanBehavior : MonoBehaviour
         // Random eye color
         int eyeIndex = Random.Range(0, eyesMaterials.Length);
         // Get eye renderer
-        SkinnedMeshRenderer eyesRenderer = transform.Find(_gender + "Eyes").GetComponent<SkinnedMeshRenderer>();
+        SkinnedMeshRenderer eyesRenderer = transform.Find(_gender + "Eyes")
+            .GetComponent<SkinnedMeshRenderer>();
         // Set new eyes material
         eyesRenderer.material = eyesMaterials[eyeIndex];
         // Disable other types
@@ -160,7 +163,8 @@ public class HumanBehavior : MonoBehaviour
                 // Go to next step
                 continue;
             // Get mesh renderers
-            SkinnedMeshRenderer[] skinnedMeshRenderers = trans.GetComponentsInChildren<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer[] skinnedMeshRenderers = trans
+                .GetComponentsInChildren<SkinnedMeshRenderer>();
             // Search mesh renderers
             foreach (SkinnedMeshRenderer renderer in skinnedMeshRenderers)
                 // Disable mesh renderer
@@ -170,7 +174,8 @@ public class HumanBehavior : MonoBehaviour
         if (humanIndex.Equals(_humanTypes.Length) && _gender.Equals("Man"))
         {
             // Get body renderer
-            SkinnedMeshRenderer bodyRenderer = transform.Find("ManBody").GetComponent<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer bodyRenderer = transform.Find("ManBody")
+                .GetComponent<SkinnedMeshRenderer>();
             // Set new eyes material (dark)
             eyesRenderer.material = eyesMaterials[eyesMaterials.Length - 1];
             // Set new body material (dark)
@@ -239,7 +244,9 @@ public class HumanBehavior : MonoBehaviour
         _animator.SetBool(_animRotateLeft, _isRotatingLeft);
     }
 
-    // Search people befor start of simulation
+    /// <summary>
+    /// Sets the navigation points for the individual people.
+    /// </summary>
     public void PreparePeople()
     {
         // Get all people
@@ -261,7 +268,9 @@ public class HumanBehavior : MonoBehaviour
         _thisNavPoint = transform.Find("Navigation");
     }
 
-    // Stop character in specific position
+    /// <summary>
+    /// Stops the person in the specific position and waits.
+    /// </summary>
     private void WaitAWhile()
     {
         // Reset auxiliary trigger
@@ -284,12 +293,14 @@ public class HumanBehavior : MonoBehaviour
         _curTime += Time.deltaTime;
     }
 
-    // Set proper destination for character
+    /// <summary>
+    /// Navigates the person to the destination.
+    /// </summary>
     private void GoToDestination()
     {
         // Set new path
         SetNewHumanPath(_curDestination);
-        // Destination is reached (It is not way point!)
+        // Destination is reached (it is not way point!)
         if (_agent.remainingDistance <= _agent.stoppingDistance
             && !_destinations[_curDestination].name.Equals("Way Point"))
         {
@@ -313,7 +324,9 @@ public class HumanBehavior : MonoBehaviour
         _animator.SetBool(_animWalk, _isWalking);
     }
 
-    // Rotate person to specific object
+    /// <summary>
+    /// Rotates the person to the specific object.
+    /// </summary>
     private void RotateToDestination()
     {
         // Get child
@@ -364,7 +377,14 @@ public class HumanBehavior : MonoBehaviour
             Time.deltaTime * RotationSpeed);
     }
 
-    // Calculate position of character and then rotate person
+    /// <summary>
+    /// Gets the proper rotation direction.
+    /// </summary>
+    /// <param name="from">A structure that represents a start rotation.</param>
+    /// <param name="to">A structure that represents an end rotation.</param>
+    /// <returns>
+    /// The boolean that is true if the rotation is clock wise or false if not.
+    /// </returns>
     private bool GetRotateDirection(Quaternion from, Quaternion to)
     {
         // Character
@@ -390,7 +410,9 @@ public class HumanBehavior : MonoBehaviour
         return (clockWise <= counterClockWise);
     }
 
-    // Turn character to proper position when person is sitting
+    /// <summary>
+    /// Sets the turning animation while the person is sitting.
+    /// </summary>
     private void TurnCharacter()
     {
         // Set animation
@@ -398,7 +420,9 @@ public class HumanBehavior : MonoBehaviour
         _animator.SetBool(_animTurning, _isTurning);
     }
 
-    // Correct character position when person is standing
+    /// <summary>
+    /// Corrects the end position of the sitting.
+    /// </summary>
     private void SitOnBench()
     {
         // Set that character is sitting
@@ -422,27 +446,35 @@ public class HumanBehavior : MonoBehaviour
         transform.Translate(new Vector3(0f, 0f, Time.deltaTime / 2.5f), Space.Self);
     }
 
-    // Count some time when character is sitting
+    /// <summary>
+    /// Counts some time when the character is sitting.
+    /// </summary>
     private void WaitOnBench()
     {
         // Do nothing
     }
 
-    // Trigger next animation when character is getting up
+    /// <summary>
+    /// Sets the proper animation when the person is standing up.
+    /// </summary>
     public void TriggerStanding()
     {
         if (_curAction.Equals(HumanActionType.Waiting))
             _curAction = HumanActionType.Standing;
     }
 
-    // Trigger next animation when character is sitting down
+    /// <summary>
+    /// Sets the proper animation when the person is sitting down.
+    /// </summary>
     public void TriggerSitting()
     {
         if (_curAction.Equals(HumanActionType.Turning))
             _curAction = HumanActionType.Sitting;
     }
 
-    // Calculate next destination when person is standing up
+    /// <summary>
+    /// Corrects the navigation of the character after standing up.
+    /// </summary>
     private void StandUpAndSetDestination()
     {
         // Set next human destination
@@ -453,7 +485,9 @@ public class HumanBehavior : MonoBehaviour
         _curAction = HumanActionType.Idling;
     }
 
-    // Establish behavior when person is admiring monument
+    /// <summary>
+    /// Sets the proper animation when the character is admiring the monument.
+    /// </summary>
     private void AdmireMonument()
     {
         // Check time
@@ -478,7 +512,9 @@ public class HumanBehavior : MonoBehaviour
         _animator.SetBool(_animAdmiring, _isAdmiring);
     }
 
-    // Establish behavior when person is watching through window
+    /// <summary>
+    /// Sets the proper animation when the character is watching through the window.
+    /// </summary>
     private void WatchThroughWindow()
     {
         // Check time
@@ -503,7 +539,9 @@ public class HumanBehavior : MonoBehaviour
         _animator.SetBool(_animWatching, _isWatching);
     }
 
-    // Set new destination or reset route
+    /// <summary>
+    /// Sets the next destination of the character.
+    /// </summary>
     private void SetNextHumanDestination()
     {
         // Check current destination
@@ -515,7 +553,10 @@ public class HumanBehavior : MonoBehaviour
             _curDestination++;
     }
 
-    // Calculate next path for human and set proper destination
+    /// <summary>
+    /// Sets the proper path for the person.
+    /// </summary>
+    /// <param name="destIndex">A number that represents the index of the route.</param>
     private void SetNewHumanPath(int destIndex)
     {
         // Calculate path
@@ -524,7 +565,9 @@ public class HumanBehavior : MonoBehaviour
         _agent.SetPath(_path);
     }
 
-    // Reset state and position of person
+    /// <summary>
+    /// Resets the state of the person and sets start position.
+    /// </summary>
     public void ResetPerson()
     {
         // Pause audio
@@ -559,7 +602,9 @@ public class HumanBehavior : MonoBehaviour
         _agent.enabled = true;
     }
 
-    // Play "excuse me" sound when people collide
+    /// <summary>
+    /// Plays "excuse me" sound when the people collide to each other.
+    /// </summary>
     private void PlayExcuseMe()
     {
         // Search people
@@ -579,7 +624,12 @@ public class HumanBehavior : MonoBehaviour
         }
     }
 
-    // Wait for another "excuse me"
+    /// <summary>
+    /// Waits some time to play another "excuse me" sound.
+    /// </summary>
+    /// <returns>
+    /// The number of seconds to another action.
+    /// </returns>
     private IEnumerator WaitForExcuseMe()
     {
         // Wait some time with some gap
@@ -588,7 +638,9 @@ public class HumanBehavior : MonoBehaviour
         _isExcuseMe = false;
     }
 
-    // Switch character behavior
+    /// <summary>
+    /// Switches the person actions during the simulation.
+    /// </summary>
     private void SwitchHumanActions()
     {
         switch (_curAction)

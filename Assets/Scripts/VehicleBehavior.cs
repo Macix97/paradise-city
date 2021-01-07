@@ -2,7 +2,9 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-// Control behavior of vehicle during simulation
+/// <summary>
+/// Controls the behavior of the vehicle.
+/// </summary>
 public class VehicleBehavior : MonoBehaviour
 {
     // Static vehicle tag
@@ -185,7 +187,9 @@ public class VehicleBehavior : MonoBehaviour
         _curTime = 0f;
     }
 
-    // Search vehicle befor start of simulation
+    /// <summary>
+    /// Sets the navigation points for the individual vehicles.
+    /// </summary>
     public void PrepareVehicles()
     {
         // Get all vehicles
@@ -207,7 +211,9 @@ public class VehicleBehavior : MonoBehaviour
         _frontPoint = transform.Find("Front");
     }
 
-    // Set wheels before drive (set proper direction)
+    /// <summary>
+    /// Sets proper direction of the wheels before the start.
+    /// </summary>
     public void SetWheels()
     {
         // Search animators
@@ -224,7 +230,9 @@ public class VehicleBehavior : MonoBehaviour
         }
     }
 
-    // Generate driver in specific position
+    /// <summary>
+    /// Generates the driver in the specific position of the vehicle.
+    /// </summary>
     public void PrepareDriver()
     {
         // Find game controller and get proper script
@@ -259,7 +267,10 @@ public class VehicleBehavior : MonoBehaviour
         SwitchVehicleActions();
     }
 
-    // Set proper color of rear lights
+    /// <summary>
+    /// Sets proper color of the rear lights.
+    /// </summary>
+    /// <param name="color">A structure that represents a color.</param>
     private void SetRearLights(Color color)
     {
         // Set emission
@@ -268,7 +279,9 @@ public class VehicleBehavior : MonoBehaviour
         _rearLights.SetPropertyBlock(_matBlock);
     }
 
-    // Stop vehicle in specific position
+    /// <summary>
+    /// Stops the vehicle in the specific position and waits.
+    /// </summary>
     private void StopVehicleAndWait()
     {
         // Set rear lights color
@@ -322,7 +335,9 @@ public class VehicleBehavior : MonoBehaviour
         SetVehicleAnimation();
     }
 
-    // Navigate specific vehicle to destination
+    /// <summary>
+    /// Navigates the vehicle to the destination.
+    /// </summary>
     private void RideToDestination()
     {
         // Check vehicles distance
@@ -379,7 +394,9 @@ public class VehicleBehavior : MonoBehaviour
         SetVehicleAnimation();
     }
 
-    // Set proper destination for vehicle
+    /// <summary>
+    /// Sets the next destination of the vehicle.
+    /// </summary>
     private void SetNextVehicleDestinaton()
     {
         // Check current destination
@@ -391,7 +408,10 @@ public class VehicleBehavior : MonoBehaviour
             _curDestination++;
     }
 
-    // Calculate next path for vehicle and set proper destination
+    /// <summary>
+    /// Sets proper path for the vehicle.
+    /// </summary>
+    /// <param name="destIndex">A number that represents the index of the route.</param>
     private void SetNewVehiclePath(int destIndex)
     {
         // Calculate path
@@ -400,7 +420,9 @@ public class VehicleBehavior : MonoBehaviour
         _agent.SetPath(_path);
     }
 
-    // Set proper animation for vehicle
+    /// <summary>
+    /// Sets proper animation for the vehicle.
+    /// </summary>
     private void SetVehicleAnimation()
     {
         // Search animators
@@ -409,7 +431,12 @@ public class VehicleBehavior : MonoBehaviour
             animator.SetBool("isMoving", _isMoving);
     }
 
-    // Check distance between vehicles in same zone
+    /// <summary>
+    /// Checks if some vehicle in the same zone is near.
+    /// </summary>
+    /// <returns>
+    /// The boolean that is true if the vehicle is near or false if not.
+    /// </returns>
     private bool IsVehicleNear()
     {
         // Search vehicles
@@ -426,7 +453,9 @@ public class VehicleBehavior : MonoBehaviour
         return false;
     }
 
-    // Reset state and position of vehicle
+    /// <summary>
+    /// Resets the state of the vehicle and sets start position.
+    /// </summary>
     public void ResetVehicle()
     {
         // Pause audio
@@ -451,7 +480,10 @@ public class VehicleBehavior : MonoBehaviour
         _agent.enabled = true;
     }
 
-    // Set and play proper audio clip
+    /// <summary>
+    /// Sets and plays the proper audio clip.
+    /// </summary>
+    /// <param name="clip">An object that represents a clip.</param>
     private void PlayProperClip(AudioClip clip)
     {
         // Stop clip
@@ -462,7 +494,9 @@ public class VehicleBehavior : MonoBehaviour
         _audioSrc.Play();
     }
 
-    // Switch actions of vehicle
+    /// <summary>
+    /// Switches the vehicle actions during the simulation.
+    /// </summary>
     private void SwitchVehicleActions()
     {
         switch (_curAction)

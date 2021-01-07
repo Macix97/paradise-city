@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
-// Draw auxiliary paths
+/// <summary>
+/// Draws the auxiliary paths in the editor.
+/// </summary>
 public class DrawPath : MonoBehaviour
 {
     private void OnDrawGizmos()

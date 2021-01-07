@@ -6,7 +6,9 @@ using UnityEngine.UI;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 
-// Control settings in game
+/// <summary>
+/// Manages settings that could be changed while the game.
+/// </summary>
 public class GameSettingsManager : MonoBehaviour
 {
     // Control buttons names
@@ -274,7 +276,9 @@ public class GameSettingsManager : MonoBehaviour
         _curGameState = GameState.Game;
     }
 
-    // Set proper configuration before start simulation
+    /// <summary>
+    /// Sets proper configuration before starting the simulation.
+    /// </summary>
     private void SetGameConfiguration()
     {
         // Set reference to this script (needed to apply changes)
@@ -315,7 +319,11 @@ public class GameSettingsManager : MonoBehaviour
         }
     }
 
-    // Set proper population and number of cars
+    /// <summary>
+    /// Sets proper number of existing objects in the scene.
+    /// </summary>
+    /// <param name="objects">The objects that represent the proper group of the elements.</param>
+    /// <param name="label">A label that informs about current quality settings.</param>
     private void InitSettings(ref GameObject[] objects, string label)
     {
         // High settings
@@ -342,7 +350,9 @@ public class GameSettingsManager : MonoBehaviour
                 objects[cnt].SetActive(false);
     }
 
-    // Set proper event listeners to sliders
+    /// <summary>
+    /// Sets the event listeners to the selected sliders.
+    /// </summary>
     private void SetEventListeners()
     {
         // Add event listeners
@@ -350,7 +360,9 @@ public class GameSettingsManager : MonoBehaviour
         AudioSld.onValueChanged.AddListener(delegate { AdjustAudioVolume(); });
     }
 
-    // Collect people and vehicles
+    /// <summary>
+    /// Collects proper game objects (people, cars).
+    /// </summary>
     private void CollectGameObjects()
     {
         // Find proper game objects
@@ -383,7 +395,9 @@ public class GameSettingsManager : MonoBehaviour
         _allAudioSources = audioSourcesList.ToArray();
     }
 
-    // Show or hide mouse cursor
+    /// <summary>
+    /// Shows or hides the mouse cursor.
+    /// </summary>
     private void ChangeCursorVisible()
     {
         // It is game
@@ -395,8 +409,10 @@ public class GameSettingsManager : MonoBehaviour
             Cursor.visible = true;
     }
 
-    // Switch panels in game menu
-    public void SwitchGameMenu()
+    /// <summary>
+    /// Switches the state of the menu in the simulation.
+    /// </summary>
+    private void SwitchGameMenu()
     {
         // Check if key is pressed
         if (!Input.GetKeyDown(_menuKey))
@@ -425,14 +441,19 @@ public class GameSettingsManager : MonoBehaviour
         }
     }
 
-    // Play click sound after press button
+    /// <summary>
+    /// Plays click sound after press button.
+    /// </summary>
     public void PlayClickSound()
     {
         // Play click sound
         _clickSrc.PlayOneShot(_click);
     }
 
-    // Show message about key in control menu
+    /// <summary>
+    /// Shows the message about selecting key in the control menu.
+    /// </summary>
+    /// <param name="button">An object that represents a clicked button.</param>
     public void ShowKeyMessage(Button button)
     {
         // Disable other buttons
@@ -453,7 +474,9 @@ public class GameSettingsManager : MonoBehaviour
         _curGameState = GameState.Key;
     }
 
-    // Get new key via control panel in game menu
+    /// <summary>
+    /// Gets the new key via control panel in the game menu.
+    /// </summary>
     public void GetNewKey()
     {
         // Check current state
@@ -514,7 +537,12 @@ public class GameSettingsManager : MonoBehaviour
         }
     }
 
-    // Set new key via control panel in game menu
+    /// <summary>
+    /// Sets the new key obtained from the keyboard.
+    /// </summary>
+    /// <param name="oldKeyCode">A value that represents the old key code.</param>
+    /// <param name="text">A label that represents a description of the key code.</param>
+    /// <param name="newKeyCode">A value that represents the new key code.</param>
     private void SetNewKey(ref KeyCode oldKeyCode, ref Text text, KeyCode newKeyCode)
     {
         // Validate keys
@@ -542,7 +570,13 @@ public class GameSettingsManager : MonoBehaviour
             ShowKeyWarning();
     }
 
-    // Convert selected key code to string
+    /// <summary>
+    /// Converts selected key code to the string.
+    /// </summary>
+    /// <param name="keyCode">A value that represents a key code.</param>
+    /// <returns>
+    /// The proper string from the key code.
+    /// </returns>
     public string KeyCodeToString(KeyCode keyCode)
     {
         // Prepare temporary string
@@ -567,7 +601,14 @@ public class GameSettingsManager : MonoBehaviour
         return stringBuilder.ToString();
     }
 
-    // Check if key is valid
+    /// <summary>
+    /// Checks if the selected key is valid.
+    /// </summary>
+    /// <param name="someKeyCode">A value that represents selected key code.</param>
+    /// <param name="newKeyCode">A value that represents a new key code from the keyboard.</param>
+    /// <returns>
+    /// The boolean that is true if the key code is valid or false if not.
+    /// </returns>
     private bool IsKeyValid(KeyCode someKeyCode, KeyCode newKeyCode)
     {
         // Convert key codes to strings
@@ -585,7 +626,9 @@ public class GameSettingsManager : MonoBehaviour
         return true;
     }
 
-    // Hide information about selected key
+    /// <summary>
+    /// Hides information about selected key code.
+    /// </summary>
     public void HideKeyMessage()
     {
         // Enable other buttons
@@ -605,7 +648,9 @@ public class GameSettingsManager : MonoBehaviour
         _curGameState = GameState.Control;
     }
 
-    // Show warning about inserted key
+    /// <summary>
+    /// Shows warning about inserted key code.
+    /// </summary>
     private void ShowKeyWarning()
     {
         // Show warning
@@ -626,7 +671,9 @@ public class GameSettingsManager : MonoBehaviour
         _curGameState = GameState.Error;
     }
 
-    // Hide game warning about damaged file
+    /// <summary>
+    /// Hides warning about damaged game configuration file.
+    /// </summary>
     public void HideGameWarning()
     {
         // Hide warning panel
@@ -641,7 +688,9 @@ public class GameSettingsManager : MonoBehaviour
             audioSrc.UnPause();
     }
 
-    // Show game menu after pause game
+    /// <summary>
+    /// Shows the game menu and pauses the simulation.
+    /// </summary>
     public void ShowMenu()
     {
         // Activate background
@@ -658,7 +707,9 @@ public class GameSettingsManager : MonoBehaviour
         _curGameState = GameState.Menu;
     }
 
-    // Return to game
+    /// <summary>
+    /// Hides the game menu and resumes the simulation.
+    /// </summary>
     public void ResumeGame()
     {
         // Deactivate background
@@ -677,7 +728,9 @@ public class GameSettingsManager : MonoBehaviour
         _curGameState = GameState.Game;
     }
 
-    // Show settings in game menu
+    /// <summary>
+    /// Shows the settings window in the game menu.
+    /// </summary>
     public void ShowSettings()
     {
         // Deactivate menu panel
@@ -688,7 +741,9 @@ public class GameSettingsManager : MonoBehaviour
         _curGameState = GameState.Settings;
     }
 
-    // Show control settings in game menu
+    /// <summary>
+    /// Shows the control window in the game menu.
+    /// </summary>
     public void ShowControl()
     {
         // Deactivate menu panel
@@ -699,7 +754,9 @@ public class GameSettingsManager : MonoBehaviour
         _curGameState = GameState.Control;
     }
 
-    // Return to game menu from another window
+    /// <summary>
+    /// Shows the main window in the game menu and hides the other windows.
+    /// </summary>
     public void ReturnToGameMenu()
     {
         // Deactivate other panels
@@ -711,7 +768,9 @@ public class GameSettingsManager : MonoBehaviour
         _curGameState = GameState.Menu;
     }
 
-    // Increase current quality level
+    /// <summary>
+    /// Increases current quality settings of the simulation.
+    /// </summary>
     public void IncreaseQualitySettings()
     {
         // Increase index
@@ -726,7 +785,9 @@ public class GameSettingsManager : MonoBehaviour
         DecreaseQualityBtn.interactable = true;
     }
 
-    // Decrease current quality level
+    /// <summary>
+    /// Decreases current quality settings of the simulation.
+    /// </summary>
     public void DecreaseQualitySettings()
     {
         // Decrease index
@@ -741,7 +802,9 @@ public class GameSettingsManager : MonoBehaviour
         IncreaseQualityBtn.interactable = true;
     }
 
-    // Increase post-processing level
+    /// <summary>
+    /// Increases current post-processing level.
+    /// </summary>
     public void IncreasePostProcessing()
     {
         // Increase current profile
@@ -758,7 +821,9 @@ public class GameSettingsManager : MonoBehaviour
         DecreaseProcessBtn.interactable = true;
     }
 
-    // Decrease post-processing level
+    /// <summary>
+    /// Decreases current post-processing level.
+    /// </summary>
     public void DecreasePostProcessing()
     {
         // Decrease current profile
@@ -775,7 +840,9 @@ public class GameSettingsManager : MonoBehaviour
         IncreaseProcessBtn.interactable = true;
     }
 
-    // Increase number of pedestrians
+    /// <summary>
+    /// Increases the number of the pedestrian in the simulation.
+    /// </summary>
     public void IncreasePedestrians()
     {
         // There are not people
@@ -816,7 +883,9 @@ public class GameSettingsManager : MonoBehaviour
         DecreasePedestriansBtn.interactable = true;
     }
 
-    // Decrease number of pedestrians
+    /// <summary>
+    /// Decreases the number of the pedestrian in the simulation.
+    /// </summary>
     public void DecreasePedestrians()
     {
         // There are all people
@@ -847,7 +916,9 @@ public class GameSettingsManager : MonoBehaviour
         IncreasePedestriansBtn.interactable = true;
     }
 
-    // Increase number of static vehicles
+    /// <summary>
+    /// Increases the number of the static vehicles in the simulation.
+    /// </summary>
     public void IncreaseStaticVehicles()
     {
         // There are not static vehicles
@@ -888,7 +959,9 @@ public class GameSettingsManager : MonoBehaviour
         DecreaseStaticVehiclesBtn.interactable = true;
     }
 
-    // Decrease number of static vehicles
+    /// <summary>
+    /// Decreases the number of the static vehicles in the simulation.
+    /// </summary>
     public void DecreaseStaticVehicles()
     {
         // There are all static vehicles
@@ -919,7 +992,9 @@ public class GameSettingsManager : MonoBehaviour
         IncreaseStaticVehiclesBtn.interactable = true;
     }
 
-    // Increase number of vehicles
+    /// <summary>
+    /// Increases the number of the mobile vehicles in the simulation.
+    /// </summary>
     public void IncreaseVehicles()
     {
         // There are not vehicles
@@ -964,7 +1039,9 @@ public class GameSettingsManager : MonoBehaviour
         DecreaseVehiclesBtn.interactable = true;
     }
 
-    // Decrease number of vehicles
+    /// <summary>
+    /// Decreases the number of the mobile vehicles in the simulation.
+    /// </summary>
     public void DecreaseVehicles()
     {
         // There are all vehicles
@@ -995,7 +1072,9 @@ public class GameSettingsManager : MonoBehaviour
         IncreaseVehiclesBtn.interactable = true;
     }
 
-    // Increase grass density
+    /// <summary>
+    /// Increases the grass density in the simulation.
+    /// </summary>
     public void IncreaseGrassDensity()
     {
         // Grass is disabled
@@ -1022,7 +1101,9 @@ public class GameSettingsManager : MonoBehaviour
         DecreaseGrassBtn.interactable = true;
     }
 
-    // Decrease grass density
+    /// <summary>
+    /// Decreases the grass density in the simulation.
+    /// </summary>
     public void DecreaseGrassDensity()
     {
         // Grass is great
@@ -1049,7 +1130,9 @@ public class GameSettingsManager : MonoBehaviour
         IncreaseGrassBtn.interactable = true;
     }
 
-    // Increase drawing distance
+    /// <summary>
+    /// Increases the drawing distance in the simulation.
+    /// </summary>
     public void IncreaseDrawingDistance()
     {
         // Drawing distance is low
@@ -1074,7 +1157,9 @@ public class GameSettingsManager : MonoBehaviour
         DecreaseDistBtn.interactable = true;
     }
 
-    // Decrease drawing distance
+    /// <summary>
+    /// Decreases the drawing distance in the simulation.
+    /// </summary>
     public void DecreaseDrawingDistance()
     {
         // Drawing distance is high
@@ -1099,7 +1184,9 @@ public class GameSettingsManager : MonoBehaviour
         IncreaseDistBtn.interactable = true;
     }
 
-    // Turn on or turn off post-processing
+    /// <summary>
+    /// Turns on or turns off the post-processing in the simulation.
+    /// </summary>
     public void SwitchPostProcessing()
     {
         // Post-processing is on
@@ -1128,7 +1215,9 @@ public class GameSettingsManager : MonoBehaviour
         }
     }
 
-    // Adjust day duration via slider
+    /// <summary>
+    /// Changes the duration of the day via slider.
+    /// </summary>
     public void AdjustDayDuration()
     {
         // Change day duration
@@ -1137,7 +1226,9 @@ public class GameSettingsManager : MonoBehaviour
         _timeLabel.text = DayAndNightCycle.SecondsInAFullDay + "s";
     }
 
-    // Adjust audio volume via slider
+    /// <summary>
+    /// Changes the audio volume via slider.
+    /// </summary>
     public void AdjustAudioVolume()
     {
         // Prepare volume label
@@ -1150,7 +1241,9 @@ public class GameSettingsManager : MonoBehaviour
             audioSource.volume = AudioSld.value;
     }
 
-    // Exit simulation and display main menu
+    /// <summary>
+    /// Quits the simulation and displays the main menu.
+    /// </summary>
     public void ExitSimulation()
     {
         // Find camera script

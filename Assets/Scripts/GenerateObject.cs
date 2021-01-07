@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-// Generate objects in specific positions after starting program
+/// <summary>
+/// Generates the objects in the specific positions after starting the program.
+/// </summary>
 public class GenerateObject : MonoBehaviour
 {
     // Number of vehicles
@@ -84,7 +86,15 @@ public class GenerateObject : MonoBehaviour
         }
     }
 
-    // Generate some driver in car
+    /// <summary>
+    /// Generates the driver in the mobile car.
+    /// </summary>
+    /// <param name="parent">A transform that represents a vehicle.</param>
+    /// <param name="manPoint">A transform that represents position for a male driver.</param>
+    /// <param name="womanPoint">A transform that represents position for a female driver.</param>
+    /// <returns>
+    /// The object that represents the driver.
+    /// </returns>
     public GameObject GenerateDriver(Transform parent, Transform manPoint, Transform womanPoint)
     {
         // Get some gender
@@ -106,7 +116,12 @@ public class GenerateObject : MonoBehaviour
         return driver;
     }
 
-    // Draw some gender (man or woman)
+    /// <summary>
+    /// Draws the gender of the person (male or female).
+    /// </summary>
+    /// <returns>
+    /// The label that represents the gender.
+    /// </returns>
     private string DrawGender()
     {
         // Draw number
@@ -118,11 +133,15 @@ public class GenerateObject : MonoBehaviour
         return "Woman";
     }
 
-    // Draw some vehicle (car)
+    /// <summary>
+    /// Draws some type of the vehicle.
+    /// </summary>
+    /// <returns>
+    /// The number that represents the type of the vehicle.
+    /// </returns>
     private int DrawVehicle()
     {
         // Draw number
-        int number = Random.Range(1, _vehiclesNum + 1);
-        return number;
+        return Random.Range(1, _vehiclesNum + 1);
     }
 }

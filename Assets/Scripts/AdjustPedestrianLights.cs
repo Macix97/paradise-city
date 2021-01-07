@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
-// Control state of traffic lights
+/// <summary>
+/// Manages switching the pedestrian lights.
+/// </summary>
 public class AdjustPedestrianLights : MonoBehaviour
 {
     // List of light actions
@@ -95,7 +97,11 @@ public class AdjustPedestrianLights : MonoBehaviour
         SwitchPedestrianLights();
     }
 
-    // Set proper color of pedestrian lights
+    /// <summary>
+    /// Sets proper color of the pedestrian lights.
+    /// </summary>
+    /// <param name="texture">An object that represents a texture.</param>
+    /// <param name="color">A structure that represents a color.</param>
     private void SetPedestrianLights(Texture texture, Color color)
     {
         // Set texture
@@ -106,7 +112,9 @@ public class AdjustPedestrianLights : MonoBehaviour
         _light.SetPropertyBlock(_matBlock);
     }
 
-    // Switch behavior of pedestrian lights
+    /// <summary>
+    /// Switches states of the pedestrian lights basing on the current state.
+    /// </summary>
     private void SwitchPedestrianLights()
     {
         switch (_curState)
@@ -123,7 +131,9 @@ public class AdjustPedestrianLights : MonoBehaviour
         }
     }
 
-    // Establish beginning state of pedestrian lights
+    /// <summary>
+    /// Sets the beginning state of the pedestrian lights.
+    /// </summary>
     private void StartPedestrianLight()
     {
         // Set proper colors of lights
@@ -142,7 +152,9 @@ public class AdjustPedestrianLights : MonoBehaviour
         _curTime += Time.deltaTime;
     }
 
-    // Set walking texture for pedestrian lights
+    /// <summary>
+    /// Sets walking texture for the pedestrian lights.
+    /// </summary>
     private void SetWalking()
     {
         // Set proper color of light
@@ -173,7 +185,9 @@ public class AdjustPedestrianLights : MonoBehaviour
         _curTime += Time.deltaTime;
     }
 
-    // Set stopping texture for pedestrian lights
+    /// <summary>
+    /// Sets stopping texture for the pedestrian lights.
+    /// </summary>
     private void SetStopping()
     {
         // Set proper color of light

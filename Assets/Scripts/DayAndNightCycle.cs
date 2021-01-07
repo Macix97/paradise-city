@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
-// Describe colors that make up lighting
+/// <summary>
+/// Describes the colors that make up the lighting.
+/// </summary>
 [System.Serializable]
 public class DayColors
 {
@@ -10,7 +12,9 @@ public class DayColors
     public Color FogColor;
 }
 
-// Control day and night cycle by changing intensity of lighting
+/// <summary>
+/// Controls day and night cycle by changing the intensity of the lighting.
+/// </summary>
 public class DayAndNightCycle : MonoBehaviour
 {
     public DayColors TwilightColors;
@@ -123,7 +127,9 @@ public class DayAndNightCycle : MonoBehaviour
         CalculateColors();
     }
 
-    // Calculate differences between colors that will be changed
+    /// <summary>
+    /// Calculates the differences between the colors that will be changed.
+    /// </summary>
     private void CalculateColors()
     {
         // Adjust difference
@@ -161,7 +167,9 @@ public class DayAndNightCycle : MonoBehaviour
         _twilightNightDiffBF = Mathf.Abs(TwilightColors.FogColor.b - NightColors.FogColor.b) * 20;
     }
 
-    // Update time of game and count another days
+    /// <summary>
+    /// Updates time of the game and counts another days.
+    /// </summary>
     private void UpdateTime()
     {
         // Adjust time
@@ -174,7 +182,9 @@ public class DayAndNightCycle : MonoBehaviour
         }
     }
 
-    // Update light in simulation by changing colors and intensity
+    /// <summary>
+    /// Updates the light in simulation by changing the colors and intensity.
+    /// </summary>
     private void UpdateLight()
     {
         // Rotate sun
