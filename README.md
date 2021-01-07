@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="Media/Logo/Logo.png" alt="Logo" />
-</p>
+![Banner](./Media/Banner.png)
 
 ## Abstract
 
@@ -27,19 +25,19 @@ The list below presents most important properties:
 ### The pictures below show the most important aspects of the program:
 
 #### Main Menu
-![Main Menu](./Media/Pictures/MainMenu.png)
+![Main Menu](./Media/MainMenu.png)
 #### Settings Window
-![Settings Window](./Media/Pictures/SettingsWindow.png)
+![Settings Window](./Media/SettingsWindow.png)
 #### Control Window
-![Control Window](./Media/Pictures/ControlWindow.png)
+![Control Window](./Media/ControlWindow.png)
 #### City Center
-![City Center](./Media/Pictures/CityCenter.png)
+![City Center](./Media/CityCenter.png)
 #### City At Night
-![City At Night](./Media/Pictures/CityAtNight.png)
+![City At Night](./Media/CityAtNight.png)
 #### Realistic Reflections
-![Realistic Reflections](./Media/Pictures/RealisticReflections.png)
+![Realistic Reflections](./Media/RealisticReflections.png)
 #### Countryside
-![Countryside](./Media/Pictures/Countryside.png)
+![Countryside](./Media/Countryside.png)
 
 ## Used technologies
 
