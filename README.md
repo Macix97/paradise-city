@@ -1,5 +1,11 @@
 ![Banner](./Media/Banner.png)
 
+## Important links
+[![Release](./Media/ReleaseTile.png)](https://github.com/Macix97/paradise-city/releases)
+[![License](./Media/LicenseTile.png)](https://github.com/Macix97/paradise-city/blob/main/LICENSE.txt)
+[![Docs](./Media/DocsTile.png)](https://macix97.github.io/paradise-city/docs/index.html)
+[![Author Site](./Media/AuthorSiteTile.png)](https://macix97.github.io)
+
 ## Abstract
 
 Paradise City is a real-time simulation which presents behaviors occur in big city. In the project many actions are performing independently of each other. The main goal is created the full of life environment with a lot of characters and vehicles. Specific people have their own sequences of the behaviors which is executed in proper order.

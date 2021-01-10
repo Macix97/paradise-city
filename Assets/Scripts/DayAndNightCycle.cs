@@ -24,7 +24,7 @@ public class DayAndNightCycle : MonoBehaviour
     public Light Sun;
     public Light Moon;
     public Material SkyMaterial;
-    [Range(60, 1440)]
+    [Range(60, 1800)]
     public float SecondsInAFullDay = 0f;
     [Range(0, 1)]
     public float CurrentTime = 0f;
