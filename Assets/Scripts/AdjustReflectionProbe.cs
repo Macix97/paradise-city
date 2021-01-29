@@ -45,7 +45,7 @@ public class AdjustReflectionProbe : MonoBehaviour
         // Set probe intensity
         _currentTime = _dayAndNightCycle.CurrentTime;
         _secondsInAFullDay = _dayAndNightCycle.SecondsInAFullDay;
-        _curLvl = 0;
+        _curLvl = -1;
         _blendFac = 0f;
     }
 

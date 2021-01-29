@@ -262,8 +262,6 @@ public class VehicleBehavior : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (tag.Equals(StaticVehicle))
-            return;
         SwitchVehicleActions();
     }
 
@@ -499,6 +497,11 @@ public class VehicleBehavior : MonoBehaviour
     /// </summary>
     private void SwitchVehicleActions()
     {
+        // It is static vehicle
+        if (tag.Equals(StaticVehicle))
+            // Break action
+            return;
+        // Switch actions
         switch (_curAction)
         {
             case VehicleActionType.Stopping:

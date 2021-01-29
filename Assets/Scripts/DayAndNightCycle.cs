@@ -20,14 +20,13 @@ public class DayAndNightCycle : MonoBehaviour
     public DayColors TwilightColors;
     public DayColors DayColors;
     public DayColors NightColors;
-    public int CurrentDay = 0;
     public Light Sun;
     public Light Moon;
     public Material SkyMaterial;
-    [Range(60, 1800)]
+    [Range(60, 1440)]
     public float SecondsInAFullDay = 0f;
-    [Range(0, 1)]
-    public float CurrentTime = 0f;
+    internal int CurrentDay = 1;
+    internal float CurrentTime = 0.5f;
     private float _lightIntensity;
     // Flare strength
     private float _flareStrength;
@@ -74,6 +73,8 @@ public class DayAndNightCycle : MonoBehaviour
     private float _twilightNightDiffBE;
     private float _twilightNightDiffBG;
     private float _twilightNightDiffBF;
+
+    bool display;
 
     // Start is called before the first frame update
     private void Start()

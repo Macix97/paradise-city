@@ -54,10 +54,6 @@ public class AdjustStreetLights : MonoBehaviour
         _lightRenderer = gameObject.GetComponent<Renderer>();
         // Set colors
         _r = _g = _b = 0f;
-        // Check if it is traffic post
-        if (gameObject.name.Equals("Traffic Post"))
-            // Set proper emission map
-            _matBlock.SetTexture("_EmissionMap", Resources.Load<Texture>("Textures/TrafficLightsEmission03"));
         // Disable emission
         _matBlock.SetColor("_EmissionColor", new Color(0f, 0f, 0f, 1f));
         // Apply changes

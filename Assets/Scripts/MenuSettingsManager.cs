@@ -51,6 +51,8 @@ public class MenuSettingsManager : MonoBehaviour
     private MenuState _curMenuState;
     // Click sound
     private AudioClip _click;
+    // Framerate limitation
+    private const int _fpsLimit = 100;
 
     // Awake is called when the script instance is being loaded
     private void Awake()
@@ -93,6 +95,8 @@ public class MenuSettingsManager : MonoBehaviour
         _click = Resources.Load<AudioClip>("Sounds/Click");
         // Set current state
         _curMenuState = MenuState.Menu;
+        // Limitate framerate
+        Application.targetFrameRate = _fpsLimit;
     }
 
     /// <summary>

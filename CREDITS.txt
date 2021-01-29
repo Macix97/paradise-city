@@ -8,8 +8,9 @@ Mixamo: https://www.mixamo.com/
 Some resources were obtained by Unity Asset Store:
 https://assetstore.unity.com/
 
-Fonts provides 1001 Fonts:
+Fonts provides 1001 Fonts and Keshikan:
 1001 Fonts: https://www.1001fonts.com/
+Keshikan: https://www.keshikan.net/
 
 1. chill tune for a game
 Author: Xythe
@@ -75,5 +76,20 @@ Changes: No changes
 Author: Elvaerwyn
 Link: MakeHuman Community Asset
 Changes: No changes
+
+14. Expressway Font
+Author: Ray Larabie
+Link: https://www.1001fonts.com/expressway-free-font.html
+Changes: No changes made
+
+15. Galderglynn Font
+Author: Ray Larabie
+Link: https://www.1001fonts.com/galderglynn-titling-font.html
+Changes: No changes made
+
+16. DSEG7 Font
+Author: Keshikan
+Link: https://www.keshikan.net/fonts-e.html
+Changes: No changes made
 
 The author of the project would like to thank you for the provided materials.

@@ -136,6 +136,10 @@ public class GameSettingsManager : MonoBehaviour
     public Text CurGrassText { get; set; }
     // Current distance text
     public Text CurDistText { get; set; }
+    // Clock text
+    public Text ClockText { get; set; }
+    // Day text
+    public Text CurDayText { get; set; }
     // Time label
     private Text _timeLabel;
     // Audio label
@@ -189,7 +193,8 @@ public class GameSettingsManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        ChangeCursorVisible();
+        UpdateClock();
+        SwitchCursor();
         SwitchGameMenu();
         GetNewKey();
     }
@@ -244,6 +249,8 @@ public class GameSettingsManager : MonoBehaviour
         CurVehiclesText = GameObject.Find("CurrentVehiclesText").GetComponent<Text>();
         CurGrassText = GameObject.Find("CurrentGrassText").GetComponent<Text>();
         CurDistText = GameObject.Find("CurrentDistanceText").GetComponent<Text>();
+        ClockText = GameObject.Find("ClockText").GetComponent<Text>();
+        CurDayText = GameObject.Find("CurDayText").GetComponent<Text>();
         _timeLabel = GameObject.Find("TimeLabel").GetComponent<Text>();
         _audioLabel = GameObject.Find("VolumeLabel").GetComponent<Text>();
         // Keys texts
@@ -274,6 +281,8 @@ public class GameSettingsManager : MonoBehaviour
         _click = Resources.Load<AudioClip>("Sounds/Click");
         // Set current state
         _curGameState = GameState.Game;
+        // Set start time
+        UpdateClock();
     }
 
     /// <summary>
@@ -398,15 +407,24 @@ public class GameSettingsManager : MonoBehaviour
     /// <summary>
     /// Shows or hides the mouse cursor.
     /// </summary>
-    private void ChangeCursorVisible()
+    private void SwitchCursor()
     {
         // It is game
         if (_curGameState.Equals(GameState.Game))
+        {
+            // Lock cursor
+            Cursor.lockState = CursorLockMode.Locked;
             // Hide cursor
             Cursor.visible = false;
+        }
         // It is part of menu
         else
+        {
+            // Unlock cursor
+            Cursor.lockState = CursorLockMode.None;
+            // Show cursor
             Cursor.visible = true;
+        }
     }
 
     /// <summary>
@@ -693,6 +711,7 @@ public class GameSettingsManager : MonoBehaviour
     /// </summary>
     public void ShowMenu()
     {
+        // Lock cursor
         // Activate background
         _backgroundImage.gameObject.SetActive(true);
         // Activate menu panel
@@ -1239,6 +1258,35 @@ public class GameSettingsManager : MonoBehaviour
         foreach (AudioSource audioSource in _allAudioSources)
             // Change audio value
             audioSource.volume = AudioSld.value;
+    }
+
+    /// <summary>
+    /// Updates time of a day displayed on the blackboard.
+    /// </summary>
+    private void UpdateClock()
+    {
+        // Prepare labels
+        string h, m = "";
+        // Calculate minutes
+        int minutes = (int)((DayAndNightCycle.CurrentTime * 1440f) % 60f);
+        // Calculate hours
+        int hours = (int)(DayAndNightCycle.CurrentTime * 1440f / 60f);
+        // Validate hours
+        if (hours < 10)
+            // Set proper label
+            h = "0" + hours;
+        else
+            h = hours.ToString();
+        // Validate minutes
+        if (minutes < 10)
+            // Set proper label
+            m = "0" + minutes;
+        else
+            m = minutes.ToString();
+        // Set new time
+        ClockText.text = h + ":" + m;
+        // Update day
+        CurDayText.text = DayAndNightCycle.CurrentDay.ToString();
     }
 
     /// <summary>
