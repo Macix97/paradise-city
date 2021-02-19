@@ -647,8 +647,6 @@ MonoBehaviour:
   CheckingDistance: 2.5
   WaitingTime: 0.5
   StoppingDistance: 6
-  ActionDelay: 0.2
-  ActionGap: 0.1
 --- !u!205 &7374308051605725093
 LODGroup:
   m_ObjectHideFlags: 0
