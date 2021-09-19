@@ -268,7 +268,9 @@ public class VehicleBehavior : MonoBehaviour
     /// <summary>
     /// Sets proper color of the rear lights.
     /// </summary>
-    /// <param name="color">A structure that represents a color.</param>
+    /// <param name="color">
+    /// A structure that represents a color.
+    /// </param>
     private void SetRearLights(Color color)
     {
         // Set emission

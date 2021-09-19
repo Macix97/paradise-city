@@ -124,7 +124,8 @@ public class MenuSettingsManager : MonoBehaviour
 
         // Configuration load correctly!
 
-        // Set parameters from configuration file (default or saved)
+        // Set parameters from configuration file
+        // (default or saved)
         SettingsDatabase.SetMenuFromConfig(ref settingsManager);
         // Set proper labels for sliders
         AdjustSoundsVolume();
