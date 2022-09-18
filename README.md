@@ -4,7 +4,6 @@
 * [Release](https://github.com/Macix97/paradise-city/releases)
 * [License](https://github.com/Macix97/paradise-city/blob/main/LICENSE.txt)
 * [Documentation](https://github.com/Macix97/paradise-city/tree/main/Docs/ParadiseCityV1.0.pdf)
-* [Author Site](https://www.mwiktor.tk)
 
 ## Abstract
 
